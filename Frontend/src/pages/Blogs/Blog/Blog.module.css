@@ -1,0 +1,47 @@
+.blog {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  color: #ffffff;
+  border: 2px solid white;
+  border-radius: 20px;
+  box-sizing: border-box;
+  margin-bottom: 2rem;
+  cursor: pointer;
+  padding-block: 0.2rem;
+}
+.blog:hover {
+  background-color: #1d2331;
+}
+.contributor {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.left {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: 2rem;
+  flex-basis: 80%;
+}
+
+.right {
+  flex-basis: 20%;
+  margin: 2.5rem;
+}
+.right img {
+  width: 10rem;
+  height: 10rem;
+  border-radius: 20px;
+}
+.contributor img {
+  height: 3rem;
+  border-radius: 60px;
+}
+
+.title {
+  font-size: xx-large;
+  font-weight: bold;
+}
