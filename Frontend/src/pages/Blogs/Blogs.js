@@ -12,7 +12,6 @@ const Blogs = () => {
   const [blogs, setBlogs] = useState([]);
 
   useEffect(() => {
-    //write usimg async await
     const getBlogs = async () => {
       const res = await fetch("http://localhost:8000/api/blog/");
       const data = await res.json();
@@ -20,13 +19,6 @@ const Blogs = () => {
       console.log(data);
     };
     getBlogs();
-
-    // fetch("http://localhost:8000/api/blog/")
-    //   .then((res) => res.json())
-    //   .then((data) => {
-    //     setBlogs(data);
-    //     console.log(data);
-    //   });
   }, []);
   return (
     <div>
