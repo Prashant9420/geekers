@@ -44,7 +44,7 @@ const CreateBlog = () => {
     e.preventDefault();
     const response = async () => {
       try {
-        await fetch(`${ServerURL}/blog/`, {
+        const result = await fetch(`${ServerURL}/blog/`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -56,8 +56,8 @@ const CreateBlog = () => {
             categories,
           }),
         });
-        const data = await response.json();
-        if (data.status === 201) {
+        const data = await result.json();
+        if (result.status === 200) {
           alert("Blog Created Successfully");
           setTitle("");
           setContent("");

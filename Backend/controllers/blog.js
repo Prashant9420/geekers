@@ -3,7 +3,7 @@ export const createBlog = async (req, res, next) => {
   const newBlog = new Blog(req.body);
   try {
     const savedBlog = await newBlog.save();
-    res.status(200).json(savedBlog);
+    res.status(200).json({ savedBlog });
   } catch (error) {
     next(error);
   }
