@@ -3,11 +3,7 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import blogRoutes from "./routes/blog.js";
 import cors from "cors";
-<<<<<<< Updated upstream
 import morgan from "morgan";
-=======
-// import morgan from "morgan";
->>>>>>> Stashed changes
 const app = express();
 
 dotenv.config();
@@ -27,11 +23,7 @@ mongoose.connection.on("disconnected", () => {
 
 //middlewares
 app.use(express.json());
-<<<<<<< Updated upstream
 app.use(morgan("dev"));
-=======
-// app.use(morgan("dev"));
->>>>>>> Stashed changes
 app.use(cors());
 
 //all urls

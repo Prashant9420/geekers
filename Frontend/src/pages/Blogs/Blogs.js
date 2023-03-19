@@ -5,6 +5,7 @@ import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import Button from "@mui/material/Button";
 import { useNavigate, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
+import SERVER_URL from "../../utils/ServerURL";
 
 const Blogs = () => {
   const navigate = useNavigate();
@@ -13,10 +14,9 @@ const Blogs = () => {
 
   useEffect(() => {
     const getBlogs = async () => {
-      const res = await fetch("http://localhost:8000/api/blog/");
+      const res = await fetch(`${SERVER_URL}/blog`);
       const data = await res.json();
-      setBlogs(data);
-      console.log(data);
+      setBlogs(data.blogs);
     };
     getBlogs();
   }, []);
@@ -44,8 +44,12 @@ const Blogs = () => {
           <div className={style.recentBlogs}>
             <h2>Recent Blogs</h2>
 
-            {blogs?.map((blog) => {
-              return <Link to={`/blog/${blog._id}`}>{blog.title}</Link>;
+            {blogs?.map((blog, index) => {
+              return (
+                <Link key={index} to={`/blog/${blog._id}`}>
+                  {blog.title}
+                </Link>
+              );
             })}
           </div>
         </div>
