@@ -52,3 +52,14 @@ export const getBlogs = async (req, res, next) => {
     next(error);
   }
 };
+
+export const getRecentBlogs = async (req, res, next) => {
+  try {
+    const blogs = await Blog.find().sort({ createdAt: -1 }).limit(5);
+    res.status(200).json({
+      blogs,
+    });
+  } catch (error) {
+    next(error);
+  }
+};

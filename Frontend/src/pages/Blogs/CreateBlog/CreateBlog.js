@@ -7,8 +7,10 @@ import { Button } from "antd";
 import TextField from "@mui/material/TextField";
 import Chip from "@mui/material/Chip";
 import ServerURL from "../../../utils/ServerURL";
+import { useNavigate } from "react-router-dom";
 
 const CreateBlog = () => {
+  const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
   const [categories, setCategories] = useState([]);
@@ -58,11 +60,12 @@ const CreateBlog = () => {
         });
         // const data = await result.json();
         if (result.status === 200) {
-          alert("Blog Created Successfully");
           setTitle("");
           setContent("");
           setimgUrl("");
           setCategories([]);
+          alert("Blog Created Successfully");
+          navigate("/blogs");
         }
       } catch (err) {
         console.log(err);

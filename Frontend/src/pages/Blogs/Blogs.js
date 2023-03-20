@@ -14,7 +14,7 @@ const Blogs = () => {
 
   useEffect(() => {
     const getBlogs = async () => {
-      const res = await fetch(`${SERVER_URL}/blog`);
+      const res = await fetch(`${SERVER_URL}/blog/recentBlogs`);
       const data = await res.json();
       setBlogs(data.blogs);
     };
@@ -24,11 +24,6 @@ const Blogs = () => {
     <div>
       <Header />
       <div className={style.container}>
-        <div className={style.blogs}>
-          {blogs?.map((blog) => {
-            return <Blog key={blog._id} blog={blog} />;
-          })}
-        </div>
         <div className={style.right}>
           <div className={style.writeBlog}>
             <Button
@@ -41,7 +36,7 @@ const Blogs = () => {
               Write a Blog
             </Button>
           </div>
-          <div className={style.recentBlogs}>
+          {/* <div className={style.recentBlogs}>
             <h2>Recent Blogs</h2>
 
             {blogs?.map((blog, index) => {
@@ -51,8 +46,13 @@ const Blogs = () => {
                 </Link>
               );
             })}
-          </div>
+          </div> */}
         </div>
+      </div>
+      <div className={style.blogs}>
+        {blogs?.map((blog) => {
+          return <Blog key={blog._id} blog={blog} />;
+        })}
       </div>
     </div>
   );
