@@ -37,7 +37,12 @@ const Header = () => {
             <h3>Geekers</h3>
             <img src={logo} alt="" />
           </div>
-          <HomeIcon cursor="pointer" />
+          <HomeIcon
+            cursor="pointer"
+            onClick={() => {
+              navigate("/home");
+            }}
+          />
         </div>
         <div className={style.topCenter}>
           <ul className={style.pages}>
