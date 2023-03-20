@@ -1,6 +1,5 @@
 import style from "./Blog.module.css";
 import { Link, useNavigate } from "react-router-dom";
-import parse from "html-react-parser";
 import dateFormatter from "../../../utils/dateFormatter";
 
 const Blog = ({ blog }) => {
@@ -19,7 +18,6 @@ const Blog = ({ blog }) => {
     }
     return read;
   };
-  // let read = stringHtml(content);
   read = stringHtml(content);
   return (
     <div onClick={() => navigate(`/blog/${_id}`)} className={style.blog}>

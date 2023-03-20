@@ -3,7 +3,7 @@ import Blog from "./Blog/Blog";
 import Header from "../../components/Header/Header";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import Button from "@mui/material/Button";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import SERVER_URL from "../../utils/ServerURL";
 
@@ -11,7 +11,7 @@ const Blogs = () => {
   const navigate = useNavigate();
 
   const [blogs, setBlogs] = useState([]);
-  const [limit, setLimit] = useState(5);
+  const [limit, setLimit] = useState(6);
   const [countAllBlogs, setCountAllBlogs] = useState(0);
 
   const getBlogs = async () => {
@@ -23,7 +23,6 @@ const Blogs = () => {
     const res = await fetch(`${SERVER_URL}/blog/countAllBlogs`);
     const data = await res.json();
     setCountAllBlogs(data.count);
-    console.log(countAllBlogs);
   };
 
   useEffect(() => {

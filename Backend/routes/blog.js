@@ -6,16 +6,19 @@ import {
   updateBlog,
   getRecentBlogs,
   countAllBlogs,
+  getAllCategories,
 } from "../controllers/blog.js";
 
 const router = express.Router();
 
 //  CREATE
 router.post("/", createBlog);
-//Count all blogs
+//COUTN ALL BLOGS
 router.get("/countAllBlogs", countAllBlogs);
 // GET RECENT BLOGS
 router.get("/recentBlogs", getRecentBlogs);
+// GET ALL CATEGORIES
+router.get("/getAllCategories", getAllCategories);
 //UPDATE
 router.put("/:id", updateBlog);
 //DELETE

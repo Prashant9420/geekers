@@ -1,8 +1,26 @@
 import Blog from "../models/Blog.js";
+import BlogCategories from "../models/BlogCategories.js";
+
 export const createBlog = async (req, res, next) => {
   const newBlog = new Blog(req.body);
   try {
     const savedBlog = await newBlog.save();
+    const allSavedCategories = await BlogCategories.find();
+
+    // Check if the category already exists in the database
+
+    for (var i = 0; i < savedBlog.categories.length; i++) {
+      if (
+        !allSavedCategories.find(
+          (category) => category.categoryName === savedBlog.categories[i]
+        )
+      ) {
+        const newBlogCategory = new BlogCategories({
+          categoryName: savedBlog.categories[i],
+        });
+        await newBlogCategory.save();
+      }
+    }
     res.status(200).json({ savedBlog });
   } catch (error) {
     next(error);
@@ -63,6 +81,15 @@ export const getRecentBlogs = async (req, res, next) => {
     res.status(200).json({
       blogs,
     });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getAllCategories = async (req, res, next) => {
+  try {
+    const categories = await Blog.find().distinct("category");
+    res.status(200).json({ categories });
   } catch (error) {
     next(error);
   }

@@ -3,7 +3,6 @@ import style from "./CreateBlog.module.css";
 import Header from "../../../components/Header/Header";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import { Button } from "antd";
 import TextField from "@mui/material/TextField";
 import Chip from "@mui/material/Chip";
 import ServerURL from "../../../utils/ServerURL";
@@ -58,7 +57,6 @@ const CreateBlog = () => {
             categories,
           }),
         });
-        // const data = await result.json();
         if (result.status === 200) {
           setTitle("");
           setContent("");
