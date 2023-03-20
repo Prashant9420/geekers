@@ -42,12 +42,10 @@ export const getBlog = async (req, res, next) => {
   }
 };
 
-export const getBlogs = async (req, res, next) => {
+export const countAllBlogs = async (req, res, next) => {
   try {
-    const blogs = await Blog.find();
-    res.status(200).json({
-      blogs,
-    });
+    const count = await Blog.countDocuments();
+    res.status(200).json({ count });
   } catch (error) {
     next(error);
   }
@@ -55,7 +53,13 @@ export const getBlogs = async (req, res, next) => {
 
 export const getRecentBlogs = async (req, res, next) => {
   try {
-    const blogs = await Blog.find().sort({ createdAt: -1 }).limit(5);
+    const limit = req.query.limit ? parseInt(req.query.limit) : 5;
+    const skip = req.query.skip ? parseInt(req.query.skip) : 0;
+
+    const blogs = await Blog.find()
+      .sort({ createdAt: -1 })
+      .limit(limit)
+      .skip(skip);
     res.status(200).json({
       blogs,
     });

@@ -11,20 +11,32 @@ const Blogs = () => {
   const navigate = useNavigate();
 
   const [blogs, setBlogs] = useState([]);
+  const [limit, setLimit] = useState(5);
+  const [countAllBlogs, setCountAllBlogs] = useState(0);
 
   useEffect(() => {
+    const getCountAllBlogs = async () => {
+      const res = await fetch(`${SERVER_URL}/blog/countAllBlogs`);
+      const data = await res.json();
+      setCountAllBlogs(data.count);
+      console.log(countAllBlogs);
+    };
+    return () => getCountAllBlogs();
+  }, []);
+  useEffect(() => {
     const getBlogs = async () => {
-      const res = await fetch(`${SERVER_URL}/blog/recentBlogs`);
+      const res = await fetch(`${SERVER_URL}/blog/recentBlogs?limit=${limit}`);
       const data = await res.json();
       setBlogs(data.blogs);
     };
-    getBlogs();
-  }, []);
+
+    if (countAllBlogs > limit) getBlogs();
+  }, [limit]);
   return (
     <div>
       <Header />
       <div className={style.container}>
-        <div className={style.right}>
+        <div className={style.top}>
           <div className={style.writeBlog}>
             <Button
               variant="contained"
@@ -53,6 +65,17 @@ const Blogs = () => {
         {blogs?.map((blog) => {
           return <Blog key={blog._id} blog={blog} />;
         })}
+      </div>
+      <div className={style.loadMore}>
+        <button
+          disabled={countAllBlogs === limit}
+          className={style.loadMoreButton}
+          onClick={() => {
+            setLimit(limit + 5);
+          }}
+        >
+          Load more...
+        </button>
       </div>
     </div>
   );

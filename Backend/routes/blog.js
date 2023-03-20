@@ -3,17 +3,17 @@ import {
   createBlog,
   deleteBlog,
   getBlog,
-  getBlogs,
   updateBlog,
   getRecentBlogs,
+  countAllBlogs,
 } from "../controllers/blog.js";
 
 const router = express.Router();
 
 //  CREATE
 router.post("/", createBlog);
-//GET ALL
-router.get("/", getBlogs);
+//Count all blogs
+router.get("/countAllBlogs", countAllBlogs);
 // GET RECENT BLOGS
 router.get("/recentBlogs", getRecentBlogs);
 //UPDATE
