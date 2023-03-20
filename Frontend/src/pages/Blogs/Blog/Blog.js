@@ -1,12 +1,26 @@
 import style from "./Blog.module.css";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import parse from "html-react-parser";
 import dateFormatter from "../../../utils/dateFormatter";
 
 const Blog = ({ blog }) => {
   const navigate = useNavigate();
-  let { _id, categories, title, content, imgUrl, createdAt } = blog;
-
+  var { _id, categories, title, content, imgUrl, createdAt } = blog;
+  let read = "";
+  const stringHtml = (content) => {
+    for (let i = 0; i < content.length; ) {
+      if (content[i] === "<") {
+        while (content[i] !== ">") {
+          i++;
+        }
+      }
+      i++;
+      if (content.charAt(i) !== "<") read += content.charAt(i);
+    }
+    return read;
+  };
+  // let read = stringHtml(content);
+  read = stringHtml(content);
   return (
     <div onClick={() => navigate(`/blog/${_id}`)} className={style.blog}>
       <div className={style.left}>
@@ -20,7 +34,10 @@ const Blog = ({ blog }) => {
         <h5 className={style.time}>
           Published on : {dateFormatter(createdAt)}
         </h5>
-        <div className={style.description}>{parse(`${content}`)}</div>
+        <div className={style.description}>
+          {read.slice(0, 50)}
+          <Link to={`/blog/${_id}`}>...Read More</Link>
+        </div>
         <div className={style.categories}>
           {categories?.map((category, index) => {
             return (

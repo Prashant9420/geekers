@@ -32,7 +32,7 @@ const CreateBlog = () => {
   };
 
   const handleAddClick = () => {
-    setCategories([...categories, category]);
+    category !== "" && setCategories([...categories, category]);
     setCategory("");
   };
 
@@ -56,7 +56,7 @@ const CreateBlog = () => {
             categories,
           }),
         });
-        const data = await result.json();
+        // const data = await result.json();
         if (result.status === 200) {
           alert("Blog Created Successfully");
           setTitle("");
@@ -82,14 +82,12 @@ const CreateBlog = () => {
           onChange={handleChangeTitle}
         ></input>
 
-        <div className={style.textArea}>
-          <ReactQuill
-            className={style.textArea}
-            theme="snow"
-            value={content}
-            onChange={handleChangeContent}
-          />
-        </div>
+        <ReactQuill
+          className={style.textArea}
+          theme="snow"
+          value={content}
+          onChange={handleChangeContent}
+        />
         <div className={style.uploadFile}>
           {/* <Upload.Dragger
             style={{
@@ -100,6 +98,7 @@ const CreateBlog = () => {
             <Button>Click to Upload</Button>
           </Upload.Dragger> */}
           <input
+            className={style.imageURL}
             type="url"
             placeholder="Enter Image Url"
             onChange={handleChangeimgUrl}
@@ -111,6 +110,8 @@ const CreateBlog = () => {
         <div className={style.tag}>
           <div className={style.category}>
             <TextField
+              outline="none"
+              border="none"
               label="Enter a category"
               value={category}
               onChange={handleAddCategory}
@@ -121,15 +122,15 @@ const CreateBlog = () => {
               }}
             />
           </div>
-          <div className={style.addTag}>
-            <Button
-              variant="contained"
-              component="label"
-              onClick={handleAddClick}
-            >
-              Add
-            </Button>
-          </div>
+
+          <button
+            className={style.button}
+            variant="contained"
+            component="label"
+            onClick={handleAddClick}
+          >
+            Add
+          </button>
         </div>
         <div className={style.categories}>
           {categories.map((category, index) => {
@@ -137,6 +138,7 @@ const CreateBlog = () => {
               <Chip
                 className={style.chip}
                 key={index}
+                color="info"
                 label={category}
                 variant="outlined"
                 onDelete={() => handleDelete(index)}
@@ -145,9 +147,15 @@ const CreateBlog = () => {
           })}
         </div>
         <div className={style.publish}>
-          <Button variant="contained" component="label" onClick={handleSubmit}>
+          <button
+            className={style.button}
+            // color="danger"
+            // variant="contained"
+            // component="label"
+            onClick={handleSubmit}
+          >
             Publish
-          </Button>
+          </button>
         </div>
       </form>
     </div>

@@ -32,7 +32,13 @@ const Header = () => {
   return (
     <>
       <div className={style.header} id={style.theme}>
-        <div className={style.topLeft}>Logo & Name</div>
+        <div className={style.topLeft}>
+          <div className={style.logo}>
+            <h3>Geekers</h3>
+            <img src={logo} alt="" />
+          </div>
+          <HomeIcon cursor="pointer" />
+        </div>
         <div className={style.topCenter}>
           <ul className={style.pages}>
             {links.map((link, index) => {
