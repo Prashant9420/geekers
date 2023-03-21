@@ -1,14 +1,14 @@
-.App{
+.App {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-#light{
+#light {
   background-color: #f9fafd;
   color: #000;
 }
-#dark{
-  background-color: #0F172A;
+#dark {
+  background-color: #0f172a;
   color: #f9fafd;
 }

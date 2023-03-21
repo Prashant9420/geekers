@@ -77,6 +77,7 @@ const Blogs = () => {
         <div className={style.top}>
           <div className={style.writeBlog}>
             <Button
+              color="error"
               variant="contained"
               startIcon={<ModeEditIcon />}
               onClick={() => {
@@ -108,7 +109,6 @@ const Blogs = () => {
               })}
             </div>
             <div className={style.selectedCategories}>
-              <h4>Selected Categories</h4>
               {selectedCategory?.map((selectedCategory, index) => {
                 return (
                   <Chip
@@ -126,23 +126,21 @@ const Blogs = () => {
           </div>
         </div>
         <div className={style.content}>
-          <div className={style.left}>
-            <div className={style.blogs}>
-              {blogs?.map((blog) => {
-                return <Blog key={blog._id} blog={blog} />;
-              })}
-            </div>
-            <div className={style.loadMore}>
-              <button
-                disabled={countAllBlogs <= limit}
-                className={style.loadMoreButton}
-                onClick={() => {
-                  setLimit(limit + 5);
-                }}
-              >
-                Load more...
-              </button>
-            </div>
+          <div className={style.blogs}>
+            {blogs?.map((blog) => {
+              return <Blog key={blog._id} blog={blog} />;
+            })}
+          </div>
+          <div className={style.loadMore}>
+            <button
+              disabled={countAllBlogs <= limit}
+              className={style.loadMoreButton}
+              onClick={() => {
+                setLimit(limit + 5);
+              }}
+            >
+              Load more...
+            </button>
           </div>
         </div>
       </div>
