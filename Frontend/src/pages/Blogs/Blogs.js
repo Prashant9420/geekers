@@ -34,6 +34,13 @@ const Blogs = () => {
     setCountAllBlogs(data.count);
   };
 
+  const toggleSelectedCategoryState = (categoryName) => {
+    const index = selectedCategoryNames.indexOf(categoryName);
+    const newSelectedCategoryStates = [...selectedCategoryStates];
+    newSelectedCategoryStates[index] = !newSelectedCategoryStates[index];
+    setSelectedCategoryStates(newSelectedCategoryStates);
+  };
+
   const handleSelectCategory = (e) => {
     const categoryName = e.target.innerText;
     const index = selectedCategoryNames.indexOf(categoryName);
@@ -41,12 +48,7 @@ const Blogs = () => {
       setSelectedCategoryNames([...selectedCategoryNames, categoryName]);
       setSelectedCategoryStates([...selectedCategoryStates, true]);
     } else {
-      const newSelectedCategoryNames = [...selectedCategoryNames];
-      const newSelectedCategoryStates = [...selectedCategoryStates];
-      newSelectedCategoryNames.splice(index, 1);
-      newSelectedCategoryStates.splice(index, 1);
-      setSelectedCategoryNames(newSelectedCategoryNames);
-      setSelectedCategoryStates(newSelectedCategoryStates);
+      toggleSelectedCategoryState(categoryName);
     }
     console.log(selectedCategoryNames);
     console.log(selectedCategoryStates);
@@ -95,15 +97,32 @@ const Blogs = () => {
             </div>
           </div>
           <div className={style.right}>
-            <h3>Categories</h3>
-            <div className={style.categories}>
-              {allCategories?.map((category, index) => {
+            <div className={style.allCategories}>
+              <h3>Categories</h3>
+              <div className={style.categories}>
+                {allCategories?.map((category, index) => {
+                  return (
+                    <Chip
+                      key={index}
+                      color="info"
+                      variant="outlined"
+                      label={category.categoryName}
+                      cursor="pointer"
+                      onClick={handleSelectCategory}
+                    />
+                  );
+                })}
+              </div>
+            </div>
+            <div className={style.selectedCategories}>
+              <h3>Selected Categories</h3>
+              {selectedCategoryNames?.map((categoryName, index) => {
                 return (
                   <Chip
                     key={index}
                     color="info"
                     variant="outlined"
-                    label={category.categoryName}
+                    label={categoryName}
                     cursor="pointer"
                     onClick={handleSelectCategory}
                   />
