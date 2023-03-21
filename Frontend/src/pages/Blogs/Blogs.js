@@ -77,7 +77,7 @@ const Blogs = () => {
         <div className={style.top}>
           <div className={style.writeBlog}>
             <Button
-              color="error"
+              color="info"
               variant="contained"
               startIcon={<ModeEditIcon />}
               onClick={() => {
@@ -87,13 +87,14 @@ const Blogs = () => {
               Write a Blog
             </Button>
           </div>
-          <div className={style.allCategories}>
-            <div className={style.categories}>
-              <h3>Tags</h3>
+        </div>
+        <div className={style.allCategories}>
+          <div className={style.categories}>
+            <h3>Tags</h3>
+            <div className={style.allCategoriesChip}>
               {allCategories?.map((category, index) => {
                 return (
                   <Chip
-                    className={style.chip}
                     key={index}
                     color="info"
                     variant={
@@ -108,40 +109,40 @@ const Blogs = () => {
                 );
               })}
             </div>
-            <div className={style.selectedCategories}>
-              {selectedCategory?.map((selectedCategory, index) => {
-                return (
-                  <Chip
-                    className={style.chip}
-                    key={index}
-                    color="info"
-                    variant="outlined"
-                    label={selectedCategory}
-                    cursor="pointer"
-                    onDelete={() => handleSelectCategory(selectedCategory)}
-                  />
-                );
-              })}
-            </div>
+          </div>
+          <div className={style.selectedCategoriesChip}>
+            {selectedCategory?.map((selectedCategory, index) => {
+              return (
+                <Chip
+                  key={index}
+                  color="info"
+                  variant="filled"
+                  label={selectedCategory}
+                  cursor="pointer"
+                  onDelete={() => handleSelectCategory(selectedCategory)}
+                />
+              );
+            })}
           </div>
         </div>
+
         <div className={style.content}>
           <div className={style.blogs}>
             {blogs?.map((blog) => {
               return <Blog key={blog._id} blog={blog} />;
             })}
           </div>
-          <div className={style.loadMore}>
-            <button
-              disabled={countAllBlogs <= limit}
-              className={style.loadMoreButton}
-              onClick={() => {
-                setLimit(limit + 5);
-              }}
-            >
-              Load more...
-            </button>
-          </div>
+        </div>
+        <div className={style.loadMore}>
+          <button
+            disabled={countAllBlogs <= limit}
+            className={style.loadMoreButton}
+            onClick={() => {
+              setLimit(limit + 5);
+            }}
+          >
+            Load more...
+          </button>
         </div>
       </div>
     </div>

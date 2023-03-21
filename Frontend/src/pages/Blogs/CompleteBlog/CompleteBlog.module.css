@@ -1,10 +1,18 @@
-/* Style for desktop screens */
 .completeBlog {
   display: flex;
   flex-direction: column;
   align-items: center;
-  max-width: 800px;
+  max-width: 90%;
   margin: 0 auto;
+  font-family: "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+    "Helvetica Neue", sans-serif;
+}
+
+img {
+  width: 70%;
+  height: 60%;
+  object-fit: cover;
+  border-radius: 5px;
 }
 
 .title {
@@ -12,17 +20,20 @@
   font-weight: bold;
   text-align: center;
   margin: 2rem 0;
+  color: #ffffff;
 }
 
 .time {
   font-size: 1.2rem;
   margin-bottom: 2rem;
+  color: #c0c0c0;
 }
 
 .description {
-  font-size: 1.6rem;
-  line-height: 2.4rem;
+  font-size: 1rem;
+  line-height: 2rem;
   margin-bottom: 2rem;
+  color: #f0f0f0;
 }
 
 .categories {
@@ -32,15 +43,16 @@
   margin-bottom: 2rem;
 }
 
-.category {
-  background-color: #eee;
-  padding: 0.5rem 1rem;
-  margin-right: 1rem;
-  margin-bottom: 1rem;
-  border-radius: 5px;
+button {
+  background-color: #06070a;
+  color: #f0f0f0;
+  border: none;
+  border-radius: 20px;
+  padding: 0.5rem;
+  margin-right: 0.2rem;
 }
 
-/* Style for tablet screens */
+/* Responsive (Incomplete) */
 @media (max-width: 768px) {
   .completeBlog {
     max-width: 90%;
@@ -56,7 +68,7 @@
   }
 }
 
-/* Style for mobile screens */
+/* Mobile */
 @media (max-width: 480px) {
   .title {
     font-size: 1.8rem;

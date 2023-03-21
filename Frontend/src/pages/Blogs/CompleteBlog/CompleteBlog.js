@@ -23,14 +23,16 @@ const CompleteBlog = () => {
     <div className={style.completeBlog}>
       <img src={imgUrl} alt="Not Found!" />
       <div className={style.title}>{title}</div>
-      <div className={style.time}>{dateFormatter(createdAt)}</div>
+      <div className={style.time}>
+        Published On : {dateFormatter(createdAt)}
+      </div>
       <div className={style.description}>{parse(`${content}`)}</div>
       <div className={style.categories}>
         {categories?.map((category, index) => {
           return (
-            <div key={index} className={style.category}>
+            <button key={index} className={style.category}>
               {category}
-            </div>
+            </button>
           );
         })}
       </div>
