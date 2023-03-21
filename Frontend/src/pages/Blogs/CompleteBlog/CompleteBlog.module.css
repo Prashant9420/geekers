@@ -1,8 +1,80 @@
+/* Style for desktop screens */
 .completeBlog {
   display: flex;
   flex-direction: column;
   align-items: center;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  text-align: center;
+  margin: 2rem 0;
+}
+
+.time {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+.description {
+  font-size: 1.6rem;
+  line-height: 2.4rem;
+  margin-bottom: 2rem;
+}
+
+.categories {
+  display: flex;
+  flex-wrap: wrap;
   justify-content: center;
-  width: 100%;
-  height: 100vh;
+  margin-bottom: 2rem;
+}
+
+.category {
+  background-color: #eee;
+  padding: 0.5rem 1rem;
+  margin-right: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 5px;
+}
+
+/* Style for tablet screens */
+@media (max-width: 768px) {
+  .completeBlog {
+    max-width: 90%;
+  }
+
+  .title {
+    font-size: 2rem;
+  }
+
+  .description {
+    font-size: 1.4rem;
+    line-height: 2rem;
+  }
+}
+
+/* Style for mobile screens */
+@media (max-width: 480px) {
+  .title {
+    font-size: 1.8rem;
+  }
+
+  .time {
+    font-size: 1rem;
+  }
+
+  .description {
+    font-size: 1.2rem;
+    line-height: 1.8rem;
+  }
+
+  .category {
+    font-size: 0.8rem;
+    padding: 0.3rem 0.8rem;
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
 }

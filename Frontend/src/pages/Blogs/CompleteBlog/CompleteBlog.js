@@ -21,7 +21,6 @@ const CompleteBlog = () => {
   const { title, content, imgUrl, createdAt, categories } = blog;
   return (
     <div className={style.completeBlog}>
-      {" "}
       <img src={imgUrl} alt="Not Found!" />
       <div className={style.title}>{title}</div>
       <div className={style.time}>{dateFormatter(createdAt)}</div>
