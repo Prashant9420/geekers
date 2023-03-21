@@ -86,6 +86,44 @@ const Blogs = () => {
               Write a Blog
             </Button>
           </div>
+          <div className={style.allCategories}>
+            <div className={style.categories}>
+              <h3>Tags</h3>
+              {allCategories?.map((category, index) => {
+                return (
+                  <Chip
+                    className={style.chip}
+                    key={index}
+                    color="info"
+                    variant={
+                      selectedCategory.includes(category.categoryName)
+                        ? "filled"
+                        : "outlined"
+                    }
+                    label={category.categoryName}
+                    cursor="pointer"
+                    onClick={() => handleSelectCategory(category.categoryName)}
+                  />
+                );
+              })}
+            </div>
+            <div className={style.selectedCategories}>
+              <h4>Selected Categories</h4>
+              {selectedCategory?.map((selectedCategory, index) => {
+                return (
+                  <Chip
+                    className={style.chip}
+                    key={index}
+                    color="info"
+                    variant="outlined"
+                    label={selectedCategory}
+                    cursor="pointer"
+                    onDelete={() => handleSelectCategory(selectedCategory)}
+                  />
+                );
+              })}
+            </div>
+          </div>
         </div>
         <div className={style.content}>
           <div className={style.left}>
@@ -104,46 +142,6 @@ const Blogs = () => {
               >
                 Load more...
               </button>
-            </div>
-          </div>
-          <div className={style.right}>
-            <div className={style.allCategories}>
-              <h3>Categories</h3>
-              <div className={style.categories}>
-                {allCategories?.map((category, index) => {
-                  return (
-                    <Chip
-                      key={index}
-                      color="info"
-                      variant={
-                        selectedCategory.includes(category.categoryName)
-                          ? "filled"
-                          : "outlined"
-                      }
-                      label={category.categoryName}
-                      cursor="pointer"
-                      onClick={() =>
-                        handleSelectCategory(category.categoryName)
-                      }
-                    />
-                  );
-                })}
-              </div>
-            </div>
-            <div className={style.selectedCategories}>
-              <h3>Selected Categories</h3>
-              {selectedCategory?.map((selectedCategory, index) => {
-                return (
-                  <Chip
-                    key={index}
-                    color="info"
-                    variant="outlined"
-                    label={selectedCategory}
-                    cursor="pointer"
-                    onDelete={() => handleSelectCategory(selectedCategory)}
-                  />
-                );
-              })}
             </div>
           </div>
         </div>
