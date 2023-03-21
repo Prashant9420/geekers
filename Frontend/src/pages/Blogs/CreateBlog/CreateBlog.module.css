@@ -12,6 +12,7 @@
 }
 
 .title {
+  margin-top: 2.5rem;
   height: 2.5rem;
   font-size: xx-large;
   outline: none;
@@ -33,6 +34,7 @@
 }
 
 .imageURL {
+  width: 100%;
   border: none;
   outline: none;
   font-size: medium;
@@ -50,9 +52,9 @@
   gap: 1rem;
 }
 
-/* .chip {
-  background-color: white;
-} */
+.chip {
+  display: flex;
+}
 
 .category {
   outline: none;

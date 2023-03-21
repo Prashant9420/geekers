@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import style from "./Header.module.css";
-import SearchIcon from "@mui/icons-material/Search";
-import Input from "@mui/material/Input";
-import InputAdornment from "@mui/material/InputAdornment";
+// import SearchIcon from "@mui/icons-material/Search";
+// import Input from "@mui/material/Input";
+// import InputAdornment from "@mui/material/InputAdornment";
 import { useNavigate } from "react-router-dom";
 import LightModeIcon from "@mui/icons-material/LightMode";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import HomeIcon from "@mui/icons-material/Home";
-import logo from "./logo2.jpg";
+// import logo from "./logo.jpg";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -35,7 +35,7 @@ const Header = () => {
         <div className={style.topLeft}>
           <div className={style.logo}>
             <h3>Geekers</h3>
-            <img src={logo} alt="" />
+            {/* <img src={logo} alt="Not Found" /> */}
           </div>
           <HomeIcon
             cursor="pointer"
@@ -63,7 +63,7 @@ const Header = () => {
               <DarkModeIcon fontSize="small" onClick={handleMode} />
             )}
           </div>
-          <div className={style.searchBar}>
+          {/* <div className={style.searchBar}>
             <Input
               type="text"
               placeholder="Search..."
@@ -73,7 +73,7 @@ const Header = () => {
                 </InputAdornment>
               }
             />
-          </div>
+          </div> */}
           <div className={style.buttons}>
             <button onClick={handleSignIn} className={style.button}>
               SignIn

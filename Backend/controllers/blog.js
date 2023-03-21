@@ -88,8 +88,20 @@ export const getRecentBlogs = async (req, res, next) => {
 
 export const getAllCategories = async (req, res, next) => {
   try {
-    const categories = await Blog.find().distinct("category");
+    const categories = await BlogCategories.find().select("categoryName -_id");
     res.status(200).json({ categories });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const searchByCategories = async (req, res, next) => {
+  try {
+    const { categories } = req.body;
+    const blogs = await Blog.find({
+      categories: { $in: categories },
+    });
+    res.status(200).json({ blogs });
   } catch (error) {
     next(error);
   }

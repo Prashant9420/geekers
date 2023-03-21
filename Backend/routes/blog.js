@@ -7,6 +7,7 @@ import {
   getRecentBlogs,
   countAllBlogs,
   getAllCategories,
+  searchByCategories,
 } from "../controllers/blog.js";
 
 const router = express.Router();
@@ -19,6 +20,8 @@ router.get("/countAllBlogs", countAllBlogs);
 router.get("/recentBlogs", getRecentBlogs);
 // GET ALL CATEGORIES
 router.get("/getAllCategories", getAllCategories);
+// SEARCH BY CATEGORIES
+router.post("/searchByCategories", searchByCategories);
 //UPDATE
 router.put("/:id", updateBlog);
 //DELETE

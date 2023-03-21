@@ -1,6 +1,7 @@
 .blog {
+  width: 80%;
+  height: 20rem;
   display: flex;
-  width: 45%;
   align-items: center;
   color: #ffffff;
   border: 2px solid white;
@@ -9,9 +10,12 @@
   margin-bottom: 2rem;
   cursor: pointer;
   padding-block: 0.2rem;
+  transition: transform 0.2s ease-in-out;
 }
 .blog:hover {
   background-color: #1d2331;
+  color: blue;
+  transform: scale(1.03);
 }
 .contributor {
   display: flex;

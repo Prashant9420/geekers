@@ -20,18 +20,10 @@
 .topLeft {
   display: flex;
   align-items: center;
+  margin-left: 1.5rem;
   flex: 3;
   height: 3rem;
   justify-content: space-between;
-  /* border: 2px solid white; */
-}
-
-.topRight {
-  flex: 3;
-  display: flex;
-  align-items: center;
-  gap: 3rem;
-  height: 3rem;
 }
 
 .topCenter {
@@ -40,23 +32,26 @@
 .topCenter ul {
   display: flex;
   list-style: none;
-  gap: 2rem;
+  gap: 1.5rem;
 }
-
-.topRight .searchBar {
+.topCenter ul li {
   display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
+  width: 6rem;
+}
+.topCenter ul li:hover {
+  box-shadow: 0px 0px 10px 3.5px white;
 }
 
-.topRight .searchBar input {
-  width: 7rem;
-  color: white;
+.topRight {
+  margin-right: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  height: 3rem;
 }
-
-.searchIcon {
-  color: white;
-}
-
 .topRight .button {
   height: 2rem;
   width: 5rem;

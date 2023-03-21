@@ -111,6 +111,7 @@ const CreateBlog = () => {
         <div className={style.tag}>
           <div className={style.category}>
             <TextField
+              required
               outline="none"
               border="none"
               label="Enter a category"

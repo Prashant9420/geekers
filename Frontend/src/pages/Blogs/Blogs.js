@@ -6,6 +6,7 @@ import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import SERVER_URL from "../../utils/ServerURL";
+import Chip from "@mui/material/Chip";
 
 const Blogs = () => {
   const navigate = useNavigate();
@@ -13,11 +14,19 @@ const Blogs = () => {
   const [blogs, setBlogs] = useState([]);
   const [limit, setLimit] = useState(6);
   const [countAllBlogs, setCountAllBlogs] = useState(0);
+  const [allCategories, setAllCategories] = useState([]);
+  const [selectedCategoryNames, setSelectedCategoryNames] = useState([]);
+  const [selectedCategoryStates, setSelectedCategoryStates] = useState([]);
 
   const getBlogs = async () => {
     const res = await fetch(`${SERVER_URL}/blog/recentBlogs?limit=${limit}`);
     const data = await res.json();
     setBlogs(data.blogs);
+  };
+  const getAllCategories = async () => {
+    const res = await fetch(`${SERVER_URL}/blog/getAllCategories`);
+    const data = await res.json();
+    setAllCategories(data.categories);
   };
   const getCountAllBlogs = async () => {
     const res = await fetch(`${SERVER_URL}/blog/countAllBlogs`);
@@ -25,9 +34,28 @@ const Blogs = () => {
     setCountAllBlogs(data.count);
   };
 
+  const handleSelectCategory = (e) => {
+    const categoryName = e.target.innerText;
+    const index = selectedCategoryNames.indexOf(categoryName);
+    if (index === -1) {
+      setSelectedCategoryNames([...selectedCategoryNames, categoryName]);
+      setSelectedCategoryStates([...selectedCategoryStates, true]);
+    } else {
+      const newSelectedCategoryNames = [...selectedCategoryNames];
+      const newSelectedCategoryStates = [...selectedCategoryStates];
+      newSelectedCategoryNames.splice(index, 1);
+      newSelectedCategoryStates.splice(index, 1);
+      setSelectedCategoryNames(newSelectedCategoryNames);
+      setSelectedCategoryStates(newSelectedCategoryStates);
+    }
+    console.log(selectedCategoryNames);
+    console.log(selectedCategoryStates);
+  };
+
   useEffect(() => {
     getCountAllBlogs();
     getBlogs();
+    getAllCategories();
   }, [limit]);
 
   return (
@@ -46,34 +74,44 @@ const Blogs = () => {
               Write a Blog
             </Button>
           </div>
-          {/* <div className={style.recentBlogs}>
-            <h2>Recent Blogs</h2>
-
-            {blogs?.map((blog, index) => {
-              return (
-                <Link key={index} to={`/blog/${blog._id}`}>
-                  {blog.title}
-                </Link>
-              );
-            })}
-          </div> */}
         </div>
-      </div>
-      <div className={style.blogs}>
-        {blogs?.map((blog) => {
-          return <Blog key={blog._id} blog={blog} />;
-        })}
-      </div>
-      <div className={style.loadMore}>
-        <button
-          disabled={countAllBlogs <= limit}
-          className={style.loadMoreButton}
-          onClick={() => {
-            setLimit(limit + 5);
-          }}
-        >
-          Load more...
-        </button>
+        <div className={style.content}>
+          <div className={style.left}>
+            <div className={style.blogs}>
+              {blogs?.map((blog) => {
+                return <Blog key={blog._id} blog={blog} />;
+              })}
+            </div>
+            <div className={style.loadMore}>
+              <button
+                disabled={countAllBlogs <= limit}
+                className={style.loadMoreButton}
+                onClick={() => {
+                  setLimit(limit + 5);
+                }}
+              >
+                Load more...
+              </button>
+            </div>
+          </div>
+          <div className={style.right}>
+            <h3>Categories</h3>
+            <div className={style.categories}>
+              {allCategories?.map((category, index) => {
+                return (
+                  <Chip
+                    key={index}
+                    color="info"
+                    variant="outlined"
+                    label={category.categoryName}
+                    cursor="pointer"
+                    onClick={handleSelectCategory}
+                  />
+                );
+              })}
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

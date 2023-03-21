@@ -33,7 +33,7 @@ const Blog = ({ blog }) => {
           Published on : {dateFormatter(createdAt)}
         </h5>
         <div className={style.description}>
-          {read.slice(0, 50)}
+          {read.slice(0, 180)}
           <Link to={`/blog/${_id}`}>...Read More</Link>
         </div>
         <div className={style.categories}>
