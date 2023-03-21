@@ -32,58 +32,43 @@ const Blogs = () => {
     const data = await res.json();
     setCountAllBlogs(data.count);
   };
-
-  // const toggleSelectedCategoryState = (categoryName) => {
-  //   const index = selectedCategoryNames.indexOf(categoryName);
-  //   const newSelectedCategoryStates = [...selectedCategoryStates];
-  //   newSelectedCategoryStates[index] = !newSelectedCategoryStates[index];
-  //   setSelectedCategoryStates(newSelectedCategoryStates);
-  // };
-
-  const handleSelectCategory = (categoryName) => {
-    if (selectedCategory.includes(categoryName)) {
-      setSelectedCategory([
-        ...selectedCategory,
-        { categoryName, selected: false },
-      ]);
-    } else {
-      setSelectedCategory([
-        ...selectedCategory,
-        { categoryName, selected: true },
-      ]);
-      console.log(selectedCategory);
+  const searchByCategory = async () => {
+    try {
+      const result = await fetch(`${SERVER_URL}/blog/searchByCategories`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          categories: selectedCategory,
+        }),
+      });
+      const data = await result.json();
+      setBlogs(data.blogs);
+    } catch (error) {
+      console.log(error);
     }
-
-    // const categoryName = e.target.innerText;
-    // const index = selectedCategoryNames.indexOf(categoryName);
-    // if (index === -1) {
-    //   setSelectedCategoryNames([...selectedCategoryNames, categoryName]);
-    //   setSelectedCategoryStates([...selectedCategoryStates, true]);
-    // } else {
-    //   toggleSelectedCategoryState(categoryName);
-    // }
-    // console.log(selectedCategoryNames);
-    // console.log(selectedCategoryStates);
   };
-
-  // const handleDeleteSelectedCategory = (index) => {
-  //   const newSelectedCategoryNames = selectedCategoryNames.filter(
-  //     (selectedCategoryNames, i) => i !== index
-  //   );
-  //   const newSelectedCategoryStates = selectedCategoryStates.filter(
-  //     (selectedCategoryStates, i) => i !== index
-  //   );
-  //   setSelectedCategoryNames(newSelectedCategoryNames);
-  //   setSelectedCategoryStates(newSelectedCategoryStates);
-  // };
-  // console.log(selectedCategoryNames);
-  // console.log(selectedCategoryStates);
+  const handleSelectCategory = async (categoryName) => {
+    if (!selectedCategory.includes(categoryName)) {
+      setSelectedCategory(() => [...selectedCategory, categoryName]);
+    } else {
+      const newArray = selectedCategory.filter(
+        (category) => category !== categoryName
+      );
+      setSelectedCategory(() => [...newArray]);
+    }
+    searchByCategory();
+  };
 
   useEffect(() => {
     getCountAllBlogs();
     getBlogs();
     getAllCategories();
   }, [limit]);
+  useEffect(() => {
+    selectedCategory.length === 0 ? getBlogs() : searchByCategory();
+  }, [selectedCategory]);
 
   return (
     <div>
@@ -130,7 +115,11 @@ const Blogs = () => {
                     <Chip
                       key={index}
                       color="info"
-                      variant="outlined"
+                      variant={
+                        selectedCategory.includes(category.categoryName)
+                          ? "filled"
+                          : "outlined"
+                      }
                       label={category.categoryName}
                       cursor="pointer"
                       onClick={() =>
@@ -143,7 +132,7 @@ const Blogs = () => {
             </div>
             <div className={style.selectedCategories}>
               <h3>Selected Categories</h3>
-              {/* {selectedCategory?.map((selectedCategory, index) => {
+              {selectedCategory?.map((selectedCategory, index) => {
                 return (
                   <Chip
                     key={index}
@@ -151,10 +140,10 @@ const Blogs = () => {
                     variant="outlined"
                     label={selectedCategory}
                     cursor="pointer"
-                    // onDelete={() => handleDeleteSelectedCategory(index)}
+                    onDelete={() => handleSelectCategory(selectedCategory)}
                   />
                 );
-              })} */}
+              })}
             </div>
           </div>
         </div>
