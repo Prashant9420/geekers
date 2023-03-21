@@ -34,14 +34,3 @@
   flex: 3;
   border: 2px solid #e5e5e5;
 }
-
-.categories {
-  margin-inline: 1rem;
-  width: 21rem;
-  height: 21rem;
-  /* border: 2px solid #e5e5e5; */
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-column-gap: 0.7rem;
-  grid-row-gap: 0.1rem;
-}

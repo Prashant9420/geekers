@@ -15,8 +15,7 @@ const Blogs = () => {
   const [limit, setLimit] = useState(6);
   const [countAllBlogs, setCountAllBlogs] = useState(0);
   const [allCategories, setAllCategories] = useState([]);
-  const [selectedCategoryNames, setSelectedCategoryNames] = useState([]);
-  const [selectedCategoryStates, setSelectedCategoryStates] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState([]);
 
   const getBlogs = async () => {
     const res = await fetch(`${SERVER_URL}/blog/recentBlogs?limit=${limit}`);
@@ -34,25 +33,51 @@ const Blogs = () => {
     setCountAllBlogs(data.count);
   };
 
-  const toggleSelectedCategoryState = (categoryName) => {
-    const index = selectedCategoryNames.indexOf(categoryName);
-    const newSelectedCategoryStates = [...selectedCategoryStates];
-    newSelectedCategoryStates[index] = !newSelectedCategoryStates[index];
-    setSelectedCategoryStates(newSelectedCategoryStates);
+  // const toggleSelectedCategoryState = (categoryName) => {
+  //   const index = selectedCategoryNames.indexOf(categoryName);
+  //   const newSelectedCategoryStates = [...selectedCategoryStates];
+  //   newSelectedCategoryStates[index] = !newSelectedCategoryStates[index];
+  //   setSelectedCategoryStates(newSelectedCategoryStates);
+  // };
+
+  const handleSelectCategory = (categoryName) => {
+    if (selectedCategory.includes(categoryName)) {
+      setSelectedCategory([
+        ...selectedCategory,
+        { categoryName, selected: false },
+      ]);
+    } else {
+      setSelectedCategory([
+        ...selectedCategory,
+        { categoryName, selected: true },
+      ]);
+      console.log(selectedCategory);
+    }
+
+    // const categoryName = e.target.innerText;
+    // const index = selectedCategoryNames.indexOf(categoryName);
+    // if (index === -1) {
+    //   setSelectedCategoryNames([...selectedCategoryNames, categoryName]);
+    //   setSelectedCategoryStates([...selectedCategoryStates, true]);
+    // } else {
+    //   toggleSelectedCategoryState(categoryName);
+    // }
+    // console.log(selectedCategoryNames);
+    // console.log(selectedCategoryStates);
   };
 
-  const handleSelectCategory = (e) => {
-    const categoryName = e.target.innerText;
-    const index = selectedCategoryNames.indexOf(categoryName);
-    if (index === -1) {
-      setSelectedCategoryNames([...selectedCategoryNames, categoryName]);
-      setSelectedCategoryStates([...selectedCategoryStates, true]);
-    } else {
-      toggleSelectedCategoryState(categoryName);
-    }
-    console.log(selectedCategoryNames);
-    console.log(selectedCategoryStates);
-  };
+  // const handleDeleteSelectedCategory = (index) => {
+  //   const newSelectedCategoryNames = selectedCategoryNames.filter(
+  //     (selectedCategoryNames, i) => i !== index
+  //   );
+  //   const newSelectedCategoryStates = selectedCategoryStates.filter(
+  //     (selectedCategoryStates, i) => i !== index
+  //   );
+  //   setSelectedCategoryNames(newSelectedCategoryNames);
+  //   setSelectedCategoryStates(newSelectedCategoryStates);
+  // };
+  // console.log(selectedCategoryNames);
+  // console.log(selectedCategoryStates);
 
   useEffect(() => {
     getCountAllBlogs();
@@ -108,7 +133,9 @@ const Blogs = () => {
                       variant="outlined"
                       label={category.categoryName}
                       cursor="pointer"
-                      onClick={handleSelectCategory}
+                      onClick={() =>
+                        handleSelectCategory(category.categoryName)
+                      }
                     />
                   );
                 })}
@@ -116,18 +143,18 @@ const Blogs = () => {
             </div>
             <div className={style.selectedCategories}>
               <h3>Selected Categories</h3>
-              {selectedCategoryNames?.map((categoryName, index) => {
+              {/* {selectedCategory?.map((selectedCategory, index) => {
                 return (
                   <Chip
                     key={index}
                     color="info"
                     variant="outlined"
-                    label={categoryName}
+                    label={selectedCategory}
                     cursor="pointer"
-                    onClick={handleSelectCategory}
+                    // onDelete={() => handleDeleteSelectedCategory(index)}
                   />
                 );
-              })}
+              })} */}
             </div>
           </div>
         </div>
