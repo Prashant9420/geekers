@@ -60,3 +60,73 @@ button {
   padding: 0.5rem;
   margin-right: 0.2rem;
 }
+
+/* Responsive  */
+
+@media (max-width: 768px) {
+  .blog {
+    width: 90vw;
+    height: 15rem;
+    margin: 0 auto;
+  }
+  .left {
+    padding-left: 0.5rem;
+  }
+  .right {
+    padding-right: 0.5rem;
+  }
+  .right img {
+    width: 8rem;
+    height: 6rem;
+  }
+  .title {
+    font-size: 1.2rem;
+  }
+  .time {
+    font-size: 0.8rem;
+  }
+  .description {
+    font-size: 0.8rem;
+  }
+  .category {
+    font-size: 0.8rem;
+  }
+  button {
+    padding: 0.3rem;
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .blog {
+    width: 92vw;
+    height: 12rem;
+    margin: 0 auto;
+  }
+  .left {
+    padding-left: 0.5rem;
+  }
+  .right {
+    padding-right: 0.5rem;
+  }
+  .right img {
+    width: 8rem;
+    height: 6rem;
+  }
+  .title {
+    font-size: 1rem;
+  }
+  .time {
+    font-size: 0.6rem;
+  }
+  .description {
+    font-size: 0.6rem;
+  }
+  .category {
+    font-size: 0.6rem;
+  }
+  button {
+    padding: 0.3rem;
+    font-size: 0.8rem;
+  }
+}
