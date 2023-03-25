@@ -4,17 +4,12 @@ import EmailIcon from "@mui/icons-material/Email";
 import LockIcon from "@mui/icons-material/Lock";
 import { InputAdornment } from "@mui/material";
 import Header from "../../components/Header/Header";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const SignIn = () => {
-
   const navigate = useNavigate();
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
-
-  const handleSignIn = () => {
-    navigate(`/${"signup"}`);
-  };
 
   const handleChangeName = (e) => {
     setName(e.target.value);
@@ -73,9 +68,7 @@ const SignIn = () => {
             Login
           </button>
           <a href="/forgotPasssword">Forgot Password</a>
-          <p>
-            New User <button onClick={handleSignIn}>Sign Up</button>
-          </p>
+          <Link to={"/signUp"}> Don't have an account? Sign Up </Link>
         </form>
       </div>
     </>

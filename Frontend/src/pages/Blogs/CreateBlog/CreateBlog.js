@@ -41,35 +41,32 @@ const CreateBlog = () => {
     setCategories(categories.filter((category, i) => i !== index));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = async () => {
-      try {
-        const result = await fetch(`${ServerURL}/blog/`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            title,
-            content,
-            imgUrl,
-            categories,
-          }),
-        });
-        if (result.status === 200) {
-          setTitle("");
-          setContent("");
-          setimgUrl("");
-          setCategories([]);
-          alert("Blog Created Successfully");
-          navigate("/blogs");
-        }
-      } catch (err) {
-        console.log(err);
+    try {
+      const result = await fetch(`${ServerURL}/blog/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title,
+          content,
+          imgUrl,
+          categories,
+        }),
+      });
+      if (result.status === 200) {
+        setTitle("");
+        setContent("");
+        setimgUrl("");
+        setCategories([]);
+        alert("Blog Created Successfully");
+        navigate("/blogs");
       }
-    };
-    response();
+    } catch (err) {
+      console.log(err);
+    }
   };
   return (
     <div>
@@ -149,13 +146,7 @@ const CreateBlog = () => {
           })}
         </div>
         <div className={style.publish}>
-          <button
-            className={style.button}
-            // color="danger"
-            // variant="contained"
-            // component="label"
-            onClick={handleSubmit}
-          >
+          <button className={style.button} onClick={handleSubmit}>
             Publish
           </button>
         </div>

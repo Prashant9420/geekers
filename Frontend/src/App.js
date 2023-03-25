@@ -35,8 +35,8 @@ function App() {
             <Route exact path="/compiler" element={<Compiler />} />
             <Route exact path="/events" element={<Events />} />
             <Route exact path="*" element={<PageNotFound />} />
-            <Route exact path="/signin" element={<SignIn />} />
-            <Route exact path="/signup" element={<SignUp />} />
+            <Route exact path="/signIn" element={<SignIn />} />
+            <Route exact path="/signUp" element={<SignUp />} />
             <Route exact path="/blog/:id" element={<CompleteBlog />} />
           </Routes>
         </Router>

@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import blogRoutes from "./routes/blog.js";
+import userRoutes from "./routes/user.js";
 import cors from "cors";
 import morgan from "morgan";
 const app = express();
@@ -28,6 +29,7 @@ app.use(cors());
 
 //all urls
 app.use("/api/blog", blogRoutes);
+app.use("/api/user", userRoutes);
 
 //global error handling
 app.use((err, req, res, next) => {

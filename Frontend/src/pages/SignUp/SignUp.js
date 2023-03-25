@@ -3,97 +3,102 @@ import style from "./SignUp.module.css";
 import EmailIcon from "@mui/icons-material/Email";
 import LockIcon from "@mui/icons-material/Lock";
 import { InputAdornment } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import ServerURL from "../../utils/ServerURL";
 
 const SignUp = () => {
-
   const navigate = useNavigate();
-  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
-  const handleChangeName = (e) => {
-    setName(e.target.value);
-  };
-
-  const handleSignUp =() =>{
-    navigate(`${"/signin"}`);
-  }
-  const handleChangePassword = (e) => {
-    setPassword(e.target.value);
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("submit");
-    console.log(name);
-    console.log(password);
+    try {
+      const result = await fetch(`${ServerURL}/user/register`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          username,
+          email,
+          password,
+        }),
+      });
+      const data = await result.json();
+      console.log(data);
+      if (result.status === 200) {
+        setUsername("");
+        setEmail("");
+        setPassword("");
+        alert("User Created Successfully");
+        navigate("/");
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
+
   return (
     <div className={style.container}>
       <form className={style.form} onSubmit={handleSubmit}>
         <h1 className={style.title}>SignUp</h1>
-        <label htmlFor="email">Email</label>
+        <label htmlFor="userName">Username</label>
         <input
-          type="email"
-          name="email"
-          id="email"
-          placeholder="Enter your email"
+          type="text"
+          name="text"
+          id="userName"
+          value={username}
+          placeholder="Enter your username"
           required
-          onChange={handleChangeName}
+          onChange={(e) => setUsername(e.target.value)}
           startAdornment={
             <InputAdornment position="start">
               <EmailIcon />
             </InputAdornment>
           }
         />
+        <label htmlFor="email">Email</label>
+        <input
+          type="email"
+          name="email"
+          id="email"
+          value={email}
+          placeholder="Enter your email"
+          required
+          onChange={(e) => setEmail(e.target.value)}
+        />
         <label htmlFor="password">Password</label>
         <input
           type="password"
           name="password"
           id="password"
+          value={password}
           placeholder="Enter your password"
           required
-          onChange={handleChangePassword}
-          startAdornment={
-            <InputAdornment position="start">
-              <LockIcon />
-            </InputAdornment>
-          }
-          endAdornment={
-            <InputAdornment position="end">
-              <LockIcon />
-            </InputAdornment>
-          }
+          onChange={(e) => {
+            setPassword(e.target.value);
+          }}
         />
-         <label htmlFor="confirmPassword">Confirm Password</label>
+        <label htmlFor="confirmPassword">Confirm Password</label>
         <input
           type="password"
           name="confirmPassword"
           id="confirmPassword"
+          value={confirmPassword}
           placeholder="Re-Enter your password"
           required
-          onChange={handleChangePassword}
-          startAdornment={
-            <InputAdornment position="start">
-              <LockIcon />
-            </InputAdornment>
-          }
-          endAdornment={
-            <InputAdornment position="end">
-              <LockIcon />
-            </InputAdornment>
-          }
+          onChange={(e) => setConfirmPassword(e.target.value)}
         />
         <button className={style.button} type="submit">
           Sign Up
         </button>
-        <p>
-          Already a User <button onClick={handleSignUp}>Sign In</button>
-        </p>
+        <Link to="/signIn" className={style.link}>
+          Already have an account? Sign In
+        </Link>
       </form>
     </div>
   );
 };
 
 export default SignUp;
-

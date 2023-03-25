@@ -12,7 +12,7 @@ import {
 
 const router = express.Router();
 
-//  CREATE
+//  CREATE BLOG
 router.post("/", createBlog);
 //COUTN ALL BLOGS
 router.get("/countAllBlogs", countAllBlogs);
