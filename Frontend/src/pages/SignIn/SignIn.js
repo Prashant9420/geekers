@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import style from "./SignIn.module.css";
 import EmailIcon from "@mui/icons-material/Email";
-import LockIcon from "@mui/icons-material/Lock";
 import { InputAdornment } from "@mui/material";
 import Header from "../../components/Header/Header";
 import { Link, useNavigate } from "react-router-dom";
+import ServerURL from "../../utils/ServerURL";
 
 const SignIn = () => {
   const navigate = useNavigate();
@@ -19,11 +19,28 @@ const SignIn = () => {
     setPassword(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("submit");
-    console.log(name);
-    console.log(password);
+    try {
+      const result = await fetch(`${ServerURL}/user/getAllUsers`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      });
+      const data = await result.json();
+      for (let i = 0; i < data.length; i++) {
+        const user = data[i];
+        if (user.email === name && user.password === password) {
+          alert("User Logged In Successfully");
+          navigate("/");
+          break;
+        }
+        if (i === data.length - 1) {
+          alert("Invalid Credentials");
+        }
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
   return (
     <>
@@ -39,11 +56,6 @@ const SignIn = () => {
             placeholder="Enter your email"
             required
             onChange={handleChangeName}
-            startAdornment={
-              <InputAdornment position="start">
-                <EmailIcon />
-              </InputAdornment>
-            }
           />
           <label htmlFor="password">Password</label>
           <input
@@ -53,16 +65,6 @@ const SignIn = () => {
             placeholder="Enter your password"
             required
             onChange={handleChangePassword}
-            startAdornment={
-              <InputAdornment position="start">
-                <LockIcon />
-              </InputAdornment>
-            }
-            endAdornment={
-              <InputAdornment position="end">
-                <LockIcon />
-              </InputAdornment>
-            }
           />
           <button className={style.button} type="submit">
             Login

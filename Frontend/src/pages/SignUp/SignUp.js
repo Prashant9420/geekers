@@ -34,6 +34,9 @@ const SignUp = () => {
         alert("User Created Successfully");
         navigate("/");
       }
+      if (result.status === 500) {
+        alert("User Already Exists");
+      }
     } catch (err) {
       console.log(err);
     }
