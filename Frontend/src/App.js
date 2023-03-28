@@ -13,6 +13,8 @@ import { createContext, useState } from "react";
 import CompleteBlog from "./pages/Blogs/CompleteBlog/CompleteBlog";
 import "./App.css";
 
+export const AuthContext = createContext(null);
+
 export const ThemeContext = createContext(null);
 
 function App() {
@@ -21,26 +23,30 @@ function App() {
   //   setMode(mode === "light" ? setMode("dark") : setMode("light"));
   // };
 
+  const [username, setUsername] = useState("");
+
   return (
     <ThemeContext.Provider value={{ mode, setMode }}>
-      <div id={mode}>
-        <Router>
-          <Routes>
-            <Route exact path="/" element={<Home />} />
-            <Route exact path="/home" element={<Home />} />
-            <Route exact path="/practice" element={<Practice />} />
-            <Route exact path="/contests" element={<Contests />} />
-            <Route exact path="/blogs" element={<Blogs />} />
-            <Route exact path="/blogs/createBlog" element={<CreateBlog />} />
-            <Route exact path="/compiler" element={<Compiler />} />
-            <Route exact path="/events" element={<Events />} />
-            <Route exact path="*" element={<PageNotFound />} />
-            <Route exact path="/signIn" element={<SignIn />} />
-            <Route exact path="/signUp" element={<SignUp />} />
-            <Route exact path="/blog/:id" element={<CompleteBlog />} />
-          </Routes>
-        </Router>
-      </div>
+      <AuthContext.Provider value={{ username, setUsername }}>
+        <div id={mode}>
+          <Router>
+            <Routes>
+              <Route exact path="/" element={<Home />} />
+              <Route exact path="/home" element={<Home />} />
+              <Route exact path="/practice" element={<Practice />} />
+              <Route exact path="/contests" element={<Contests />} />
+              <Route exact path="/blogs" element={<Blogs />} />
+              <Route exact path="/blogs/createBlog" element={<CreateBlog />} />
+              <Route exact path="/compiler" element={<Compiler />} />
+              <Route exact path="/events" element={<Events />} />
+              <Route exact path="*" element={<PageNotFound />} />
+              <Route exact path="/signIn" element={<SignIn />} />
+              <Route exact path="/signUp" element={<SignUp />} />
+              <Route exact path="/blog/:id" element={<CompleteBlog />} />
+            </Routes>
+          </Router>
+        </div>
+      </AuthContext.Provider>
     </ThemeContext.Provider>
   );
 }

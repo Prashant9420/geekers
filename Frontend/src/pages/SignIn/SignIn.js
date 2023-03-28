@@ -1,12 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import style from "./SignIn.module.css";
 import EmailIcon from "@mui/icons-material/Email";
 import { InputAdornment } from "@mui/material";
 import Header from "../../components/Header/Header";
 import { Link, useNavigate } from "react-router-dom";
 import ServerURL from "../../utils/ServerURL";
+import { AuthContext } from "../../App";
 
 const SignIn = () => {
+  const { username, setUsername } = useContext(AuthContext);
+
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -26,20 +29,10 @@ const SignIn = () => {
           password: password,
         }),
       });
-      console.log(
-        JSON.stringify({
-          email: email,
-          password: password,
-        })
-      );
-      console.log(result);
       if (result.status === 200) {
         const data = await result.json();
-        console.log(data);
-        console.log(result);
-
-        // document.cookie = `access_token=${result.data}; path=/;`;
-
+        setUsername(data.details.username);
+        window.localStorage.setItem("username", data.details.username);
         navigate("/");
       } else {
         alert("Invalid Credentials");

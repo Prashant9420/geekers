@@ -30,7 +30,8 @@ const Blog = ({ blog }) => {
           {/* User Image */}
           {/* <img src={imgUrl} alt="" /> */}
           {/* Add Contributor Name */}
-          {/* <div className={style.name}></div> */}
+          // Fetch username from backend
+          <div className={style.name}></div>
         </div>
 
         <div className={style.description}>{read.slice(0, 150)}...</div>

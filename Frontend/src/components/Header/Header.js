@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import style from "./Header.module.css";
 // import SearchIcon from "@mui/icons-material/Search";
 // import Input from "@mui/material/Input";
@@ -7,10 +7,13 @@ import { useNavigate } from "react-router-dom";
 import LightModeIcon from "@mui/icons-material/LightMode";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import HomeIcon from "@mui/icons-material/Home";
-// import logo from "./logo.jpg";
+import Avatar from "@mui/material/Avatar";
+import { AuthContext } from "../../App";
+import { deepOrange, deepPurple } from "@mui/material/colors";
 
 const Header = () => {
   const navigate = useNavigate();
+  const { username } = useContext(AuthContext);
   const links = ["Practice", "Contests", "Events", "Compiler", "Blogs"];
   const [mode, setMode] = useState(true);
   const [theme, setTheme] = useState("light");
@@ -27,6 +30,12 @@ const Header = () => {
 
   const handleSignIn = () => {
     navigate(`/${"signin"}`);
+  };
+
+  const handleLogout = () => {
+    window.localStorage.removeItem("username");
+    window.location.reload();
+    document.cookie = "access_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
   };
 
   return (
@@ -74,11 +83,27 @@ const Header = () => {
               }
             />
           </div> */}
-          <div className={style.buttons}>
-            <button onClick={handleSignIn} className={style.button}>
-              SignIn
-            </button>
-          </div>
+          {window.localStorage.getItem("username") ? (
+            <div className={style.avatar}>
+              <Avatar sx={{ bgcolor: deepPurple[500] }}>
+                {window.localStorage
+                  .getItem("username")
+                  .charAt(0)
+                  .toUpperCase()}
+              </Avatar>
+              <div className={style.buttons}>
+                <button onClick={handleLogout} className={style.button}>
+                  Logout
+                </button>
+              </div>
+            </div>
+          ) : (
+            <div className={style.buttons}>
+              <button onClick={handleSignIn} className={style.button}>
+                SignIn
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </>

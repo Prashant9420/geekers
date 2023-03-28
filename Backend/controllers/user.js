@@ -4,7 +4,6 @@ import jwt from "jsonwebtoken";
 import { createError } from "../utils/error.js";
 import { Strategy } from "passport-google-oauth20";
 import passport from "passport";
-import cookieParser from "cookie-parser";
 
 // export const connectPassport = () => {
 //   passport.use(
@@ -79,7 +78,7 @@ export const login = async (req, res, next) => {
     const { password, isAdmin, ...otherDetails } = user._doc;
     res.cookie("access_token", token, {
       expires: new Date(Date.now() + 86400000),
-      httpOnly: true,
+      httpOnly: false,
       sameSite: "none",
       secure: true,
     });
