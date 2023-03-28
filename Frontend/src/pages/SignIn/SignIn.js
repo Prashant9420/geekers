@@ -8,35 +8,41 @@ import ServerURL from "../../utils/ServerURL";
 
 const SignIn = () => {
   const navigate = useNavigate();
-  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  const handleChangeName = (e) => {
-    setName(e.target.value);
-  };
-
-  const handleChangePassword = (e) => {
-    setPassword(e.target.value);
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const result = await fetch(`${ServerURL}/user/getAllUsers`, {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
+      const result = await fetch(`${ServerURL}/user/login`, {
+        method: "POST",
+        credentials: "include",
+        withCredentials: true,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: email,
+          password: password,
+        }),
       });
-      const data = await result.json();
-      for (let i = 0; i < data.length; i++) {
-        const user = data[i];
-        if (user.email === name && user.password === password) {
-          alert("User Logged In Successfully");
-          navigate("/");
-          break;
-        }
-        if (i === data.length - 1) {
-          alert("Invalid Credentials");
-        }
+      console.log(
+        JSON.stringify({
+          email: email,
+          password: password,
+        })
+      );
+      console.log(result);
+      if (result.status === 200) {
+        const data = await result.json();
+        console.log(data);
+        console.log(result);
+
+        // document.cookie = `access_token=${result.data}; path=/;`;
+
+        navigate("/");
+      } else {
+        alert("Invalid Credentials");
       }
     } catch (err) {
       console.log(err);
@@ -55,7 +61,7 @@ const SignIn = () => {
             id="email"
             placeholder="Enter your email"
             required
-            onChange={handleChangeName}
+            onChange={(e) => setEmail(e.target.value)}
           />
           <label htmlFor="password">Password</label>
           <input
@@ -64,7 +70,7 @@ const SignIn = () => {
             id="password"
             placeholder="Enter your password"
             required
-            onChange={handleChangePassword}
+            onChange={(e) => setPassword(e.target.value)}
           />
           <button className={style.button} type="submit">
             Login

@@ -1,14 +1,22 @@
 import express from "express";
-import { createUser, getAllUsers } from "../controllers/user.js";
+import { login, registerUser } from "../controllers/user.js";
+import passport from "passport";
 
 const router = express.Router();
 
 // CREATE USER
 
-router.post("/register", createUser);
+router.post("/register", registerUser);
 
-// GET ALL USERS
+// LOGIN
 
-router.get("/getAllUsers", getAllUsers);
+router.post("/login", login);
+
+// GOOGLE LOGIN
+
+router.get(
+  "/googleLogin",
+  passport.authenticate("google", { scope: ["profile", "email"] })
+);
 
 export default router;

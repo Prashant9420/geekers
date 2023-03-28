@@ -23,10 +23,11 @@ const SignUp = () => {
           username,
           email,
           password,
+          confirmPassword,
         }),
       });
-      const data = await result.json();
-      console.log(data);
+      // const data = await result.json();
+      // console.log(data);
       if (result.status === 200) {
         setUsername("");
         setEmail("");
@@ -96,6 +97,7 @@ const SignUp = () => {
         <button className={style.button} type="submit">
           Sign Up
         </button>
+        <button className={style.button}>Sign In with Google</button>
         <Link to="/signIn" className={style.link}>
           Already have an account? Sign In
         </Link>

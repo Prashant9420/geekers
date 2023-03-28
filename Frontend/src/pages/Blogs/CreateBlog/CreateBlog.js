@@ -16,22 +16,6 @@ const CreateBlog = () => {
   const [content, setContent] = useState("");
   const [imgUrl, setimgUrl] = useState("");
 
-  const handleChangeimgUrl = (e) => {
-    setimgUrl(e.target.value);
-  };
-
-  const handleChangeTitle = (e) => {
-    setTitle(e.target.value);
-  };
-
-  const handleChangeContent = (value) => {
-    setContent(value);
-  };
-
-  const handleAddCategory = (e) => {
-    setCategory(e.target.value);
-  };
-
   const handleAddClick = () => {
     category !== "" && setCategories([...categories, category]);
     setCategory("");
@@ -41,11 +25,17 @@ const CreateBlog = () => {
     setCategories(categories.filter((category, i) => i !== index));
   };
 
+  const handleChangeContent = (value) => {
+    setContent(value);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const result = await fetch(`${ServerURL}/blog/`, {
         method: "POST",
+        credentials: "include",
+        withCredentials: true,
         headers: {
           "Content-Type": "application/json",
         },
@@ -77,7 +67,7 @@ const CreateBlog = () => {
           className={style.title}
           placeholder="Enter a title"
           value={title}
-          onChange={handleChangeTitle}
+          onChange={(e) => setTitle(e.target.value)}
         ></input>
 
         <ReactQuill
@@ -99,7 +89,7 @@ const CreateBlog = () => {
             className={style.imageURL}
             type="url"
             placeholder="Enter Image Url"
-            onChange={handleChangeimgUrl}
+            onChange={(e) => setimgUrl(e.target.value)}
             value={imgUrl}
             required
           ></input>
@@ -113,7 +103,7 @@ const CreateBlog = () => {
               border="none"
               label="Enter a category"
               value={category}
-              onChange={handleAddCategory}
+              onChange={(e) => setCategory(e.target.value)}
               onKeyPress={(e) => {
                 if (e.key === "Enter") {
                   handleAddClick();

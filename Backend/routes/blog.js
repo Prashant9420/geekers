@@ -9,11 +9,12 @@ import {
   getAllCategories,
   searchByCategories,
 } from "../controllers/blog.js";
+import { verifyUser } from "../utils/verifyToken.js";
 
 const router = express.Router();
 
 //  CREATE BLOG
-router.post("/", createBlog);
+router.post("/", verifyUser, createBlog);
 //COUTN ALL BLOGS
 router.get("/countAllBlogs", countAllBlogs);
 // GET RECENT BLOGS

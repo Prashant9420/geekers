@@ -16,6 +16,14 @@ const UserSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    profilePic: {
+      type: String,
+      default: "",
+    },
+    googleId: {
+      type: String,
+      unique: true,
+    },
   },
   {
     timestamps: true,
