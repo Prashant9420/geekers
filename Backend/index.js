@@ -33,7 +33,7 @@ app.use(morgan("dev"));
 
 app.use(
   cors({
-    origin: "http://localhost:3000, https://blog-app-frontend.vercel.app",
+    origin: ["http://localhost:3000", "https://geekers.vercel.app"],
     credentials: true,
     exposedHeaders: ["set-cookie"],
   })
