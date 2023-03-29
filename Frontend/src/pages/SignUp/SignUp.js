@@ -5,6 +5,7 @@ import LockIcon from "@mui/icons-material/Lock";
 import { InputAdornment } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import ServerURL from "../../utils/ServerURL";
+import { toast } from "react-toastify";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -33,9 +34,28 @@ const SignUp = () => {
         setEmail("");
         setPassword("");
         navigate("/signIn");
-        alert(
-          "User created successfully! Now Please Login to access your account"
-        );
+        toast("You are successfully registered!", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          type: "success",
+          theme: "colored",
+        });
+        toast("Please Login", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          type: "info",
+          theme: "colored",
+        });
       }
       if (result.status === 500) {
         alert("User Already Exists");

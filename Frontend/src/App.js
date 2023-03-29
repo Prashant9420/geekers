@@ -12,6 +12,8 @@ import SignUp from "./pages/SignUp/SignUp";
 import { createContext, useState } from "react";
 import CompleteBlog from "./pages/Blogs/CompleteBlog/CompleteBlog";
 import "./App.css";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const AuthContext = createContext(null);
 
@@ -29,6 +31,7 @@ function App() {
     <ThemeContext.Provider value={{ mode, setMode }}>
       <AuthContext.Provider value={{ username, setUsername }}>
         <div id={mode}>
+          <ToastContainer />
           <Router>
             <Routes>
               <Route exact path="/" element={<Home />} />

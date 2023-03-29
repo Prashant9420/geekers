@@ -6,6 +6,7 @@ import Header from "../../components/Header/Header";
 import { Link, useNavigate } from "react-router-dom";
 import ServerURL from "../../utils/ServerURL";
 import { AuthContext } from "../../App";
+import { toast } from "react-toastify";
 
 const SignIn = () => {
   const { username, setUsername } = useContext(AuthContext);
@@ -35,7 +36,17 @@ const SignIn = () => {
         window.localStorage.setItem("username", data.details.username);
         navigate("/");
       } else {
-        alert("Invalid Credentials");
+        toast("Invalid Credentials!", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          type: "error",
+          theme: "colored",
+        });
       }
     } catch (err) {
       console.log(err);
