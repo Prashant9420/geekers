@@ -1,4 +1,4 @@
-.header {
+/* .header {
   font-family: "serif";
   width: 100%vw;
   height: 5rem;
@@ -19,6 +19,7 @@
 }
 .mode {
   cursor: pointer;
+  margin-left: 1rem;
 }
 .pages {
   cursor: pointer;
@@ -76,7 +77,6 @@ img {
   display: flex;
 }
 
-/* Responsive */
 @media (max-width: 768px) {
   .topCenter ul {
     display: none;
@@ -147,4 +147,134 @@ img {
   .logo {
     display: none;
   }
+} */
+
+/* .appBar {
+  border: 2px solid rgb(234, 217, 217);
+}
+
+.header {
+  width: 100%vw;
+  height: 5rem;
+  position: sticky;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 2px solid rgb(234, 217, 217);
+}
+.menu {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 2px solid rgb(234, 217, 217);
+  flex: 1;
+}
+
+.logo {
+  border: 2px solid rgb(234, 217, 217);
+}
+.center {
+  border: 2px solid rgb(234, 217, 217);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex: 1;
+}
+.right {
+  display: flex;
+  height: 5rem;
+  display: flex;
+  width: 12rem;
+  align-items: center;
+  justify-content: space-between;
+  border: 2px solid rgb(234, 217, 217);
+}
+
+.user {
+  gap: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.avatar {
+  height: 3rem;
+  width: 3rem;
+  border-radius: 50%;
+  cursor: pointer;
+} */
+
+/* .appBar {
+  background-color: #222;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.center {
+  border: 2px solid rgb(234, 217, 217);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.center svg {
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.right {
+  border: 2px solid rgb(234, 217, 217);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.menu {
+  display: flex;
+  align-items: center;
+}
+
+.mode {
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.signIn {
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+}
+
+.user {
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+}
+
+.user .buttons button {
+  margin-left: 10px;
+}
+
+.avatar {
+  display: flex;
+  flex-direction: column;
+} */
+
+.user {
+  display: flex;
+  width: 7rem;
+  align-items: center;
+  justify-content: space-between;
+}
+.mode {
+}
+.right {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 10rem;
 }
