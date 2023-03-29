@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import style from "./Header.module.css";
 import { useNavigate } from "react-router-dom";
 import LightModeIcon from "@mui/icons-material/LightMode";
@@ -184,14 +184,26 @@ const Header = () => {
                         ?.charAt(0)
                         .toUpperCase()}
                     </Avatar>
-                    <Button onClick={handleLogout}>Logout</Button>
+                    <Button
+                      variant="outlined"
+                      color="secondary"
+                      onClick={handleLogout}
+                    >
+                      Logout
+                    </Button>
                   </div>
                 ) : (
                   <div className={style.user}>
                     <Avatar sx={{ bgcolor: deepOrange[500] }}>
                       <AccountCircleIcon />
                     </Avatar>
-                    <Button onClick={handleSignIn}>SignIn</Button>
+                    <Button
+                      variant="outlined"
+                      color="secondary"
+                      onClick={handleSignIn}
+                    >
+                      Login
+                    </Button>
                   </div>
                 )}
               </div>

@@ -1,11 +1,17 @@
 import React, { useState } from "react";
 import style from "./SignUp.module.css";
-import EmailIcon from "@mui/icons-material/Email";
-import LockIcon from "@mui/icons-material/Lock";
-import { InputAdornment } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import ServerURL from "../../utils/ServerURL";
 import { toast } from "react-toastify";
+import { Button } from "@mui/material";
+import TextField from "@mui/material/TextField";
+import InputAdornment from "@mui/material/InputAdornment";
+import FormControl from "@mui/material/FormControl";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import IconButton from "@mui/material/IconButton";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import InputLabel from "@mui/material/InputLabel";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -13,7 +19,18 @@ const SignUp = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+  const handleClickShowConfirmPassword = () =>
+    setShowConfirmPassword((show) => !show);
+  const handleMouseDownConfirmPassword = (event) => {
+    event.preventDefault();
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -27,16 +44,27 @@ const SignUp = () => {
           confirmPassword,
         }),
       });
-      // const data = await result.json();
-      // console.log(data);
-      if (result.status === 200) {
+      if (password !== confirmPassword) {
+        toast("Password and Confirm Password must be same", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          type: "error",
+          theme: "colored",
+        });
+        result.status = 400;
+      } else if (result.status === 200) {
         setUsername("");
         setEmail("");
         setPassword("");
         navigate("/signIn");
         toast("You are successfully registered!", {
           position: "top-right",
-          autoClose: 5000,
+          autoClose: 2000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
@@ -58,7 +86,17 @@ const SignUp = () => {
         });
       }
       if (result.status === 500) {
-        alert("User Already Exists");
+        toast("User Already Exists", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          type: "error",
+          theme: "colored",
+        });
       }
     } catch (err) {
       console.log(err);
@@ -69,57 +107,81 @@ const SignUp = () => {
     <div className={style.container}>
       <form className={style.form} onSubmit={handleSubmit}>
         <h1 className={style.title}>SignUp</h1>
-        <label htmlFor="userName">Username</label>
-        <input
+        <TextField
+          id="outlined-password-input"
+          label="Username"
           type="text"
-          name="text"
-          id="userName"
           value={username}
-          placeholder="Enter your username"
-          required
           onChange={(e) => setUsername(e.target.value)}
-          startAdornment={
-            <InputAdornment position="start">
-              <EmailIcon />
-            </InputAdornment>
-          }
         />
-        <label htmlFor="email">Email</label>
-        <input
+        <TextField
+          id="outlined-password-input"
+          label="Email"
           type="email"
-          name="email"
-          id="email"
           value={email}
-          placeholder="Enter your email"
-          required
           onChange={(e) => setEmail(e.target.value)}
         />
-        <label htmlFor="password">Password</label>
-        <input
-          type="password"
-          name="password"
-          id="password"
-          value={password}
-          placeholder="Enter your password"
-          required
-          onChange={(e) => {
-            setPassword(e.target.value);
-          }}
-        />
-        <label htmlFor="confirmPassword">Confirm Password</label>
-        <input
-          type="password"
-          name="confirmPassword"
-          id="confirmPassword"
-          value={confirmPassword}
-          placeholder="Re-Enter your password"
-          required
-          onChange={(e) => setConfirmPassword(e.target.value)}
-        />
-        <button className={style.button} type="submit">
+        <FormControl sx={{ m: 1, width: "27ch" }} variant="outlined">
+          <InputLabel htmlFor="outlined-adornment-password">
+            Password
+          </InputLabel>
+          <OutlinedInput
+            id="outlined-adornment-password"
+            type={showPassword ? "text" : "password"}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            endAdornment={
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={handleClickShowPassword}
+                  onMouseDown={handleMouseDownPassword}
+                  edge="end"
+                >
+                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            }
+            label="Password"
+          />
+        </FormControl>
+
+        <FormControl sx={{ m: 1, width: "27ch" }} variant="outlined">
+          <InputLabel htmlFor="outlined-adornment-cpassword">
+            Confirm Password
+          </InputLabel>
+          <OutlinedInput
+            id="outlined-adornment-cpassword"
+            type={showConfirmPassword ? "text" : "password"}
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            endAdornment={
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={handleClickShowConfirmPassword}
+                  onMouseDown={handleMouseDownConfirmPassword}
+                  edge="end"
+                >
+                  {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            }
+            label="Password"
+          />
+        </FormControl>
+
+        <Button
+          variant="contained"
+          className={style.button}
+          type="submit"
+          onClick={handleSubmit}
+        >
           Sign Up
-        </button>
-        <button className={style.button}>Sign In with Google</button>
+        </Button>
+        <Button variant="contained" className={style.button}>
+          Sign In with Google
+        </Button>
         <Link to="/signIn" className={style.link}>
           Already have an account? Sign In
         </Link>

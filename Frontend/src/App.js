@@ -12,7 +12,7 @@ import SignUp from "./pages/SignUp/SignUp";
 import { createContext, useState } from "react";
 import CompleteBlog from "./pages/Blogs/CompleteBlog/CompleteBlog";
 import "./App.css";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
