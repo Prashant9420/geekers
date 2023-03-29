@@ -1,9 +1,9 @@
 .blog {
   display: flex;
   align-items: center;
-  border: 2px solid white;
-  width: 40vw;
-  height: 15rem;
+  border: 2px solid;
+  width: 41vw;
+  height: 18rem;
   box-sizing: border-box;
   padding: 10px;
   border-radius: 20px;
@@ -11,8 +11,6 @@
   transition: transform 0.2s ease-in-out;
 }
 .blog:hover {
-  /* background-color: #eef0f5;
-  color: rgb(12, 12, 50); */
   transform: scale(1.03);
 }
 
@@ -36,26 +34,20 @@
   box-sizing: border-box;
 }
 .title {
-  color: #ffffff;
   font-size: 1.5rem;
   font-weight: bold;
   padding-top: 0.5rem;
   margin-bottom: 0.3rem;
 }
 .time {
-  color: #c0c0c0;
   margin-bottom: 0.6rem;
 }
 .description {
-  color: #c0c0c0;
   margin-bottom: 1rem;
 }
 .category {
-  color: #c0c0c0;
 }
 button {
-  background-color: #06070a;
-  color: #f0f0f0;
   border: none;
   border-radius: 20px;
   padding: 0.5rem;
@@ -64,7 +56,6 @@ button {
 .contributor {
   gap: 0.5rem;
   display: flex;
-  color: #c0c0c0;
   font-size: 0.8rem;
   margin-top: 0.5rem;
 }

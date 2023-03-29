@@ -17,20 +17,14 @@
   font-size: xx-large;
   outline: none;
   border: none;
-  color: rgb(244, 239, 239);
   font-weight: bold;
-  background-color: #0f172a;
 }
 .title::placeholder {
-  color: rgb(183, 191, 199);
 }
 
 .textArea {
   height: 30rem;
-  /* background-color: white; */
-  /* color: #0f172a; */
   margin-block: 5rem;
-  /* height: 12rem; */
 }
 
 .imageURL {
@@ -38,12 +32,9 @@
   border: none;
   outline: none;
   font-size: medium;
-  background-color: #0f172a;
-  color: white;
 }
 
 .category {
-  background-color: rgb(189, 206, 220);
 }
 
 .tag {
@@ -61,8 +52,6 @@
   border: "none";
 }
 .button {
-  background-color: #0f172a;
-  color: white;
   outline: none;
   border: none;
   cursor: pointer;
@@ -71,7 +60,7 @@
   margin: 2px;
 }
 .button:hover {
-  box-shadow: 0 0 10px 5px white;
+  box-shadow: 0 0 10px 5px;
 }
 .publish {
   display: flex;

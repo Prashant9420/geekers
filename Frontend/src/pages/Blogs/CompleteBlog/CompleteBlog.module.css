@@ -19,20 +19,17 @@ img {
   font-weight: bold;
   text-align: center;
   margin: 2rem 0;
-  color: #ffffff;
 }
 
 .time {
   font-size: 1.2rem;
   margin-bottom: 2rem;
-  color: #c0c0c0;
 }
 
 .description {
   font-size: 1rem;
   line-height: 2rem;
   margin-bottom: 2rem;
-  color: #f0f0f0;
 }
 
 .categories {
@@ -43,8 +40,6 @@ img {
 }
 
 button {
-  background-color: #06070a;
-  color: #f0f0f0;
   border: none;
   border-radius: 20px;
   padding: 0.5rem;

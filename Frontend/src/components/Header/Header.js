@@ -1,8 +1,5 @@
 import React, { useState, useContext } from "react";
 import style from "./Header.module.css";
-// import SearchIcon from "@mui/icons-material/Search";
-// import Input from "@mui/material/Input";
-// import InputAdornment from "@mui/material/InputAdornment";
 import { useNavigate } from "react-router-dom";
 import LightModeIcon from "@mui/icons-material/LightMode";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
@@ -13,19 +10,16 @@ import { AuthContext } from "../../App";
 
 const Header = () => {
   const navigate = useNavigate();
-  const { username } = useContext(AuthContext);
+  const { darkMode, setDarkMode } = useContext(AuthContext);
   const links = ["Practice", "Contests", "Events", "Compiler", "Blogs"];
-  const [mode, setMode] = useState(true);
   const [theme, setTheme] = useState("light");
 
   const handleClick = (index) => {
     navigate(`/${links[index].toLowerCase()}`);
   };
 
-  const handleMode = () => {
-    console.log("mode");
-    setMode(!mode);
-    setTheme(theme === "light" ? setTheme("dark") : setTheme("light"));
+  const handleDarkMode = () => {
+    setDarkMode(!darkMode);
   };
 
   const handleSignIn = () => {
@@ -66,10 +60,10 @@ const Header = () => {
         </div>
         <div className={style.topRight}>
           <div className={style.mode}>
-            {mode ? (
-              <LightModeIcon fontSize="small" onClick={handleMode} />
+            {darkMode ? (
+              <LightModeIcon fontSize="small" onClick={handleDarkMode} />
             ) : (
-              <DarkModeIcon fontSize="small" onClick={handleMode} />
+              <DarkModeIcon fontSize="small" onClick={handleDarkMode} />
             )}
           </div>
           {/* <div className={style.searchBar}>

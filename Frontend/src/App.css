@@ -3,12 +3,3 @@
   padding: 0;
   box-sizing: border-box;
 }
-
-#light {
-  background-color: #f9fafd;
-  color: #000;
-}
-#dark {
-  background-color: #0f172a;
-  color: #f9fafd;
-}

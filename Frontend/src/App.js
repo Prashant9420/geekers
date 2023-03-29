@@ -14,43 +14,52 @@ import CompleteBlog from "./pages/Blogs/CompleteBlog/CompleteBlog";
 import "./App.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
 
 export const AuthContext = createContext(null);
 
-export const ThemeContext = createContext(null);
+const darkTheme = createTheme({
+  palette: {
+    mode: "dark",
+  },
+});
 
 function App() {
-  const [mode, setMode] = useState("dark");
-  // const toggleMode = () => {
-  //   setMode(mode === "light" ? setMode("dark") : setMode("light"));
-  // };
-
   const [username, setUsername] = useState("");
+  const [darkMode, setDarkMode] = useState(true);
 
   return (
-    <ThemeContext.Provider value={{ mode, setMode }}>
-      <AuthContext.Provider value={{ username, setUsername }}>
-        <div id={mode}>
-          <ToastContainer />
-          <Router>
-            <Routes>
-              <Route exact path="/" element={<Home />} />
-              <Route exact path="/home" element={<Home />} />
-              <Route exact path="/practice" element={<Practice />} />
-              <Route exact path="/contests" element={<Contests />} />
-              <Route exact path="/blogs" element={<Blogs />} />
-              <Route exact path="/blogs/createBlog" element={<CreateBlog />} />
-              <Route exact path="/compiler" element={<Compiler />} />
-              <Route exact path="/events" element={<Events />} />
-              <Route exact path="*" element={<PageNotFound />} />
-              <Route exact path="/signIn" element={<SignIn />} />
-              <Route exact path="/signUp" element={<SignUp />} />
-              <Route exact path="/blog/:id" element={<CompleteBlog />} />
-            </Routes>
-          </Router>
-        </div>
+    <ThemeProvider
+      theme={createTheme({
+        palette: {
+          mode: darkMode === true ? "dark" : "light",
+        },
+      })}
+    >
+      <CssBaseline />
+      <AuthContext.Provider
+        value={{ username, setUsername, darkMode, setDarkMode }}
+      >
+        <ToastContainer />
+        <Router>
+          <Routes>
+            <Route exact path="/" element={<Home />} />
+            <Route exact path="/home" element={<Home />} />
+            <Route exact path="/practice" element={<Practice />} />
+            <Route exact path="/contests" element={<Contests />} />
+            <Route exact path="/blogs" element={<Blogs />} />
+            <Route exact path="/blogs/createBlog" element={<CreateBlog />} />
+            <Route exact path="/compiler" element={<Compiler />} />
+            <Route exact path="/events" element={<Events />} />
+            <Route exact path="*" element={<PageNotFound />} />
+            <Route exact path="/signIn" element={<SignIn />} />
+            <Route exact path="/signUp" element={<SignUp />} />
+            <Route exact path="/blog/:id" element={<CompleteBlog />} />
+          </Routes>
+        </Router>
       </AuthContext.Provider>
-    </ThemeContext.Provider>
+    </ThemeProvider>
   );
 }
 
