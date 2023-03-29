@@ -35,6 +35,17 @@ const SignIn = () => {
         setUsername(data.details.username);
         window.localStorage.setItem("username", data.details.username);
         navigate("/");
+        toast("You are successfully logged in!", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          type: "success",
+          theme: "colored",
+        });
       } else {
         toast("Invalid Credentials!", {
           position: "top-right",
