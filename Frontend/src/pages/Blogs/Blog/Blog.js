@@ -23,14 +23,12 @@ const Blog = ({ blog }) => {
     <div onClick={() => navigate(`/blog/${_id}`)} className={style.blog}>
       <div className={style.left}>
         <div className={style.title}>{title}</div>
-        <div className={style.time}>
-          Published on - {dateFormatter(createdAt)}
-        </div>
         <div className={style.contributor}>
           {/* User Image */}
           {/* <img src={imgUrl} alt="" /> */}
           {/* Add Contributor Name */}
           <div className={style.name}>Created By : {username}</div>
+          <div className={style.time}>◦ {dateFormatter(createdAt)}</div>
         </div>
 
         <div className={style.description}>{read.slice(0, 150)}...</div>

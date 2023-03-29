@@ -1,5 +1,6 @@
 .blog {
   display: flex;
+  align-items: center;
   border: 2px solid white;
   width: 40vw;
   height: 15rem;
@@ -59,6 +60,13 @@ button {
   border-radius: 20px;
   padding: 0.5rem;
   margin-right: 0.2rem;
+}
+.contributor {
+  gap: 0.5rem;
+  display: flex;
+  color: #c0c0c0;
+  font-size: 0.8rem;
+  margin-top: 0.5rem;
 }
 
 /* Responsive  */
