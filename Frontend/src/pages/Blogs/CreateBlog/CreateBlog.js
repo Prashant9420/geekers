@@ -7,6 +7,7 @@ import TextField from "@mui/material/TextField";
 import Chip from "@mui/material/Chip";
 import ServerURL from "../../../utils/ServerURL";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const CreateBlog = () => {
   const navigate = useNavigate();
@@ -52,7 +53,17 @@ const CreateBlog = () => {
         setContent("");
         setimgUrl("");
         setCategories([]);
-        alert("Blog Created Successfully");
+        toast("Blog Created Successfully!", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          type: "success",
+          theme: "colored",
+        });
         navigate("/blogs");
       }
     } catch (err) {
