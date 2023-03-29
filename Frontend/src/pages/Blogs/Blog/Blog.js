@@ -4,7 +4,7 @@ import dateFormatter from "../../../utils/dateFormatter";
 
 const Blog = ({ blog }) => {
   const navigate = useNavigate();
-  var { _id, categories, title, content, imgUrl, createdAt } = blog;
+  var { _id, categories, title, content, imgUrl, createdAt, username } = blog;
   let read = "";
   const stringHtml = (content) => {
     for (let i = 0; i < content.length; ) {
@@ -30,8 +30,7 @@ const Blog = ({ blog }) => {
           {/* User Image */}
           {/* <img src={imgUrl} alt="" /> */}
           {/* Add Contributor Name */}
-          // Fetch username from backend
-          <div className={style.name}></div>
+          <div className={style.name}>Created By : {username}</div>
         </div>
 
         <div className={style.description}>{read.slice(0, 150)}...</div>

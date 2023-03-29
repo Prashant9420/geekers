@@ -8,8 +8,8 @@ import LightModeIcon from "@mui/icons-material/LightMode";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import HomeIcon from "@mui/icons-material/Home";
 import Avatar from "@mui/material/Avatar";
-import { AuthContext } from "../../App";
 import { deepOrange, deepPurple } from "@mui/material/colors";
+import { AuthContext } from "../../App";
 
 const Header = () => {
   const navigate = useNavigate();

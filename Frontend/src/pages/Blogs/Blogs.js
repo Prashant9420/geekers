@@ -81,7 +81,12 @@ const Blogs = () => {
               variant="contained"
               startIcon={<ModeEditIcon />}
               onClick={() => {
-                navigate("/blogs/createBlog");
+                if (window.localStorage.getItem("username") === null) {
+                  alert("Please Login First");
+                  navigate("/signIn");
+                } else {
+                  navigate("/blogs/createBlog");
+                }
               }}
             >
               Write a Blog

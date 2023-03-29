@@ -32,8 +32,10 @@ const SignUp = () => {
         setUsername("");
         setEmail("");
         setPassword("");
-        alert("User Created Successfully");
-        navigate("/");
+        navigate("/signIn");
+        alert(
+          "User created successfully! Now Please Login to access your account"
+        );
       }
       if (result.status === 500) {
         alert("User Already Exists");

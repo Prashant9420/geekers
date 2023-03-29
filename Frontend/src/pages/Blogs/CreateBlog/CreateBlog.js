@@ -44,6 +44,7 @@ const CreateBlog = () => {
           content,
           imgUrl,
           categories,
+          username: window.localStorage.getItem("username"),
         }),
       });
       if (result.status === 200) {
