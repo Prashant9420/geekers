@@ -270,3 +270,7 @@ img {
   align-items: center;
   margin-right: 2rem;
 }
+
+.avatar {
+  color: rgb(169, 169, 219);
+}

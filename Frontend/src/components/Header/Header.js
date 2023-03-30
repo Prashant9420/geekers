@@ -5,7 +5,7 @@ import LightModeIcon from "@mui/icons-material/LightMode";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import HomeIcon from "@mui/icons-material/Home";
 import Avatar from "@mui/material/Avatar";
-import { deepOrange, deepPurple } from "@mui/material/colors";
+import { blue, deepOrange, deepPurple } from "@mui/material/colors";
 import { AuthContext } from "../../App";
 import AppBar from "@mui/material/AppBar";
 import { Container } from "@mui/system";
@@ -182,7 +182,7 @@ const Header = () => {
                 {window.localStorage?.getItem("username") ? (
                   <Avatar
                     className={style.avatar}
-                    sx={{ bgcolor: deepPurple[500], p: 0 }}
+                    sx={{ bgcolor: blue, p: 0 }}
                     onClick={handleOpenUserMenu}
                   >
                     {window.localStorage
@@ -191,26 +191,18 @@ const Header = () => {
                       .toUpperCase()}
                   </Avatar>
                 ) : (
-                  <Avatar sx={{ bgcolor: deepOrange[500] }}>
-                    <AccountCircleIcon />
+                  <Avatar>
+                    <AccountCircleIcon color="info" />
                   </Avatar>
                 )}
               </IconButton>
             </Tooltip>
             {!window.localStorage?.getItem("username") ? (
-              <Button
-                variant="outlined"
-                color="secondary"
-                onClick={handleSignIn}
-              >
+              <Button variant="contained" color="info" onClick={handleSignIn}>
                 Sign In
               </Button>
             ) : (
-              <Button
-                variant="outlined"
-                color="secondary"
-                onClick={handleLogout}
-              >
+              <Button variant="contained" color="info" onClick={handleLogout}>
                 Logout
               </Button>
             )}

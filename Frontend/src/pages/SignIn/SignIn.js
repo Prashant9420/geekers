@@ -47,7 +47,7 @@ const SignIn = () => {
         window.localStorage.setItem("username", data.details.username);
         navigate("/");
         toast("You are successfully logged in!", {
-          position: "top-right",
+          position: "top-center",
           autoClose: 2000,
           hideProgressBar: false,
           closeOnClick: true,
@@ -59,7 +59,7 @@ const SignIn = () => {
         });
       } else {
         toast("Invalid Credentials!", {
-          position: "top-right",
+          position: "top-center",
           autoClose: 3000,
           hideProgressBar: false,
           closeOnClick: true,

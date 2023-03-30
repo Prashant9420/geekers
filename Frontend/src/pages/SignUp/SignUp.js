@@ -46,7 +46,7 @@ const SignUp = () => {
       });
       if (password !== confirmPassword) {
         toast("Password and Confirm Password must be same", {
-          position: "top-right",
+          position: "top-center",
           autoClose: 5000,
           hideProgressBar: false,
           closeOnClick: true,
@@ -63,7 +63,7 @@ const SignUp = () => {
         setPassword("");
         navigate("/signIn");
         toast("You are successfully registered!", {
-          position: "top-right",
+          position: "top-center",
           autoClose: 2000,
           hideProgressBar: false,
           closeOnClick: true,
@@ -87,7 +87,7 @@ const SignUp = () => {
       }
       if (result.status === 500) {
         toast("User Already Exists", {
-          position: "top-right",
+          position: "top-center",
           autoClose: 5000,
           hideProgressBar: false,
           closeOnClick: true,

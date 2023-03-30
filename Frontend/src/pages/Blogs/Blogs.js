@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import SERVER_URL from "../../utils/ServerURL";
 import Chip from "@mui/material/Chip";
+import { toast } from "react-toastify";
 
 const Blogs = () => {
   const navigate = useNavigate();
@@ -82,7 +83,10 @@ const Blogs = () => {
               startIcon={<ModeEditIcon />}
               onClick={() => {
                 if (window.localStorage.getItem("username") === null) {
-                  alert("Please Login First");
+                  toast("Please Login First", {
+                    type: "error",
+                    position: "top-center",
+                  });
                   navigate("/signIn");
                 } else {
                   navigate("/blogs/createBlog");
