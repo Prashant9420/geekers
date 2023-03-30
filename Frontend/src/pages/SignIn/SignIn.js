@@ -14,6 +14,7 @@ import IconButton from "@mui/material/IconButton";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputLabel from "@mui/material/InputLabel";
 import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
 
 const SignIn = () => {
   const { username, setUsername } = useContext(AuthContext);
@@ -78,11 +79,14 @@ const SignIn = () => {
     <>
       <div className={style.container}>
         <form className={style.form} onSubmit={handleSubmit}>
-          <h1 className={style.title}>Login</h1>
+          <Typography sx={{ textAlign: "center" }} variant="h2">
+            SignIn
+          </Typography>
           <TextField
             id="outlined-password-input"
             label="Email"
             type="email"
+            pattern="^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />

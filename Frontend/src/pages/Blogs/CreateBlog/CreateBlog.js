@@ -8,6 +8,7 @@ import Chip from "@mui/material/Chip";
 import ServerURL from "../../../utils/ServerURL";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { Button, Input } from "@mui/material";
 
 const CreateBlog = () => {
   const navigate = useNavigate();
@@ -74,13 +75,14 @@ const CreateBlog = () => {
     <div>
       <Header />
       <form className={style.form}>
-        <input
+        <Input
+          sx={{ fontSize: "2.5rem", fontWeight: "bold" }}
           type="text"
           className={style.title}
           placeholder="Enter a title"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-        ></input>
+        ></Input>
 
         <ReactQuill
           className={style.textArea}
@@ -97,14 +99,14 @@ const CreateBlog = () => {
             Drag files here <br /> OR <br />
             <Button>Click to Upload</Button>
           </Upload.Dragger> */}
-          <input
+          <Input
             className={style.imageURL}
             type="url"
             placeholder="Enter Image Url"
             onChange={(e) => setimgUrl(e.target.value)}
             value={imgUrl}
             required
-          ></input>
+          ></Input>
         </div>
 
         <div className={style.tag}>
@@ -124,14 +126,14 @@ const CreateBlog = () => {
             />
           </div>
 
-          <button
+          <Button
             className={style.button}
             variant="contained"
             component="label"
             onClick={handleAddClick}
           >
             Add
-          </button>
+          </Button>
         </div>
         <div className={style.categories}>
           {categories.map((category, index) => {
@@ -148,9 +150,13 @@ const CreateBlog = () => {
           })}
         </div>
         <div className={style.publish}>
-          <button className={style.button} onClick={handleSubmit}>
+          <Button
+            variant="contained"
+            className={style.button}
+            onClick={handleSubmit}
+          >
             Publish
-          </button>
+          </Button>
         </div>
       </form>
     </div>
