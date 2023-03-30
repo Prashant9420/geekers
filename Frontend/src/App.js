@@ -16,6 +16,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
+import ForgotPassword from "./pages/SignIn/ForgotPassword/ForgotPassword";
 
 export const AuthContext = createContext(null);
 
@@ -56,6 +57,11 @@ function App() {
             <Route exact path="/signIn" element={<SignIn />} />
             <Route exact path="/signUp" element={<SignUp />} />
             <Route exact path="/blog/:id" element={<CompleteBlog />} />
+            <Route
+              exact
+              path="/signIn/forgotPassword"
+              element={<ForgotPassword />}
+            />
           </Routes>
         </Router>
       </AuthContext.Provider>

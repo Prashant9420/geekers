@@ -119,7 +119,7 @@ const SignIn = () => {
           >
             Login
           </Button>
-          <Link to={"/forgotPasssword"} className={style.link}>
+          <Link to={"/signIn/forgotPassword"} className={style.link}>
             Forgot Password
           </Link>
           <Link to={"/signUp"} className={style.link}>

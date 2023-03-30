@@ -264,17 +264,10 @@ img {
   flex-direction: column;
 } */
 
-.user {
-  display: flex;
-  width: 7rem;
-  align-items: center;
-  justify-content: space-between;
-}
 .mode {
+  cursor: pointer;
 }
-.right {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 10rem;
+
+.avatar {
+  margin: 1rem;
 }

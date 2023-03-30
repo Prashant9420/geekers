@@ -19,6 +19,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import AdbIcon from "@mui/icons-material/Adb";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -75,7 +76,7 @@ const Header = () => {
             sx={{
               mr: 2,
               display: { xs: "none", md: "flex" },
-              fontFamily: "monospace",
+              fontFamily: "Montserrat",
               fontWeight: 700,
               letterSpacing: ".3rem",
               color: "inherit",
@@ -139,75 +140,76 @@ const Header = () => {
               mr: 2,
               display: { xs: "flex", md: "none" },
               flexGrow: 1,
-              fontFamily: "monospace",
+              fontFamily: "Montserrat",
               fontWeight: 700,
               letterSpacing: ".3rem",
               color: "inherit",
               textDecoration: "none",
             }}
           >
-            LOGO
+            GEEKERS
           </Typography>
-
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page, index) => (
               <Button
                 key={index}
                 onClick={(handleCloseNavMenu, () => handleClick(index))}
-                sx={{ my: 2, color: "white", display: "block" }}
+                sx={{ mx: 2, my: 2, color: "white", display: "block" }}
               >
                 {page}
               </Button>
             ))}
           </Box>
+
+          <Box className={style.mode}>
+            {darkMode ? (
+              <LightModeIcon fontSize="small" onClick={handleDarkMode} />
+            ) : (
+              <DarkModeIcon fontSize="small" onClick={handleDarkMode} />
+            )}
+          </Box>
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton
+                className={style.avatar}
                 onClick={handleOpenUserMenu}
                 sx={{ p: 0 }}
-              ></IconButton>
-            </Tooltip>
-            <div className={style.right}>
-              <div className={style.mode}>
-                {darkMode ? (
-                  <LightModeIcon fontSize="small" onClick={handleDarkMode} />
-                ) : (
-                  <DarkModeIcon fontSize="small" onClick={handleDarkMode} />
-                )}
-              </div>
-              <div className={style.avatar}>
+              >
                 {window.localStorage?.getItem("username") ? (
-                  <div className={style.user}>
-                    <Avatar sx={{ bgcolor: deepPurple[500] }}>
-                      {window.localStorage
-                        .getItem("username")
-                        ?.charAt(0)
-                        .toUpperCase()}
-                    </Avatar>
-                    <Button
-                      variant="outlined"
-                      color="secondary"
-                      onClick={handleLogout}
-                    >
-                      Logout
-                    </Button>
-                  </div>
+                  <Avatar
+                    className={style.avatar}
+                    sx={{ bgcolor: deepPurple[500] }}
+                    onClick={handleOpenUserMenu}
+                  >
+                    {window.localStorage
+                      .getItem("username")
+                      ?.charAt(0)
+                      .toUpperCase()}
+                  </Avatar>
                 ) : (
-                  <div className={style.user}>
-                    <Avatar sx={{ bgcolor: deepOrange[500] }}>
-                      <AccountCircleIcon />
-                    </Avatar>
-                    <Button
-                      variant="outlined"
-                      color="secondary"
-                      onClick={handleSignIn}
-                    >
-                      Login
-                    </Button>
-                  </div>
+                  <Avatar sx={{ bgcolor: deepOrange[500] }}>
+                    <AccountCircleIcon />
+                  </Avatar>
                 )}
-              </div>
-            </div>
+              </IconButton>
+            </Tooltip>
+            {!window.localStorage?.getItem("username") ? (
+              <Button
+                variant="outlined"
+                color="secondary"
+                onClick={handleSignIn}
+              >
+                Sign In
+              </Button>
+            ) : (
+              <Button
+                variant="outlined"
+                color="secondary"
+                onClick={handleLogout}
+              >
+                Logout
+              </Button>
+            )}
 
             <Menu
               sx={{ mt: "45px" }}
