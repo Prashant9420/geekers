@@ -1,6 +1,6 @@
-# [geekers](https://geekers.vercel.app/)
+# [geekers](https://geekers.vercel.app/) 
 
-# Coding Club site for College using MERN
+# Coding Club site of my College using MERN (In Progress)
 
 
 
@@ -13,6 +13,7 @@ This project was built using these technologies.
 
 * React.js
 * Node.js
+* JavaScript
 
 # Features
 
@@ -29,4 +30,4 @@ Run
 * npm install
 * node index.js
 
-Open http://localhost:3000 with your browser to see the result.
+Open http://localhost:3000 in your browser to see the result.
