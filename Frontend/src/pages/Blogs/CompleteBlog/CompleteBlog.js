@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import parse from "html-react-parser";
 import dateFormatter from "../../../utils/dateFormatter";
 import ServerURL from "../../../utils/ServerURL";
+import Header from "../../../components/Bar";
 
 const CompleteBlog = () => {
   const { id } = useParams();
@@ -21,6 +22,7 @@ const CompleteBlog = () => {
   const { title, content, imgUrl, createdAt, categories } = blog;
   return (
     <div className={style.completeBlog}>
+      <Header />
       <img src={imgUrl} alt="Not Found!" />
       <div className={style.title}>{title}</div>
       <div className={style.time}>
