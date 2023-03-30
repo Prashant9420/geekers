@@ -1,5 +1,6 @@
 # [geekers](https://geekers.vercel.app/)
-Coding Club site for College using MERN
+
+# Coding Club site for College using MERN
 
 
 
@@ -15,16 +16,17 @@ This project was built using these technologies.
 
 # Features
 
-* crescent_moon Dark Mode
+* Dark Mode
 * Filter categories
-* pencil2 Easy to customize and write blogs of your own
+* Easy to customize and write blogs of your own
 
 # Getting Started
-hammer_and_wrench Installation and Setup Instructions
+Installation and Setup Instructions
 To get started just clone this repository. You will need node.js and git installed globally on your machine.
 
 Run
 
-npm install
-node index.js
+* npm install
+* node index.js
+
 Open http://localhost:3000 with your browser to see the result.
