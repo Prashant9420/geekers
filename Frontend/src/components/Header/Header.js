@@ -19,13 +19,12 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import AdbIcon from "@mui/icons-material/Adb";
 
 const Header = () => {
   const navigate = useNavigate();
   const { darkMode, setDarkMode } = useContext(AuthContext);
   const pages = ["Practice", "Contests", "Events", "Compiler", "Blogs"];
-  const settings = ["Profile", "Account", "Dashboard", "Logout"];
+  const settings = ["Profile", "Account", "Dashboard"];
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -86,7 +85,12 @@ const Header = () => {
             GEEKERS
           </Typography>
           <HomeIcon
-            cursor="pointer"
+            sx={{
+              display: { xs: "none", md: "flex" },
+              ml: 5,
+              mr: 2,
+              cursor: "pointer",
+            }}
             onClick={() => {
               navigate("/home");
             }}
@@ -161,24 +165,24 @@ const Header = () => {
             ))}
           </Box>
 
-          <Box className={style.mode}>
+          <div className={style.mode}>
             {darkMode ? (
               <LightModeIcon fontSize="small" onClick={handleDarkMode} />
             ) : (
               <DarkModeIcon fontSize="small" onClick={handleDarkMode} />
             )}
-          </Box>
+          </div>
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton
                 className={style.avatar}
                 onClick={handleOpenUserMenu}
-                sx={{ p: 0 }}
+                sx={{ p: 0, mx: 2 }}
               >
                 {window.localStorage?.getItem("username") ? (
                   <Avatar
                     className={style.avatar}
-                    sx={{ bgcolor: deepPurple[500] }}
+                    sx={{ bgcolor: deepPurple[500], p: 0 }}
                     onClick={handleOpenUserMenu}
                   >
                     {window.localStorage

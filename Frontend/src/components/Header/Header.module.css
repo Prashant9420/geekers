@@ -266,8 +266,7 @@ img {
 
 .mode {
   cursor: pointer;
-}
-
-.avatar {
-  margin: 1rem;
+  display: flex;
+  align-items: center;
+  margin-right: 2rem;
 }
