@@ -1,5 +1,10 @@
 import express from "express";
-import { login, registerUser } from "../controllers/user.js";
+import {
+  forgotPassword,
+  login,
+  registerUser,
+  resetPassword,
+} from "../controllers/user.js";
 import passport from "passport";
 
 const router = express.Router();
@@ -11,6 +16,14 @@ router.post("/register", registerUser);
 // LOGIN
 
 router.post("/login", login);
+
+// FORGOT PASSWORD
+
+router.post("/forgotPassword", forgotPassword);
+
+// RESET PASSWORD
+
+router.post("/resetPassword", resetPassword);
 
 // GOOGLE LOGIN
 

@@ -17,6 +17,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import ForgotPassword from "./pages/SignIn/ForgotPassword/ForgotPassword";
+import ResetPassword from "./pages/SignIn/ResetPassword/ResetPassword";
 
 export const AuthContext = createContext(null);
 
@@ -55,13 +56,14 @@ function App() {
             <Route exact path="/events" element={<Events />} />
             <Route exact path="*" element={<PageNotFound />} />
             <Route exact path="/signIn" element={<SignIn />} />
-            <Route exact path="/signUp" element={<SignUp />} />
-            <Route exact path="/blog/:id" element={<CompleteBlog />} />
+            <Route exact path="/forgotPassword" element={<ForgotPassword />} />
             <Route
               exact
-              path="/signIn/forgotPassword"
-              element={<ForgotPassword />}
+              path="/resetPassword/:id/:token"
+              element={<ResetPassword />}
             />
+            <Route exact path="/signUp" element={<SignUp />} />
+            <Route exact path="/blog/:id" element={<CompleteBlog />} />
           </Routes>
         </Router>
       </AuthContext.Provider>

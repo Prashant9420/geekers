@@ -1,6 +1,5 @@
 import React, { useState, useContext } from "react";
 import style from "./SignIn.module.css";
-import Header from "../../components/Header/Header";
 import { Link, useNavigate } from "react-router-dom";
 import ServerURL from "../../utils/ServerURL";
 import { AuthContext } from "../../App";
@@ -123,7 +122,7 @@ const SignIn = () => {
           >
             Login
           </Button>
-          <Link to={"/signIn/forgotPassword"} className={style.link}>
+          <Link to={"/forgotPassword"} className={style.link}>
             Forgot Password
           </Link>
           <Link to={"/signUp"} className={style.link}>

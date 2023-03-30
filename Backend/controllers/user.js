@@ -1,7 +1,9 @@
 import User from "../models/User.js";
+import Otp from "../models/Otp.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { createError } from "../utils/error.js";
+import nodeMailer from "nodemailer";
 import { Strategy } from "passport-google-oauth20";
 import passport from "passport";
 
@@ -86,4 +88,62 @@ export const login = async (req, res, next) => {
   } catch (err) {
     next(err);
   }
+};
+
+export const forgotPassword = async (req, res, next) => {
+  try {
+    const user = await User.findOne({ email: req.body.email });
+    if (!user) return next(createError(404, "Email does not exist!"));
+    const otp = Math.floor(100000 + Math.random() * 900000);
+    const newOtp = new Otp({
+      email: req.body.email,
+      otp,
+      expiresIn: Date.now() + 300000,
+    });
+    await newOtp.save();
+    mailer(req.body.email, otp);
+    // send email
+    res.status(200).send("OTP has been sent to your email!");
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const resetPassword = async (req, res, next) => {
+  let data = await Otp.findOne({ email: req.body.email, otp: req.body.otp });
+  if (!data) return next(createError(404, "OTP is incorrect!"));
+  if (data.expiresIn < Date.now())
+    return next(createError(404, "OTP has expired!"));
+  const user = await User.findOne({ email: req.body.email });
+  if (!user) return next(createError(404, "User not found!"));
+  const salt = bcrypt.genSaltSync(10);
+  const hash = bcrypt.hashSync(req.body.password, salt);
+  user.password = hash;
+  await user.save();
+  res.status(200).send("Password has been reset!");
+};
+
+const mailer = (email, otp) => {
+  var transporter = nodeMailer.createTransport({
+    service: "gmail",
+    port: 465,
+    secure: false,
+    auth: {
+      user: process.env.EMAIL,
+      pass: process.env.PASSWORD,
+    },
+  });
+  var mailOptions = {
+    from: process.env.EMAIL,
+    to: email,
+    subject: "OTP for password reset",
+    text: `Your OTP is ${otp}`,
+  };
+  transporter.sendMail(mailOptions, function (error, info) {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log("Email sent: " + info.response);
+    }
+  });
 };

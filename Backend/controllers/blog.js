@@ -1,11 +1,10 @@
 import Blog from "../models/Blog.js";
-import BlogCategories from "../models/BlogCategories.js";
-
+import BlogCategory from "../models/BlogCategory.js";
 export const createBlog = async (req, res, next) => {
   const newBlog = new Blog(req.body);
   try {
     const savedBlog = await newBlog.save();
-    const allSavedCategories = await BlogCategories.find();
+    const allSavedCategories = await BlogCategory.find();
 
     // Check if the category already exists in the database
 
@@ -15,7 +14,7 @@ export const createBlog = async (req, res, next) => {
           (category) => category.categoryName === savedBlog.categories[i]
         )
       ) {
-        const newBlogCategory = new BlogCategories({
+        const newBlogCategory = new BlogCategory({
           categoryName: savedBlog.categories[i],
         });
         await newBlogCategory.save();
@@ -88,7 +87,7 @@ export const getRecentBlogs = async (req, res, next) => {
 
 export const getAllCategories = async (req, res, next) => {
   try {
-    const categories = await BlogCategories.find().select("categoryName -_id");
+    const categories = await BlogCategory.find().select("categoryName -_id");
     res.status(200).json({ categories });
   } catch (error) {
     next(error);
