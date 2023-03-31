@@ -28,7 +28,7 @@ const ForgotPassword = () => {
       });
       if (result.status === 200) {
         setResetForm(true);
-        toast("Please check your email for the reset link!", {
+        toast("Please check your email for the OTP!", {
           position: "top-center",
           autoClose: 2000,
           hideProgressBar: false,
@@ -59,29 +59,31 @@ const ForgotPassword = () => {
   return (
     <>
       {!resetForm ? (
-        <form onSubmit={handleSubmit} className={style.form}>
-          <Typography sx={{ fontSize: "3rem", fontWeight: "bold" }}>
-            Enter Your Email
-          </Typography>
-          <TextField
-            id="outlined-password-input"
-            label="Email"
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <Button variant="contained" type="submit">
-            Send OTP
-          </Button>
+        <>
           <Button
-            variant="contained"
-            onClick={() => {
-              navigate("/signIn");
-            }}
+            onClick={() => navigate("/signIn")}
+            variant="outlined"
+            sx={{ margin: "1rem" }}
           >
             Back
           </Button>
-        </form>
+          <form onSubmit={handleSubmit} className={style.form}>
+            <Typography sx={{ fontSize: "2rem", fontWeight: "bold" }}>
+              Enter Your Email
+            </Typography>
+            <TextField
+              id="outlined-password-input"
+              sx={{ width: "20rem", margin: "1rem" }}
+              label="Email"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <Button variant="contained" type="submit">
+              Send OTP
+            </Button>
+          </form>
+        </>
       ) : (
         <ResetPassword email={email} />
       )}

@@ -76,9 +76,19 @@ const SignIn = () => {
   };
   return (
     <>
+      <Button
+        onClick={() => navigate("/")}
+        variant="outlined"
+        sx={{ margin: "1rem" }}
+      >
+        Home
+      </Button>
       <div className={style.container}>
         <form className={style.form} onSubmit={handleSubmit}>
-          <Typography sx={{ textAlign: "center" }} variant="h2">
+          <Typography
+            sx={{ textAlign: "center", fontWeight: "bold" }}
+            variant="h3"
+          >
             SignIn
           </Typography>
           <TextField

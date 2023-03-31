@@ -104,6 +104,7 @@ const ResetPassword = (props) => {
         value={otp}
         maxWidth="30%"
         onChange={handleSetOtp}
+        required
       />
       <br />
       <Typography sx={{ fontSize: "1.5rem" }}>Enter New Password</Typography>
