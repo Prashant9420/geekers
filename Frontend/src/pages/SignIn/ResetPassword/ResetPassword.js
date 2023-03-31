@@ -11,6 +11,8 @@ import InputAdornment from "@mui/material/InputAdornment";
 import FormControl from "@mui/material/FormControl";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputLabel from "@mui/material/InputLabel";
+import { MuiOtpInput } from "mui-one-time-password-input";
+import { color } from "@mui/system";
 
 const ResetPassword = (props) => {
   const [password, setPassword] = useState("");
@@ -29,6 +31,8 @@ const ResetPassword = (props) => {
   const handleMouseDownConfirmPassword = (event) => {
     event.preventDefault();
   };
+
+  const handleSetOtp = (otp) => setOtp(otp);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -92,14 +96,17 @@ const ResetPassword = (props) => {
       <Typography sx={{ fontSize: "3rem", fontWeight: "bold" }}>
         Reset Password
       </Typography>
-      <TextField
-        label="OTP"
-        type="text"
+      <Typography sx={{ fontSize: "1.5rem", color: "white" }}>
+        Enter OTP
+      </Typography>
+      <MuiOtpInput
+        length={6}
         value={otp}
-        maxLength="6"
-        onChange={(e) => setOtp(e.target.value)}
-        required
+        maxWidth="30%"
+        onChange={handleSetOtp}
       />
+      <br />
+      <Typography sx={{ fontSize: "1.5rem" }}>Enter New Password</Typography>
       <FormControl sx={{ m: 1, width: "27ch" }} variant="outlined">
         <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
         <OutlinedInput
