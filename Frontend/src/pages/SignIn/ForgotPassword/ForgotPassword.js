@@ -5,10 +5,12 @@ import style from "./ForgotPassword.module.css";
 import ServerURL from "../../../utils/ServerURL";
 import { toast } from "react-toastify";
 import ResetPassword from "../ResetPassword/ResetPassword";
+import { useNavigate } from "react-router-dom";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
   const [resetForm, setResetForm] = useState(false);
+  const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -70,6 +72,14 @@ const ForgotPassword = () => {
           />
           <Button variant="contained" type="submit">
             Send OTP
+          </Button>
+          <Button
+            variant="contained"
+            onClick={() => {
+              navigate("/signIn");
+            }}
+          >
+            Back
           </Button>
         </form>
       ) : (
