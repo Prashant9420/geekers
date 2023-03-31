@@ -73,6 +73,17 @@ const ResetPassword = (props) => {
           type: "success",
           theme: "colored",
         });
+        toast("Please login again!", {
+          position: "top-right",
+          autoClose: 4000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          type: "info",
+          theme: "colored",
+        });
       } else {
         toast("Password reset failed!", {
           position: "top-center",
