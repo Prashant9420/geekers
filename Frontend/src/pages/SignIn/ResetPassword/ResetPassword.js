@@ -84,7 +84,7 @@ const ResetPassword = (props) => {
           theme: "colored",
         });
       } else {
-        toast("Password reset failed!", {
+        toast("Invalid OTP!", {
           position: "top-center",
           autoClose: 2000,
           hideProgressBar: false,
