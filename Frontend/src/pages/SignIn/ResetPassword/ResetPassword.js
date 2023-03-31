@@ -112,7 +112,7 @@ const ResetPassword = (props) => {
       <MuiOtpInput
         length={6}
         value={otp}
-        maxWidth="30%"
+        maxWidth="22.5rem"
         onChange={handleSetOtp}
         TextFieldsProps={{ placeholder: "-", required: true }}
         required
