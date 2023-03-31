@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import style from "./ResetPassword.module.css";
-import { Typography, TextField, Button } from "@mui/material";
+import { Typography, Button } from "@mui/material";
 import ServerURL from "../../../utils/ServerURL";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
@@ -12,7 +12,6 @@ import FormControl from "@mui/material/FormControl";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputLabel from "@mui/material/InputLabel";
 import { MuiOtpInput } from "mui-one-time-password-input";
-import { color } from "@mui/system";
 
 const ResetPassword = (props) => {
   const [password, setPassword] = useState("");
@@ -115,6 +114,7 @@ const ResetPassword = (props) => {
         value={otp}
         maxWidth="30%"
         onChange={handleSetOtp}
+        TextFieldsProps={{ placeholder: "-", required: true }}
         required
       />
       <br />
