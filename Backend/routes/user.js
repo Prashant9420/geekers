@@ -41,28 +41,19 @@ router.get("/googleLogin/success", (req, res, next) => {
   }
 });
 
-router.get("/logout", function (req, res) {
-  req.logout();
-  req.session.destroy(function (err) {
-    if (err) {
-      console.log(err);
-    }
+router.get("/googleLogout", (req, res, next) => {
+  try {
+    req.logout(() => {
+      console.log("Logged out");
+    });
     res.clearCookie("connect.sid");
     res.redirect("/");
-  });
+  } catch (err) {
+    console.log("Error: ", err);
+    createError(500, "Internal Server Error");
+    next(err);
+  }
 });
-
-// router.get("/googleLogout", (req, res, next) => {
-//   try {
-//     req.logout();
-//     res.clearCookie("connect.sid");
-//     res.redirect("/");
-//   } catch (err) {
-//     console.log("Error: ", err);
-//     createError(500, "Internal Server Error");
-//     next(err);
-//   }
-// });
 
 router.get(
   "/googleLogin",

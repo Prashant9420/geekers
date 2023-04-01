@@ -58,19 +58,20 @@ const Header = () => {
 
   const handleLogout = () => {
     googleLogout();
+    console.log("Logged out");
     if (window.localStorage.getItem("imageUrl" !== null)) {
-      window.localStorage.removeItem("imageUrl");
     }
+    window.localStorage.removeItem("imageUrl");
     window.localStorage.removeItem("username");
-    window.location.reload();
-    document.cookie = "access_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+    // window.location.reload();
+    // document.cookie = "access_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
   };
 
   async function googleLogout() {
     try {
       const res = await fetch(`${ServerURL}/user/googleLogout`, {
         method: "GET",
-        credentials: "include",
+        // credentials: "include",
       });
       if (!res.ok) {
         throw new Error("Failed to log out");
