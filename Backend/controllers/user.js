@@ -1,4 +1,5 @@
 import User from "../models/User.js";
+import GoogleUser from "../models/GoogleUser.js";
 import Otp from "../models/Otp.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
@@ -7,41 +8,51 @@ import nodeMailer from "nodemailer";
 import { Strategy } from "passport-google-oauth20";
 import passport from "passport";
 
-// export const connectPassport = () => {
-//   passport.use(
-//     new Strategy(
-//       {
-//         clientID: process.env.GOOGLE_CLIENT_ID,
-//         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-//         callbackURL: "http://localhost:8000/api/user/googleLogin/callback",
-//       },
-//       async function (accessToken, refreshToken, profile, done) {
-//         // database logic
-//         const user = await User.findOne({
-//           googleId: profile.id,
-//         });
-//         if (user) {
-//           done(null, newUser);
-//         } else {
-//           const newUser = await User.create({
-//             googleId: profile.id,
-//             username: profile.displayName,
-//             email: profile.emails[0].value,
-//             profilePic: profile.photos[0].value,
-//           });
-//           done(null, newUser);
-//         }
-//       }
-//     )
-//   );
-//   passport.serializeUser((user, done) => {
-//     done(null, user.id);
-//   });
-//   passport.deserializeUser(async (id, done) => {
-//     // const user = await User.findById(id);
-//     done(null, user);
-//   });
-// };
+export const connectPassport = () => {
+  passport.use(
+    new Strategy(
+      {
+        clientID: process.env.GOOGLE_CLIENT_ID,
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+        callbackURL: "http://localhost:8000/api/user/googleLogin/callback",
+      },
+      async function (accessToken, refreshToken, profile, done) {
+        // database logic
+        try {
+          const googleuser = await GoogleUser.findOne({
+            googleId: profile.id,
+          });
+          if (googleuser) {
+            done(null, googleuser);
+          } else {
+            const newGoogleUser = await GoogleUser.create({
+              googleId: profile.id,
+              name: profile.displayName,
+              avatar: profile.photos[0].value,
+            });
+            newGoogleUser.save();
+            done(null, newGoogleUser);
+          }
+        } catch (err) {
+          createError(500, "Internal Server Error");
+          done(err);
+        }
+      }
+    )
+  );
+  passport.serializeUser((googleuser, done) => {
+    done(null, googleuser._id);
+  });
+  passport.deserializeUser(async (_id, done) => {
+    try {
+      const googleuser = await GoogleUser.findById(_id);
+      done(null, googleuser);
+    } catch (err) {
+      createError(500, "Internal Server Error");
+      done(err);
+    }
+  });
+};
 
 export const registerUser = async (req, res, next) => {
   try {

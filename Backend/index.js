@@ -1,17 +1,18 @@
 import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
+import session from "express-session";
 import blogRoutes from "./routes/blog.js";
 import userRoutes from "./routes/user.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import morgan from "morgan";
-// import { connectPassport } from "./controllers/user.js";
+import passport from "passport";
+import { connectPassport } from "./controllers/user.js";
 
 const app = express();
 
 dotenv.config();
-// connectPassport();
 
 const connect = async () => {
   try {
@@ -32,8 +33,29 @@ app.use(cookieParser());
 app.use(morgan("dev"));
 
 app.use(
+  session({
+    secret: "process.env.JWT ",
+    resave: false,
+    saveUninitialized: false,
+  })
+);
+
+app.use(passport.authenticate("session"));
+app.use(passport.initialize());
+app.use(passport.session());
+connectPassport();
+
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  next();
+});
+
+app.use(
   cors({
     origin: ["http://localhost:3000", "https://geekers.vercel.app"],
+    methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
     exposedHeaders: ["set-cookie"],
   })

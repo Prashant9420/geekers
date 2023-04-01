@@ -1,11 +1,10 @@
-import React, { useContext } from "react";
+import React, { useState, useContext } from "react";
 import style from "./Header.module.css";
 import { useNavigate } from "react-router-dom";
 import LightModeIcon from "@mui/icons-material/LightMode";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import HomeIcon from "@mui/icons-material/Home";
 import Avatar from "@mui/material/Avatar";
-import { blue, deepOrange, deepPurple } from "@mui/material/colors";
 import { AuthContext } from "../../App";
 import AppBar from "@mui/material/AppBar";
 import { Container } from "@mui/system";
@@ -19,6 +18,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import ServerURL from "../../utils/ServerURL";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -26,8 +26,8 @@ const Header = () => {
   const pages = ["Practice", "Contests", "Events", "Compiler", "Blogs"];
   const settings = ["Profile", "Account", "Dashboard"];
 
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [anchorElNav, setAnchorElNav] = useState(null);
+  const [anchorElUser, setAnchorElUser] = useState(null);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -57,10 +57,30 @@ const Header = () => {
   };
 
   const handleLogout = () => {
+    googleLogout();
+    if (window.localStorage.getItem("imageUrl" !== null)) {
+      window.localStorage.removeItem("imageUrl");
+    }
     window.localStorage.removeItem("username");
     window.location.reload();
     document.cookie = "access_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
   };
+
+  async function googleLogout() {
+    try {
+      const res = await fetch(`${ServerURL}/user/googleLogout`, {
+        method: "GET",
+        credentials: "include",
+      });
+      if (!res.ok) {
+        throw new Error("Failed to log out");
+      }
+      const message = await res.text();
+      return message;
+    } catch (err) {
+      console.error(err);
+    }
+  }
 
   return (
     <AppBar position="static" className={style.appBar}>
@@ -180,16 +200,12 @@ const Header = () => {
                 sx={{ p: 0, mx: 2 }}
               >
                 {window.localStorage?.getItem("username") ? (
-                  <Avatar
+                  <img
                     className={style.avatar}
-                    sx={{ bgcolor: blue, p: 0 }}
                     onClick={handleOpenUserMenu}
-                  >
-                    {window.localStorage
-                      .getItem("username")
-                      ?.charAt(0)
-                      .toUpperCase()}
-                  </Avatar>
+                    src={window.localStorage?.getItem("imageUrl")}
+                    alt={window.localStorage.getItem("username")}
+                  />
                 ) : (
                   <Avatar>
                     <AccountCircleIcon color="info" />

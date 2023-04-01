@@ -6,6 +6,7 @@ import {
   resetPassword,
 } from "../controllers/user.js";
 import passport from "passport";
+import { createError } from "../utils/error.js";
 
 const router = express.Router();
 
@@ -27,9 +28,54 @@ router.post("/resetPassword", resetPassword);
 
 // GOOGLE LOGIN
 
+router.get("/googleLogin/success", (req, res, next) => {
+  try {
+    if (req.user) {
+      res.status(200).json({ user: req.user });
+    } else {
+      res.status(401).send("Failed to login");
+    }
+  } catch (err) {
+    createError(500, "Internal Server Error");
+    next(err);
+  }
+});
+
+router.get("/logout", function (req, res) {
+  req.logout();
+  req.session.destroy(function (err) {
+    if (err) {
+      console.log(err);
+    }
+    res.clearCookie("connect.sid");
+    res.redirect("/");
+  });
+});
+
+// router.get("/googleLogout", (req, res, next) => {
+//   try {
+//     req.logout();
+//     res.clearCookie("connect.sid");
+//     res.redirect("/");
+//   } catch (err) {
+//     console.log("Error: ", err);
+//     createError(500, "Internal Server Error");
+//     next(err);
+//   }
+// });
+
 router.get(
   "/googleLogin",
   passport.authenticate("google", { scope: ["profile", "email"] })
+);
+
+router.get(
+  "/googleLogin/callback",
+  passport.authenticate("google", {
+    scope: ["profile", "email"],
+    successRedirect: "http://localhost:3000/",
+    failureRedirect: "/googleLogin/failed",
+  })
 );
 
 export default router;

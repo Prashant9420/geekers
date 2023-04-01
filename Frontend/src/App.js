@@ -52,6 +52,7 @@ function App() {
             <Route exact path="/contests" element={<Contests />} />
             <Route exact path="/blogs" element={<Blogs />} />
             <Route exact path="/blogs/createBlog" element={<CreateBlog />} />
+            <Route exact path="/blog/:id" element={<CompleteBlog />} />
             <Route exact path="/compiler" element={<Compiler />} />
             <Route exact path="/events" element={<Events />} />
             <Route exact path="*" element={<PageNotFound />} />
@@ -63,7 +64,6 @@ function App() {
               element={<ResetPassword />}
             />
             <Route exact path="/signUp" element={<SignUp />} />
-            <Route exact path="/blog/:id" element={<CompleteBlog />} />
           </Routes>
         </Router>
       </AuthContext.Provider>

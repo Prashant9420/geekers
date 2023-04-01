@@ -26,6 +26,10 @@ const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const googleLogin = async () => {
+    window.location.href = `${ServerURL}/user/googleLogin`;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -131,6 +135,13 @@ const SignIn = () => {
             type="submit"
           >
             Login
+          </Button>
+          <Button
+            variant="contained"
+            className={style.button}
+            onClick={() => googleLogin()}
+          >
+            Sign In with Google
           </Button>
           <Link to={"/forgotPassword"} className={style.link}>
             Forgot Password
