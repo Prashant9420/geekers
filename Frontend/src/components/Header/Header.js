@@ -56,22 +56,21 @@ const Header = () => {
     navigate(`/${"signin"}`);
   };
 
-  const handleLogout = () => {
-    googleLogout();
-    console.log("Logged out");
+  const handleLogout = async () => {
+    await googleLogout();
     if (window.localStorage.getItem("imageUrl" !== null)) {
     }
     window.localStorage.removeItem("imageUrl");
     window.localStorage.removeItem("username");
-    // window.location.reload();
-    // document.cookie = "access_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+    window.location.reload();
+    document.cookie = "access_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
   };
 
   async function googleLogout() {
     try {
       const res = await fetch(`${ServerURL}/user/googleLogout`, {
         method: "GET",
-        // credentials: "include",
+        credentials: "include",
       });
       if (!res.ok) {
         throw new Error("Failed to log out");
@@ -201,12 +200,20 @@ const Header = () => {
                 sx={{ p: 0, mx: 2 }}
               >
                 {window.localStorage?.getItem("username") ? (
-                  <img
-                    className={style.avatar}
-                    onClick={handleOpenUserMenu}
-                    src={window.localStorage?.getItem("imageUrl")}
-                    alt={window.localStorage.getItem("username")}
-                  />
+                  window.localStorage?.getItem("imageUrl") ? (
+                    <Avatar
+                      className={style.avatar}
+                      onClick={handleOpenUserMenu}
+                      src={window.localStorage?.getItem("imageUrl").toString()}
+                    />
+                  ) : (
+                    <Avatar>
+                      {window.localStorage
+                        ?.getItem("username")
+                        .charAt(0)
+                        .toUpperCase()}
+                    </Avatar>
+                  )
                 ) : (
                   <Avatar>
                     <AccountCircleIcon color="info" />

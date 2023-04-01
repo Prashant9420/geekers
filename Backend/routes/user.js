@@ -64,7 +64,7 @@ router.get(
   "/googleLogin/callback",
   passport.authenticate("google", {
     scope: ["profile", "email"],
-    successRedirect: "http://localhost:3000/",
+    successRedirect: "https://geekers.vercel.app/",
     failureRedirect: "/googleLogin/failed",
   })
 );
