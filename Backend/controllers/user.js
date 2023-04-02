@@ -14,6 +14,7 @@ export const connectPassport = () => {
       {
         clientID: process.env.GOOGLE_CLIENT_ID,
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+        // callbackURL: "http://localhost:8000/api/user/googleLogin/callback",
         callbackURL:
           "https://geekers.onrender.com/api/user/googleLogin/callback",
       },

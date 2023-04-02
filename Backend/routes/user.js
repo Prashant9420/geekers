@@ -65,6 +65,7 @@ router.get(
   passport.authenticate("google", {
     scope: ["profile", "email"],
     successRedirect: "https://geekers.vercel.app/",
+    // successRedirect: "http://localhost:3000/",
     failureRedirect: "/googleLogin/failed",
   })
 );

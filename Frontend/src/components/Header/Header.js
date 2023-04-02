@@ -58,8 +58,6 @@ const Header = () => {
 
   const handleLogout = async () => {
     await googleLogout();
-    if (window.localStorage.getItem("imageUrl" !== null)) {
-    }
     window.localStorage.removeItem("imageUrl");
     window.localStorage.removeItem("username");
     window.location.reload();
