@@ -16,7 +16,7 @@ export const connectPassport = () => {
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
         // callbackURL: "http://localhost:8000/api/user/googleLogin/callback",
         callbackURL:
-          "https://geekers.onrender.com/api/user/googleLogin/callback",
+          "https://geekers-production.up.railway.app/api/user/googleLogin/callback",
       },
       async function (accessToken, refreshToken, profile, done) {
         // database logic

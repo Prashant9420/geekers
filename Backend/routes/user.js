@@ -30,7 +30,7 @@ router.post("/resetPassword", resetPassword);
 
 router.get("/googleLogin/success", (req, res, next) => {
   try {
-    if (req.user) {
+    if (req) {
       res.status(200).json({ user: req.user });
     } else {
       res.status(401).send("Failed to login");
