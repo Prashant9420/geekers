@@ -25,16 +25,6 @@ async function getGoogleUserData() {
   }
 }
 
-async function getGoogleUserProfileData() {
-  try {
-    const res = await fetch(`${ServerURL}/user/profile`);
-    const data = await res.json();
-    console.log(data.user);
-  } catch (err) {
-    console.error(err);
-  }
-}
-
 const Home = () => {
   // To change the state of user after login
   const [googleUserData, setGoogleUserData] = useState({});
@@ -43,7 +33,6 @@ const Home = () => {
     async function fetchData() {
       const data = await getGoogleUserData();
       setGoogleUserData(data);
-      getGoogleUserProfileData();
     }
     fetchData();
   }, []);
