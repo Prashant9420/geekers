@@ -66,8 +66,15 @@ router.get(
     scope: ["profile", "email"],
     successRedirect: "https://geekers.vercel.app/",
     // successRedirect: "http://localhost:3000/",
-    failureRedirect: "/googleLogin/failed",
+    failureRedirect: "https://geekers.vercel.app/signin",
+    // failureRedirect: "http://localhost:3000//signin",
   })
 );
+
+router.get("/profile", function (req, res) {
+  res.cookie("accessToken", req.session.passport.user.accessToken);
+  res.cookie("refreshToken", req.session.passport.user.refreshToken);
+  res.json({ user: req.user });
+});
 
 export default router;
