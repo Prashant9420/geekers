@@ -22,14 +22,17 @@ async function getGoogleUserData() {
 }
 
 const Home = () => {
-  const [googleUserData, setGoogleUserData] = useState({});
+  // const [googleUserData, setGoogleUserData] = useState({});
 
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     const data = await getGoogleUserData();
+  //     setGoogleUserData(data);
+  //   }
+  //   fetchData();
+  // }, []);
   useEffect(() => {
-    async function fetchData() {
-      const data = await getGoogleUserData();
-      setGoogleUserData(data);
-    }
-    fetchData();
+    getGoogleUserData();
   }, []);
 
   return (
