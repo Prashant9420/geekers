@@ -14,6 +14,9 @@ async function getGoogleUserData() {
     }
     const data = await res.json();
     console.log(data);
+    if (data?.user?.name === undefined) {
+      return;
+    }
     window.localStorage.setItem("username", data?.user?.name);
     window.localStorage.setItem("imageUrl", data?.user?.avatar);
     return data;
@@ -23,17 +26,15 @@ async function getGoogleUserData() {
 }
 
 const Home = () => {
-  // const [googleUserData, setGoogleUserData] = useState({});
+  // To change the state of user after login
+  const [googleUserData, setGoogleUserData] = useState({});
 
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     const data = await getGoogleUserData();
-  //     setGoogleUserData(data);
-  //   }
-  //   fetchData();
-  // }, []);
   useEffect(() => {
-    getGoogleUserData();
+    async function fetchData() {
+      const data = await getGoogleUserData();
+      setGoogleUserData(data);
+    }
+    fetchData();
   }, []);
 
   return (
