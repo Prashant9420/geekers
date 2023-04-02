@@ -13,6 +13,7 @@ async function getGoogleUserData() {
       throw new Error("Failed to retrieve user data");
     }
     const data = await res.json();
+    console.log(data);
     window.localStorage.setItem("username", data?.user?.name);
     window.localStorage.setItem("imageUrl", data?.user?.avatar);
     return data;
