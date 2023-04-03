@@ -8,12 +8,17 @@ async function getGoogleUserData() {
     const res = await fetch(`${ServerURL}/user/googleLogin/success`, {
       method: "GET",
       credentials: "include",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Credentials": "true",
+      },
     });
     if (!res.ok) {
       throw new Error("Failed to retrieve user data");
     }
     const data = await res.json();
-    console.log(data);
+    console.log(data.user);
     if (data?.user?.name === undefined) {
       return;
     }
@@ -27,13 +32,13 @@ async function getGoogleUserData() {
 
 const Home = () => {
   // To change the state of user after login
-  const [googleUserData, setGoogleUserData] = useState({});
+  const [googleUserData, setGoogleUserData] = useState(null);
 
+  async function fetchData() {
+    const data = await getGoogleUserData();
+    setGoogleUserData(data);
+  }
   useEffect(() => {
-    async function fetchData() {
-      const data = await getGoogleUserData();
-      setGoogleUserData(data);
-    }
     fetchData();
   }, []);
 

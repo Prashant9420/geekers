@@ -40,15 +40,15 @@ router.get(
     successRedirect: "https://geekers.vercel.app/",
     // successRedirect: "http://localhost:3000/",
     failureRedirect: "https://geekers.vercel.app/signin",
-    // failureRedirect: "http://localhost:3000//signin",
+    // failureRedirect: "http://localhost:3000/signin",
   })
 );
 
 router.get("/googleLogin/success", (req, res, next) => {
   try {
     if (req.user) {
-      res.cookie("accessToken", req.session.passport.user.accessToken);
-      res.cookie("refreshToken", req.session.passport.user.refreshToken);
+      res.cookie("accessToken", req.session.passport.user.accessToken, {});
+      res.cookie("refreshToken", req.session.passport.user.refreshToken, {});
       res.status(200).json({ user: req.user });
     } else {
       res.status(401).send("Failed to login");
@@ -65,6 +65,8 @@ router.get("/googleLogout", (req, res, next) => {
       console.log("Logged out");
     });
     res.clearCookie("connect.sid");
+    res.clearCookie("refreshToken");
+    res.clearCookie("accessToken");
     res.redirect("/");
   } catch (err) {
     console.log("Error: ", err);
