@@ -37,6 +37,13 @@ app.use(
     secret: "process.env.JWT ",
     resave: false,
     saveUninitialized: false,
+    cookie: {
+      maxAge: 1000 * 60 * 60 * 24 * 7,
+      httpOnly: true,
+      sameSite: "none",
+      secure: false,
+      domain: "geekers.vercel.app",
+    },
   })
 );
 

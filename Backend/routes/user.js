@@ -49,6 +49,13 @@ router.get("/googleLogin/success", (req, res, next) => {
     if (req.user) {
       res.cookie("accessToken", req.session.passport.user.accessToken, {});
       res.cookie("refreshToken", req.session.passport.user.refreshToken, {});
+      res.cookie("accessToken", req.session.passport.user.accessToken, {
+        path: "https://geekers.vercel.app/",
+      });
+      res.cookie("refreshToken", req.session.passport.user.refreshToken, {
+        path: "https://geekers.vercel.app/",
+      });
+
       res.status(200).json({ user: req.user });
     } else {
       res.status(401).send("Failed to login");
