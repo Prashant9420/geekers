@@ -14,6 +14,8 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import InputLabel from "@mui/material/InputLabel";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
+import { GoogleLogin } from "@react-oauth/google";
+import jwt_decode from "jwt-decode";
 
 const SignIn = () => {
   const { username, setUsername } = useContext(AuthContext);
@@ -26,8 +28,55 @@ const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const googleLogin = async () => {
-    window.location.href = `${ServerURL}/user/googleLogin`;
+  const createOrGetUser = async (response) => {
+    const decoded = jwt_decode(response.credential);
+    const { name, picture, sub, email } = decoded;
+    const googleUser = {
+      name,
+      email,
+      avatar: picture,
+      googleId: sub,
+    };
+
+    const result = await fetch(`${ServerURL}/user/googleLogin`, {
+      method: "POST",
+      credentials: "include",
+      withCredentials: true,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(googleUser),
+    });
+    if (result.status === 200) {
+      const data = await result.json();
+      window.localStorage.setItem("username", data.name);
+      window.localStorage.setItem("avatar", data.avatar);
+      console.log(window.localStorage.getItem("avatar"));
+      navigate("/");
+      toast("You are successfully logged in!", {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        type: "success",
+        theme: "colored",
+      });
+    } else {
+      toast("Invalid Credentials!", {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        type: "error",
+        theme: "colored",
+      });
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -103,7 +152,6 @@ const SignIn = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
-
           <FormControl sx={{ m: 1, width: "27ch" }} variant="outlined">
             <InputLabel htmlFor="outlined-adornment-password">
               Password
@@ -136,13 +184,14 @@ const SignIn = () => {
           >
             Login
           </Button>
-          <Button
-            variant="contained"
-            className={style.button}
-            onClick={() => googleLogin()}
-          >
-            Sign In with Google
-          </Button>
+          <GoogleLogin
+            onSuccess={(credentialResponse) => {
+              createOrGetUser(credentialResponse);
+            }}
+            onError={() => {
+              console.log("Login Failed");
+            }}
+          />
           <Link to={"/forgotPassword"} className={style.link}>
             Forgot Password
           </Link>

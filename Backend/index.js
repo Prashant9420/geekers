@@ -7,8 +7,6 @@ import userRoutes from "./routes/user.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import morgan from "morgan";
-import passport from "passport";
-import { connectPassport } from "./controllers/user.js";
 
 const app = express();
 
@@ -39,18 +37,11 @@ app.use(
     saveUninitialized: false,
     cookie: {
       maxAge: 1000 * 60 * 60 * 24 * 7,
-      httpOnly: true,
       sameSite: "none",
-      secure: false,
       domain: "geekers.vercel.app",
     },
   })
 );
-
-app.use(passport.authenticate("session"));
-app.use(passport.initialize());
-app.use(passport.session());
-connectPassport();
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");

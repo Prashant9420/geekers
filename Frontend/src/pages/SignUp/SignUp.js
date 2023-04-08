@@ -32,12 +32,6 @@ const SignUp = () => {
     event.preventDefault();
   };
 
-  // Google Login
-
-  const googleLogin = async () => {
-    window.location.href = `${ServerURL}/user/googleLogin`;
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
@@ -200,13 +194,6 @@ const SignUp = () => {
 
           <Button variant="contained" className={style.button} type="submit">
             Sign Up
-          </Button>
-          <Button
-            variant="contained"
-            className={style.button}
-            onClick={() => googleLogin()}
-          >
-            Sign In with Google
           </Button>
           <Link to="/signIn" className={style.link}>
             Already have an account? Sign In

@@ -5,55 +5,27 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { createError } from "../utils/error.js";
 import nodeMailer from "nodemailer";
-import { Strategy } from "passport-google-oauth20";
-import passport from "passport";
 
-export const connectPassport = () => {
-  passport.use(
-    new Strategy(
-      {
-        clientID: process.env.GOOGLE_CLIENT_ID,
-        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-        callbackURL: "http://localhost:8000/api/user/googleLogin/callback",
-        // callbackURL:
-        // "https://geekers.onrender.com/api/user/googleLogin/callback",
-      },
-      async function (accessToken, refreshToken, profile, done) {
-        // database logic
-        try {
-          const googleuser = await GoogleUser.findOne({
-            googleId: profile.id,
-          });
-          if (googleuser) {
-            done(null, googleuser);
-          } else {
-            const newGoogleUser = await GoogleUser.create({
-              googleId: profile.id,
-              name: profile.displayName,
-              avatar: profile.photos[0].value,
-            });
-            newGoogleUser.save();
-            done(null, newGoogleUser);
-          }
-        } catch (err) {
-          createError(500, "Internal Server Error");
-          done(err);
-        }
-      }
-    )
-  );
-  passport.serializeUser((googleuser, done) => {
-    done(null, googleuser._id);
-  });
-  passport.deserializeUser(async (_id, done) => {
-    try {
-      const googleuser = await GoogleUser.findById(_id);
-      done(null, googleuser);
-    } catch (err) {
-      createError(500, "Internal Server Error");
-      done(err);
+export const googleLogin = async (req, res, next) => {
+  try {
+    const googleUser = await GoogleUser.findOne({
+      googleId: req.body.googleId,
+    });
+    if (!googleUser) {
+      const newGoogleUser = new GoogleUser({
+        googleId: req.body.googleId,
+        name: req.body.name,
+        avatar: req.body.avatar,
+        email: req.body.email,
+      });
+      await newGoogleUser.save();
+      return res.status(200).send(newGoogleUser);
+    } else {
+      return res.status(200).send(googleUser);
     }
-  });
+  } catch (err) {
+    next(err);
+  }
 };
 
 export const registerUser = async (req, res, next) => {

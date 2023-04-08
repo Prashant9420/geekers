@@ -4,9 +4,8 @@ import {
   login,
   registerUser,
   resetPassword,
+  googleLogin,
 } from "../controllers/user.js";
-import passport from "passport";
-import { createError } from "../utils/error.js";
 
 const router = express.Router();
 
@@ -28,58 +27,6 @@ router.post("/resetPassword", resetPassword);
 
 // GOOGLE LOGIN
 
-router.get(
-  "/googleLogin",
-  passport.authenticate("google", { scope: ["profile", "email"] })
-);
-
-router.get(
-  "/googleLogin/callback",
-  passport.authenticate("google", {
-    scope: ["profile", "email"],
-    successRedirect: "https://geekers.vercel.app/",
-    // successRedirect: "http://localhost:3000/",
-    failureRedirect: "https://geekers.vercel.app/signin",
-    // failureRedirect: "http://localhost:3000/signin",
-  })
-);
-
-router.get("/googleLogin/success", (req, res, next) => {
-  try {
-    if (req.user) {
-      res.cookie("accessToken", req.session.passport.user.accessToken, {});
-      res.cookie("refreshToken", req.session.passport.user.refreshToken, {});
-      res.cookie("accessToken", req.session.passport.user.accessToken, {
-        path: "https://geekers.vercel.app/",
-      });
-      res.cookie("refreshToken", req.session.passport.user.refreshToken, {
-        path: "https://geekers.vercel.app/",
-      });
-
-      res.status(200).json({ user: req.user });
-    } else {
-      res.status(401).send("Failed to login");
-    }
-  } catch (err) {
-    createError(500, "Internal Server Error");
-    next(err);
-  }
-});
-
-router.get("/googleLogout", (req, res, next) => {
-  try {
-    req.logout(() => {
-      console.log("Logged out");
-    });
-    res.clearCookie("connect.sid");
-    res.clearCookie("refreshToken");
-    res.clearCookie("accessToken");
-    res.redirect("/");
-  } catch (err) {
-    console.log("Error: ", err);
-    createError(500, "Internal Server Error");
-    next(err);
-  }
-});
+router.post("/googleLogin", googleLogin);
 
 export default router;

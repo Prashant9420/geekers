@@ -18,7 +18,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import ServerURL from "../../utils/ServerURL";
+import { googleLogout } from "@react-oauth/google";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -57,28 +57,12 @@ const Header = () => {
   };
 
   const handleLogout = async () => {
-    await googleLogout();
-    window.localStorage.removeItem("imageUrl");
+    googleLogout();
+    window.localStorage.removeItem("avatar");
     window.localStorage.removeItem("username");
     window.location.reload();
     document.cookie = "access_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
   };
-
-  async function googleLogout() {
-    try {
-      const res = await fetch(`${ServerURL}/user/googleLogout`, {
-        method: "GET",
-        credentials: "include",
-      });
-      if (!res.ok) {
-        throw new Error("Failed to log out");
-      }
-      const message = await res.text();
-      return message;
-    } catch (err) {
-      console.error(err);
-    }
-  }
 
   return (
     <AppBar position="static" className={style.appBar}>
@@ -198,11 +182,12 @@ const Header = () => {
                 sx={{ p: 0, mx: 2 }}
               >
                 {window.localStorage?.getItem("username") ? (
-                  window.localStorage?.getItem("imageUrl") ? (
+                  window.localStorage?.getItem("avatar") ? (
                     <Avatar
                       className={style.avatar}
                       onClick={handleOpenUserMenu}
-                      src={window.localStorage?.getItem("imageUrl").toString()}
+                      src={window.localStorage?.getItem("avatar").toString()}
+                      alt="G"
                     />
                   ) : (
                     <Avatar>

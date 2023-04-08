@@ -18,6 +18,7 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import ForgotPassword from "./pages/SignIn/ForgotPassword/ForgotPassword";
 import ResetPassword from "./pages/SignIn/ResetPassword/ResetPassword";
+import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
 
 export const AuthContext = createContext(null);
 
@@ -32,42 +33,48 @@ function App() {
   const [darkMode, setDarkMode] = useState(true);
 
   return (
-    <ThemeProvider
-      theme={createTheme({
-        palette: {
-          mode: darkMode === true ? "dark" : "light",
-        },
-      })}
-    >
-      <CssBaseline />
-      <AuthContext.Provider
-        value={{ username, setUsername, darkMode, setDarkMode }}
+    <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}>
+      <ThemeProvider
+        theme={createTheme({
+          palette: {
+            mode: darkMode === true ? "dark" : "light",
+          },
+        })}
       >
-        <ToastContainer />
-        <Router>
-          <Routes>
-            <Route exact path="/" element={<Home />} />
-            <Route exact path="/home" element={<Home />} />
-            <Route exact path="/practice" element={<Practice />} />
-            <Route exact path="/contests" element={<Contests />} />
-            <Route exact path="/blogs" element={<Blogs />} />
-            <Route exact path="/blogs/createBlog" element={<CreateBlog />} />
-            <Route exact path="/blog/:id" element={<CompleteBlog />} />
-            <Route exact path="/compiler" element={<Compiler />} />
-            <Route exact path="/events" element={<Events />} />
-            <Route exact path="*" element={<PageNotFound />} />
-            <Route exact path="/signIn" element={<SignIn />} />
-            <Route exact path="/forgotPassword" element={<ForgotPassword />} />
-            <Route
-              exact
-              path="/resetPassword/:id/:token"
-              element={<ResetPassword />}
-            />
-            <Route exact path="/signUp" element={<SignUp />} />
-          </Routes>
-        </Router>
-      </AuthContext.Provider>
-    </ThemeProvider>
+        <CssBaseline />
+        <AuthContext.Provider
+          value={{ username, setUsername, darkMode, setDarkMode }}
+        >
+          <ToastContainer />
+          <Router>
+            <Routes>
+              <Route exact path="/" element={<Home />} />
+              <Route exact path="/home" element={<Home />} />
+              <Route exact path="/practice" element={<Practice />} />
+              <Route exact path="/contests" element={<Contests />} />
+              <Route exact path="/blogs" element={<Blogs />} />
+              <Route exact path="/blogs/createBlog" element={<CreateBlog />} />
+              <Route exact path="/blog/:id" element={<CompleteBlog />} />
+              <Route exact path="/compiler" element={<Compiler />} />
+              <Route exact path="/events" element={<Events />} />
+              <Route exact path="*" element={<PageNotFound />} />
+              <Route exact path="/signIn" element={<SignIn />} />
+              <Route
+                exact
+                path="/forgotPassword"
+                element={<ForgotPassword />}
+              />
+              <Route
+                exact
+                path="/resetPassword/:id/:token"
+                element={<ResetPassword />}
+              />
+              <Route exact path="/signUp" element={<SignUp />} />
+            </Routes>
+          </Router>
+        </AuthContext.Provider>
+      </ThemeProvider>
+    </GoogleOAuthProvider>
   );
 }
 
