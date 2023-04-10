@@ -1,33 +1,28 @@
- .compiler{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    /* height: 100%; */
-    /* width: 100%; */
+.compiler {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
-.left{
-    flex: 6;
-    display: flex;
-    flex-direction: column;
-    /* border:2px solid red; */
-
+.left {
+  flex: 6;
+  display: flex;
+  flex-direction: column;
 }
-.right{
-    flex: 4;
-    display: flex;
-    flex-direction: column;
-    /* border:2px solid red; */
-
+.right {
+  flex: 4;
+  display: flex;
+  flex-direction: column;
+  /* border:2px solid red; */
 }
-.codeInput input{
-    height: 25rem;
-    width: 45rem;
-    background-color: #0F172A;
+.codeInput input {
+  height: 25rem;
+  width: 45rem;
+  background-color: #0f172a;
 }
-.codeOutput input{
-    height: 26rem;
-    background-color: #0F172A;
+.codeOutput input {
+  height: 26rem;
+  background-color: #0f172a;
 }
-.select{
-    width: 4rem;
-} 
+.select {
+  width: 4rem;
+}

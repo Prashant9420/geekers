@@ -1,13 +1,17 @@
+import { Typography } from "@mui/material";
 import Header from "../../components/Header/Header";
 import style from "./Home.module.css";
 
 const Home = () => {
   return (
-    <div>
+    <>
       <Header />
-      <h1 className={style.header}>Geekers</h1>
-      <h2>Explore Learn Build</h2>
-    </div>
+      <Typography
+        sx={{ fontSize: "5rem", textAlign: "center", fontWeight: "bold" }}
+      >
+        Explore Learn Build
+      </Typography>
+    </>
   );
 };
 

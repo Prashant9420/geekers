@@ -60,6 +60,7 @@ app.use(
 );
 
 //all urls
+
 app.use("/api/blog", blogRoutes);
 app.use("/api/user", userRoutes);
 

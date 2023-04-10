@@ -6,6 +6,7 @@ import parse from "html-react-parser";
 import dateFormatter from "../../../utils/dateFormatter";
 import ServerURL from "../../../utils/ServerURL";
 import Header from "../../../components/Header/Header";
+// import textToSpeech from
 
 const CompleteBlog = () => {
   const { id } = useParams();
@@ -29,6 +30,7 @@ const CompleteBlog = () => {
         <div className={style.time}>
           Published On : {dateFormatter(createdAt)}
         </div>
+        <div className={style.audio}></div>
         <div className={style.description}>{parse(`${content}`)}</div>
         <div className={style.categories}>
           {categories?.map((category, index) => {
