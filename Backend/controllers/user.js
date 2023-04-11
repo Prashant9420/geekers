@@ -19,6 +19,7 @@ export const googleLogin = async (req, res, next) => {
         email: req.body.email,
       });
       await newGoogleUser.save();
+      registerUserMail(req.body.email, req.body.name);
       return res.status(200).send(newGoogleUser);
     } else {
       return res.status(200).send(googleUser);
@@ -39,6 +40,7 @@ export const registerUser = async (req, res, next) => {
     });
 
     await newUser.save();
+    registerUserMail(req.body.email, req.body.username);
     res.status(200).send("User has been created.");
   } catch (err) {
     next(err);
@@ -123,6 +125,36 @@ const mailer = (email, otp) => {
     to: email,
     subject: "OTP for password reset",
     text: `Your OTP is ${otp}`,
+  };
+  transporter.sendMail(mailOptions, function (error, info) {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log("Email sent: " + info.response);
+    }
+  });
+};
+
+const registerUserMail = (email, name) => {
+  var transporter = nodeMailer.createTransport({
+    service: "gmail",
+    port: 465,
+    secure: false,
+    auth: {
+      user: process.env.EMAIL,
+      pass: process.env.PASSWORD,
+    },
+  });
+  var mailOptions = {
+    from: process.env.EMAIL,
+    to: email,
+    subject: "Welcome to Our Community",
+    text: `Hi ${name},
+    
+  We are thrilled to inform you that your registration for our club has been successfully completed!
+  As a registered user, you now have access to all of the features and benefits that our web app has to offer.
+
+  We hope you enjoy your time with us!`,
   };
   transporter.sendMail(mailOptions, function (error, info) {
     if (error) {

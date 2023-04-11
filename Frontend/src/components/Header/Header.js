@@ -58,6 +58,7 @@ const Header = () => {
 
   const handleLogout = async () => {
     googleLogout();
+    navigate("/");
     window.localStorage.removeItem("avatar");
     window.localStorage.removeItem("username");
     window.location.reload();
