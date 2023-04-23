@@ -1,38 +1,119 @@
-import style from "./Compiler.module.css";
-import Header from "../../components/Header/Header";
-import Button from "@mui/material/Button";
-import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import { useState } from "react";
+import {
+  Box,
+  Container,
+  TextField,
+  Button,
+  Select,
+  MenuItem,
+} from "@mui/material";
+import qs from "qs";
 
 const Compiler = () => {
+  const [language, setLanguage] = useState("java");
+  const [code, setCode] = useState("");
+  const [input, setInput] = useState("");
+  const [output, setOutput] = useState("");
+  const [copy, setCopy] = useState(false);
+
+  const handleLanguageChange = (event) => {
+    setLanguage(event.target.value);
+  };
+
+  const handleCodeChange = (event) => {
+    setCode(event.target.value);
+  };
+
+  const handleInputChage = (event) => {
+    setInput(event.target.value);
+  };
+
+  const handleCopyCode = () => {
+    setCopy(true);
+    navigator.clipboard.writeText(code);
+    setTimeout(() => {
+      setCopy(false);
+    }, 3000);
+  };
+
+  const handleRunClick = async () => {
+    const data = qs.stringify({
+      language: language,
+      code: code,
+      input: input,
+    });
+    try {
+      const response = await fetch("https://api.codex.jaagrav.in", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          "Access-Control-Allow-Origin": "*",
+        },
+        body: data,
+      });
+      const ans = await response.json();
+      setOutput(ans.output);
+    } catch (error) {
+      setOutput(error.message);
+    }
+  };
+
   return (
-    <div>
-      <Header />
-      <div className={style.compiler}>
-        <div className={style.left}>
-          <select className={style.selectLanguage}>
-            <option value="">Select a Language</option>
-            <option value="C">C</option>
-            <option value="C++">C++</option>
-            <option value="Java">Java</option>
-            <option value="Python">Python</option>
-          </select>
-          <Button variant="contained">Index-1</Button>
-          <div className={style.codeInput}>
-            <input type="text" />
-            <ContentCopyIcon />
-          </div>
-        </div>
-        <div className={style.right}>
-          <div className={style.button}>
-            <Button variant="contained">Custom Input</Button>
-            <Button variant="contained">Custom Output</Button>
-          </div>
-          <div className={style.codeOutput}>
-            <input type="text" className={style.code} />
-          </div>
-        </div>
-      </div>
-    </div>
+    <Box sx={{ minHeight: "100vh" }}>
+      <Container maxWidth="sm" sx={{ py: 4 }}>
+        <Box sx={{ mb: 2 }}>
+          <Select
+            value={language}
+            onChange={handleLanguageChange}
+            sx={{ mr: 2 }}
+          >
+            <MenuItem value="py">Python</MenuItem>
+            <MenuItem value="js">JavaScript</MenuItem>
+            <MenuItem value="java">Java</MenuItem>
+            <MenuItem value="cpp">C++</MenuItem>
+          </Select>
+          <TextField
+            label="Code"
+            multiline
+            fullWidth
+            value={code}
+            onChange={handleCodeChange}
+            variant="outlined"
+            rows={10}
+          />
+        </Box>
+        <Box sx={{ mb: 2 }}>
+          <TextField
+            label="Input (Optional)"
+            multiline
+            fullWidth
+            value={input}
+            onChange={handleInputChage}
+            variant="outlined"
+            rows={3}
+          />
+        </Box>
+        <Button
+          onClick={handleRunClick}
+          variant="contained"
+          sx={{ marginX: "10px" }}
+        >
+          Run
+        </Button>
+        <Button variant="contained" onClick={handleCopyCode}>
+          {copy ? "Copied!" : "Copy Code"}
+        </Button>
+        <TextField
+          label="Output"
+          multiline
+          fullWidth
+          value={output}
+          variant="outlined"
+          rows={10}
+          sx={{ mt: 2 }}
+        />
+      </Container>
+    </Box>
   );
 };
 
