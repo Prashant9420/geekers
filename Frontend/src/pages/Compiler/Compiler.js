@@ -10,7 +10,7 @@ import {
 import qs from "qs";
 
 const Compiler = () => {
-  const [language, setLanguage] = useState("java");
+  const [language, setLanguage] = useState("*");
   const [code, setCode] = useState("");
   const [input, setInput] = useState("");
   const [output, setOutput] = useState("");
@@ -67,6 +67,7 @@ const Compiler = () => {
             onChange={handleLanguageChange}
             sx={{ mr: 2 }}
           >
+            <MenuItem value="*">Select A language</MenuItem>
             <MenuItem value="py">Python</MenuItem>
             <MenuItem value="js">JavaScript</MenuItem>
             <MenuItem value="java">Java</MenuItem>
