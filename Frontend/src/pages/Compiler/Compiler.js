@@ -52,8 +52,11 @@ const Compiler = () => {
         body: data,
       });
       const ans = await response.json();
-      setOutput(ans.output);
+      console.log(ans);
+      if (ans.output === "") setOutput(ans.error);
+      else setOutput(ans.output);
     } catch (error) {
+      console.log(error);
       setOutput(error.message);
     }
   };
