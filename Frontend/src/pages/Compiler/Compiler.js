@@ -68,7 +68,7 @@ const Compiler = () => {
           <Select
             value={language}
             onChange={handleLanguageChange}
-            sx={{ mr: 2 }}
+            sx={{ mr: 2, my: 3 }}
           >
             <MenuItem value="*">Select A language</MenuItem>
             <MenuItem value="py">Python</MenuItem>
