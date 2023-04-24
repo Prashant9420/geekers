@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import {
   Box,
   Container,
@@ -8,6 +8,9 @@ import {
   MenuItem,
 } from "@mui/material";
 import qs from "qs";
+import { toast } from "react-toastify";
+import Editor from "@monaco-editor/react";
+import Header from "../../components/Header/Header";
 
 const Compiler = () => {
   const [language, setLanguage] = useState("*");
@@ -15,13 +18,14 @@ const Compiler = () => {
   const [input, setInput] = useState("");
   const [output, setOutput] = useState("");
   const [copy, setCopy] = useState(false);
+  const editorRef = useRef(null);
 
   const handleLanguageChange = (event) => {
     setLanguage(event.target.value);
   };
 
-  const handleCodeChange = (event) => {
-    setCode(event.target.value);
+  const handleCodeChange = (value, event) => {
+    setCode(value);
   };
 
   const handleInputChage = (event) => {
@@ -30,6 +34,17 @@ const Compiler = () => {
 
   const handleCopyCode = () => {
     setCopy(true);
+    toast("Code Copied!", {
+      position: "top-right",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      type: "success",
+    });
+
     navigator.clipboard.writeText(code);
     setTimeout(() => {
       setCopy(false);
@@ -37,6 +52,19 @@ const Compiler = () => {
   };
 
   const handleRunClick = async () => {
+    if (language === "*") {
+      toast("Please select a language!", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        type: "error",
+      });
+      return;
+    }
     const data = qs.stringify({
       language: language,
       code: code,
@@ -52,7 +80,6 @@ const Compiler = () => {
         body: data,
       });
       const ans = await response.json();
-      console.log(ans);
       if (ans.output === "") setOutput(ans.error);
       else setOutput(ans.output);
     } catch (error) {
@@ -62,9 +89,10 @@ const Compiler = () => {
   };
 
   return (
-    <Box sx={{ minHeight: "100vh" }}>
-      <Container maxWidth="sm" sx={{ py: 4 }}>
-        <Box sx={{ mb: 2 }}>
+    <>
+      <Header />
+      <Box>
+        <Container>
           <Select
             value={language}
             onChange={handleLanguageChange}
@@ -76,48 +104,66 @@ const Compiler = () => {
             <MenuItem value="java">Java</MenuItem>
             <MenuItem value="cpp">C++</MenuItem>
           </Select>
-          <TextField
-            label="Code"
-            multiline
-            fullWidth
-            value={code}
-            onChange={handleCodeChange}
-            variant="outlined"
-            rows={10}
-          />
-        </Box>
-        <Box sx={{ mb: 2 }}>
-          <TextField
-            label="Input (Optional)"
-            multiline
-            fullWidth
-            value={input}
-            onChange={handleInputChage}
-            variant="outlined"
-            rows={3}
-          />
-        </Box>
-        <Button
-          onClick={handleRunClick}
-          variant="contained"
-          sx={{ marginX: "10px" }}
+          <Button
+            onClick={handleRunClick}
+            variant="contained"
+            sx={{ marginX: "10px" }}
+          >
+            Run
+          </Button>
+          <Button variant="contained" onClick={handleCopyCode}>
+            {copy ? "Copied!" : "Copy Code"}
+          </Button>
+        </Container>
+        <Container
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            flexWrap: "wrap",
+          }}
         >
-          Run
-        </Button>
-        <Button variant="contained" onClick={handleCopyCode}>
-          {copy ? "Copied!" : "Copy Code"}
-        </Button>
-        <TextField
-          label="Output"
-          multiline
-          fullWidth
-          value={output}
-          variant="outlined"
-          rows={10}
-          sx={{ mt: 2 }}
-        />
-      </Container>
-    </Box>
+          <Box sx={{ width: "60%", mb: 1 }}>
+            <Editor
+              height="86.1vh"
+              width="100%"
+              defaultLanguage={language}
+              onChange={handleCodeChange}
+              theme="vs-dark"
+              options={{
+                selectOnLineNumbers: true,
+                fontSize: 19,
+                overviewRulerBorder: false,
+              }}
+            />
+          </Box>
+          <Box
+            sx={{
+              width: "40%",
+              mb: 3,
+            }}
+          >
+            <TextField
+              label="Console"
+              multiline
+              fullWidth
+              value={input}
+              onChange={handleInputChage}
+              variant="outlined"
+              rows={3}
+            />
+            <TextField
+              label="Output"
+              multiline
+              fullWidth
+              value={output}
+              variant="outlined"
+              rows={25}
+              sx={{ mt: 2 }}
+            />
+          </Box>
+        </Container>
+      </Box>
+    </>
   );
 };
 
