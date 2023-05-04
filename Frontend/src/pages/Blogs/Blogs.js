@@ -75,27 +75,25 @@ const Blogs = () => {
     <div>
       <Header />
       <div className={style.container}>
-        <div className={style.top}>
-          <div className={style.writeBlog}>
-            <Button
-              color="info"
-              variant="contained"
-              startIcon={<ModeEditIcon />}
-              onClick={() => {
-                if (window.localStorage.getItem("username") === null) {
-                  toast("Please Login First", {
-                    type: "error",
-                    position: "top-center",
-                  });
-                  navigate("/signIn");
-                } else {
-                  navigate("/blogs/createBlog");
-                }
-              }}
-            >
-              Write a Blog
-            </Button>
-          </div>
+        <div className={style.writeBlog}>
+          <Button
+            color="info"
+            variant="contained"
+            startIcon={<ModeEditIcon />}
+            onClick={() => {
+              if (window.localStorage.getItem("username") === null) {
+                toast("Please Login First", {
+                  type: "error",
+                  position: "top-center",
+                });
+                navigate("/signIn");
+              } else {
+                navigate("/blogs/createBlog");
+              }
+            }}
+          >
+            Write a Blog
+          </Button>
         </div>
         <div className={style.allCategories}>
           <div className={style.categories}>
@@ -135,13 +133,13 @@ const Blogs = () => {
           </div>
         </div>
 
-        <div className={style.content}>
-          <div className={style.blogs}>
-            {blogs?.map((blog) => {
-              return <Blog key={blog._id} blog={blog} />;
-            })}
-          </div>
+        {/* <div className={style.content}> */}
+        <div className={style.blogs}>
+          {blogs?.map((blog) => {
+            return <Blog key={blog._id} blog={blog} />;
+          })}
         </div>
+        {/* </div> */}
         <div className={style.loadMore}>
           <button
             disabled={countAllBlogs <= limit}

@@ -120,6 +120,7 @@ const SignUp = () => {
           <Typography
             sx={{ textAlign: "center", fontWeight: "bold" }}
             variant="h3"
+            marginBottom="2rem"
           >
             Register
           </Typography>

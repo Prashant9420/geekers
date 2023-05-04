@@ -129,17 +129,17 @@ const SignIn = () => {
   };
   return (
     <>
-      <Button
-        onClick={() => navigate("/")}
-        variant="outlined"
-        sx={{ margin: "1rem" }}
-      >
+      <Button onClick={() => navigate("/")} variant="outlined">
         Home
       </Button>
       <div className={style.container}>
         <form className={style.form} onSubmit={handleSubmit}>
           <Typography
-            sx={{ textAlign: "center", fontWeight: "bold" }}
+            sx={{
+              textAlign: "center",
+              fontWeight: "bold",
+            }}
+            marginBottom="2rem"
             variant="h3"
           >
             SignIn

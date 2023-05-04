@@ -14,19 +14,14 @@ import CompleteBlog from "./pages/Blogs/CompleteBlog/CompleteBlog";
 import "./App.css";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { ThemeProvider, createTheme } from "@mui/material";
 import CssBaseline from "@mui/material/CssBaseline";
 import ForgotPassword from "./pages/SignIn/ForgotPassword/ForgotPassword";
 import ResetPassword from "./pages/SignIn/ResetPassword/ResetPassword";
 import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
+import { DarkTheme, LightTheme } from "./utils/theme.js";
 
 export const AuthContext = createContext(null);
-
-const darkTheme = createTheme({
-  palette: {
-    mode: "dark",
-  },
-});
 
 function App() {
   const [username, setUsername] = useState("");
@@ -34,13 +29,7 @@ function App() {
 
   return (
     <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}>
-      <ThemeProvider
-        theme={createTheme({
-          palette: {
-            mode: darkMode === true ? "dark" : "light",
-          },
-        })}
-      >
+      <ThemeProvider theme={darkMode ? DarkTheme : LightTheme}>
         <CssBaseline />
         <AuthContext.Provider
           value={{ username, setUsername, darkMode, setDarkMode }}

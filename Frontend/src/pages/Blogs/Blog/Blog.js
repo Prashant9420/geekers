@@ -20,30 +20,32 @@ const Blog = ({ blog }) => {
   };
   read = stringHtml(content);
   return (
-    <div onClick={() => navigate(`/blog/${_id}`)} className={style.blog}>
-      <div className={style.left}>
-        <div className={style.title}>{title}</div>
-        <div className={style.contributor}>
-          {/* User Image */}
-          {/* <img src={imgUrl} alt="" /> */}
-          {/* Add Contributor Name */}
-          <div className={style.name}>Created By : {username}</div>
-          <div className={style.time}>◦ {dateFormatter(createdAt)}</div>
-        </div>
+    <div onClick={() => navigate(`/blog/${_id}`)} className={style.container}>
+      <div className={style.blog}>
+        <div className={style.left}>
+          <div className={style.title}>{title}</div>
+          <div className={style.contributor}>
+            {/* User Image */}
+            {/* <img src={imgUrl} alt="" /> */}
+            {/* Add Contributor Name */}
+            <div className={style.name}>Created By : {username}</div>
+            <div className={style.time}>◦ {dateFormatter(createdAt)}</div>
+          </div>
 
-        <div className={style.description}>{read.slice(0, 150)}...</div>
-        <div className={style.categories}>
-          {categories?.map((category, index) => {
-            return (
-              <button key={index} className={style.category}>
-                {category}
-              </button>
-            );
-          })}
+          <div className={style.description}>{read.slice(0, 130)}...</div>
+        </div>
+        <div className={style.right}>
+          <img src={imgUrl} alt="Not Found!" />
         </div>
       </div>
-      <div className={style.right}>
-        <img src={imgUrl} alt="Not Found!" />
+      <div className={style.categories}>
+        {categories?.map((category, index) => {
+          return (
+            <button key={index} className={style.category}>
+              {category}
+            </button>
+          );
+        })}
       </div>
     </div>
   );
