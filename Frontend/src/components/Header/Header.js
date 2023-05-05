@@ -83,6 +83,7 @@ const Header = () => {
               display: { xs: "none", md: "flex" },
               fontFamily: "Montserrat",
               fontWeight: 700,
+              color: "FFFFFF",
               letterSpacing: ".3rem",
               textDecoration: "none",
             }}
@@ -145,7 +146,7 @@ const Header = () => {
                 <Button
                   key={index}
                   onClick={(handleCloseNavMenu, () => handleClick(index))}
-                  sx={{ mx: 2, my: 2, display: "block" }}
+                  sx={{ mx: 2, my: 2, display: "block", color: "FFFFFF" }}
                 >
                   {page}
                 </Button>
@@ -164,29 +165,26 @@ const Header = () => {
               flexGrow: 1,
               fontFamily: "Montserrat",
               fontWeight: 700,
+              fontSize: ".7rem",
+              color: "FFFFFF",
               letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
             }}
           >
             GEEKERS
           </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pages.map((page, index) => (
-              <Button
-                key={index}
-                onClick={(handleCloseNavMenu, () => handleClick(index))}
-                sx={{ mx: 2, my: 2, color: "white", display: "block" }}
-              >
-                {page}
-              </Button>
-            ))}
-          </Box>
           <div className={style.mode}>
             {darkMode ? (
-              <LightModeIcon fontSize="small" onClick={handleDarkMode} />
+              <LightModeIcon
+                fontSize="small"
+                cursor="pointer"
+                onClick={handleDarkMode}
+              />
             ) : (
-              <DarkModeIcon fontSize="small" onClick={handleDarkMode} />
+              <DarkModeIcon
+                fontSize="small"
+                cursor="pointer"
+                onClick={handleDarkMode}
+              />
             )}
           </div>
           <Box sx={{ flexGrow: 0 }}>

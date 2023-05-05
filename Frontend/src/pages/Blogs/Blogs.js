@@ -8,6 +8,7 @@ import { useState, useEffect } from "react";
 import SERVER_URL from "../../utils/ServerURL";
 import Chip from "@mui/material/Chip";
 import { toast } from "react-toastify";
+import { AppBar } from "@mui/material";
 
 const Blogs = () => {
   const navigate = useNavigate();
@@ -72,87 +73,97 @@ const Blogs = () => {
   }, [selectedCategory]);
 
   return (
-    <div>
+    <>
       <Header />
-      <div className={style.container}>
-        <div className={style.writeBlog}>
-          <Button
-            color="info"
-            variant="contained"
-            startIcon={<ModeEditIcon />}
-            onClick={() => {
-              if (window.localStorage.getItem("username") === null) {
-                toast("Please Login First", {
-                  type: "error",
-                  position: "top-center",
-                });
-                navigate("/signIn");
-              } else {
-                navigate("/blogs/createBlog");
-              }
-            }}
-          >
-            Write a Blog
-          </Button>
-        </div>
-        <div className={style.allCategories}>
-          <div className={style.categories}>
-            <h3>Tags</h3>
-            <div className={style.allCategoriesChip}>
-              {allCategories?.map((category, index) => {
+      <div
+        style={{
+          display: "flex",
+          widhth: "100%",
+          justifyContent: "center",
+        }}
+      >
+        <div className={style.container}>
+          <div className={style.writeBlog}>
+            <Button
+              color="info"
+              variant="contained"
+              startIcon={<ModeEditIcon />}
+              onClick={() => {
+                if (window.localStorage.getItem("username") === null) {
+                  toast("Please Login First", {
+                    type: "error",
+                    position: "top-center",
+                  });
+                  navigate("/signIn");
+                } else {
+                  navigate("/blogs/createBlog");
+                }
+              }}
+            >
+              Write a Blog
+            </Button>
+          </div>
+          <div className={style.allCategories}>
+            <div className={style.categories}>
+              <h3>Tags</h3>
+              <div className={style.allCategoriesChip}>
+                {allCategories?.map((category, index) => {
+                  return (
+                    <Chip
+                      key={index}
+                      color="info"
+                      variant={
+                        selectedCategory.includes(category.categoryName)
+                          ? "filled"
+                          : "outlined"
+                      }
+                      label={category.categoryName}
+                      cursor="pointer"
+                      onClick={() =>
+                        handleSelectCategory(category.categoryName)
+                      }
+                    />
+                  );
+                })}
+              </div>
+            </div>
+            <div className={style.selectedCategoriesChip}>
+              {selectedCategory?.map((selectedCategory, index) => {
                 return (
                   <Chip
                     key={index}
                     color="info"
-                    variant={
-                      selectedCategory.includes(category.categoryName)
-                        ? "filled"
-                        : "outlined"
-                    }
-                    label={category.categoryName}
+                    variant="filled"
+                    label={selectedCategory}
                     cursor="pointer"
-                    onClick={() => handleSelectCategory(category.categoryName)}
+                    onDelete={() => handleSelectCategory(selectedCategory)}
                   />
                 );
               })}
             </div>
           </div>
-          <div className={style.selectedCategoriesChip}>
-            {selectedCategory?.map((selectedCategory, index) => {
-              return (
-                <Chip
-                  key={index}
-                  color="info"
-                  variant="filled"
-                  label={selectedCategory}
-                  cursor="pointer"
-                  onDelete={() => handleSelectCategory(selectedCategory)}
-                />
-              );
+
+          {/* <div className={style.content}> */}
+          <div className={style.blogs}>
+            {blogs?.map((blog) => {
+              return <Blog key={blog._id} blog={blog} />;
             })}
           </div>
-        </div>
-
-        {/* <div className={style.content}> */}
-        <div className={style.blogs}>
-          {blogs?.map((blog) => {
-            return <Blog key={blog._id} blog={blog} />;
-          })}
-        </div>
-        {/* </div> */}
-        <div className={style.loadMore}>
-          <button
-            disabled={countAllBlogs <= limit}
-            className={style.loadMoreButton}
-            onClick={() => {
-              setLimit(limit + 5);
-            }}
-          >
-            Load more...
-          </button>
+          {/* </div> */}
+          <div className={style.loadMore}>
+            <button
+              disabled={countAllBlogs <= limit}
+              className={style.loadMoreButton}
+              onClick={() => {
+                setLimit(limit + 5);
+              }}
+            >
+              Load more...
+            </button>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

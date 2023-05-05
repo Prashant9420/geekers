@@ -4,13 +4,13 @@ import { createTheme } from "@mui/material/styles";
 export const DarkTheme = createTheme({
   palette: {
     primary: {
-      main: "#0f172a",
+      main: "#1C2834",
     },
     background: {
-      default: "#0f172a",
+      default: "#0D1B2A",
     },
     secondary: {
-      main: "#0f172a",
+      main: "#0d1b2a",
     },
     text: {
       primary: "#FFFFFF",
@@ -37,13 +37,28 @@ export const DarkTheme = createTheme({
         },
       },
     },
-    MuiChip: {
+    MuiSelect: {
       styleOverrides: {
         root: {
           color: "#FFFFFF",
+          backgroundColor: "#023047",
         },
       },
     },
+
+    MuiChip: {
+      styleOverrides: {
+        root: {
+          color: "#0d1b2a",
+          backgroundColor: "#FFFFFF",
+          "&:hover": {
+            color: "#FFFFFF",
+            backgroundColor: "#0d1b2a",
+          },
+        },
+      },
+    },
+
     MuiTextField: {
       styleOverrides: {
         root: {
@@ -51,6 +66,7 @@ export const DarkTheme = createTheme({
           label: {
             color: "#FFFFFF",
           },
+          backgroundColor: "#415a77",
         },
       },
     },
@@ -109,20 +125,21 @@ export const DarkTheme = createTheme({
 export const LightTheme = createTheme({
   palette: {
     primary: {
-      main: "#CBF7ED",
+      main: "#1C2834",
     },
     background: {
-      default: "#CBF7ED",
+      default: "#FFFFFF",
     },
     secondary: {
-      main: "#23395B",
+      main: "#e0e1dd",
     },
     text: {
-      primary: "#0f172a",
+      primary: "#0d1b2a",
     },
   },
   typography: {
     fontFamily: "Poppins",
+    color: "#0d1b2a",
   },
 
   components: {
@@ -130,7 +147,7 @@ export const LightTheme = createTheme({
       styleOverrides: {
         root: {
           borderRadius: "10px",
-          color: "#0f172a",
+          color: "#FFFFFF",
         },
       },
     },
@@ -138,7 +155,11 @@ export const LightTheme = createTheme({
       styleOverrides: {
         root: {
           color: "#FFFFFF",
-          backgroundColor: "#2a9d8f",
+          backgroundColor: "#023047",
+          "&:hover": {
+            color: "#0d1b2a",
+            backgroundColor: "#FFFFFF",
+          },
         },
       },
     },
@@ -146,7 +167,11 @@ export const LightTheme = createTheme({
       styleOverrides: {
         root: {
           borderRadius: "10px",
-          color: "#0f172a",
+          color: "#FFFFFF",
+          backgroundColor: "#1E1E1E",
+          label: {
+            color: "#FFFFFF",
+          },
         },
       },
     },

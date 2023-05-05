@@ -32,13 +32,13 @@ const Blog = ({ blog }) => {
             <div className={style.time}>◦ {dateFormatter(createdAt)}</div>
           </div>
 
-          <div className={style.description}>{read.slice(0, 130)}...</div>
+          <div className={style.description}>{read.slice(0, 150)}...</div>
         </div>
         <div className={style.right}>
           <img src={imgUrl} alt="Not Found!" />
         </div>
       </div>
-      <div className={style.categories}>
+      {/* <div className={style.categories}>
         {categories?.map((category, index) => {
           return (
             <button key={index} className={style.category}>
@@ -46,7 +46,7 @@ const Blog = ({ blog }) => {
             </button>
           );
         })}
-      </div>
+      </div> */}
     </div>
   );
 };
