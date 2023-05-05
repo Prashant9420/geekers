@@ -34,6 +34,10 @@ export const DarkTheme = createTheme({
         root: {
           color: "#FFFFFF",
           backgroundColor: "#023047",
+          "&:hover": {
+            color: "#FFFFFF",
+            backgroundColor: "#0d1b2a",
+          },
         },
       },
     },
@@ -66,7 +70,7 @@ export const DarkTheme = createTheme({
           label: {
             color: "#FFFFFF",
           },
-          backgroundColor: "#415a77",
+          // backgroundColor: "#415a77",
         },
       },
     },

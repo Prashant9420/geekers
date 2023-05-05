@@ -11,6 +11,8 @@ import { Button, Typography } from "@mui/material";
 import Snackbar from "../../utils/Snackbar";
 import SnackbarForCompiling from "../../utils/SnackbarForShowingWait";
 import CodeMirror from "@uiw/react-codemirror";
+// import "codemirror/lib/codemirror.css";
+// import "codemirror/theme/material.css";
 import { draculaInit } from "@uiw/codemirror-theme-dracula";
 import { tags as t } from "@lezer/highlight";
 import { java } from "@codemirror/lang-java";
@@ -165,13 +167,14 @@ int main() {
           display: "flex",
           gap: "2rem",
           margin: "1rem",
+          justifyContent: "space-around",
         }}
       >
         <div
           style={{
             display: "flex",
             flexDirection: "column",
-            width: "55.5rem",
+            width: "40vw",
             borderRadius: "10px",
             padding: ".6rem",
             height: "46rem",
@@ -188,6 +191,7 @@ int main() {
           <div
             style={{
               display: "flex",
+              width: "50vw",
               alignItems: "center",
               justifyContent: "space-between",
               marginBottom: "1rem",
@@ -202,7 +206,7 @@ int main() {
                 setLanguage(event.target.value);
                 setCode(languageDefaultCode[event.target.value]);
               }}
-              style={{ width: "30rem" }}
+              style={{ width: "15rem" }}
             >
               {languageArray.map((item, index) => {
                 return (
@@ -212,23 +216,11 @@ int main() {
                 );
               })}
             </Select>
-            {/* <Button
-              onClick={executeCode}
-              variant="contained"
-              color="success"
-              endIcon={<SendIcon />}
-              style={{
-                height: "3rem",
-                marginRight: "10rem",
-              }}
-            >
-              Run
-            </Button> */}
-            <div style={{ display: "flex", gap: "1rem" }}>
-              <InputLabel>Run</InputLabel>
-              <SendIcon onClick={executeCode} style={{ cursor: "pointer" }} />
-            </div>
-            <div style={{ display: "flex", gap: ".5rem" }}>
+
+            <div style={{ display: "flex", gap: "1rem", padding: "0 15px" }}>
+              <Tooltip title="Run" placement="top">
+                <SendIcon onClick={executeCode} style={{ cursor: "pointer" }} />
+              </Tooltip>
               {copy ? (
                 <Tooltip title="Copied" placement="top">
                   <LibraryAddCheckRoundedIcon />
@@ -242,13 +234,16 @@ int main() {
                 </Tooltip>
               )}
               <Tooltip title="Download" placement="top">
-                <DownloadRoundedIcon onClick={handleDownloadCode} />
+                <DownloadRoundedIcon
+                  onClick={handleDownloadCode}
+                  sx={{ cursor: "pointer" }}
+                />
               </Tooltip>
             </div>
           </div>
           <CodeMirror
             value={languageDefaultCode[language]}
-            height="71vh"
+            height="37.3rem"
             width="50vw"
             extensions={[extensionsEditor[language]]}
             onChange={(value) => {
@@ -271,44 +266,59 @@ int main() {
           style={{
             display: "flex",
             flexDirection: "column",
-            gap: "2rem",
+            justifyContent: "space-around",
+            gap: ".5rem",
             flexWrap: "wrap",
-            width: "50rem",
-            marginTop: "7rem",
+            width: "30rem",
+            height: "45.7rem",
+            marginTop: ".3rem",
           }}
         >
-          <TextField
-            label="Console"
-            multiline
-            value={consoleInputs[language]}
-            onChange={(e) => {
-              setConsoleInputs({
-                ...consoleInputs,
-                [language]: e.target.value,
-              });
-            }}
-            inputProps={{ style: { fontSize: 20 } }}
-            InputLabelProps={{ style: { fontSize: 25 } }}
-            sx={{
-              backgroundColor: "#282A36",
-              color: "#f8f8f2",
-            }}
-            variant="outlined"
-            rows={6}
-          />
-          <TextField
-            label="Output"
-            multiline
-            value={outputBoxValue[language]}
-            variant="outlined"
-            rows={16}
-            inputProps={{ style: { fontSize: 20 } }}
-            InputLabelProps={{ style: { fontSize: 25 } }}
-            sx={{
-              backgroundColor: "#282A36",
-              color: "#f8f8f2",
-            }}
-          />
+          <div>
+            <InputLabel>Console</InputLabel>
+            <TextField
+              multiline
+              value={consoleInputs[language]}
+              onChange={(e) => {
+                setConsoleInputs({
+                  ...consoleInputs,
+                  [language]: e.target.value,
+                });
+              }}
+              inputProps={{
+                style: {
+                  fontSize: 20,
+                  height: "10rem",
+                  width: "30rem",
+                },
+              }}
+              variant="outlined"
+              sx={{
+                backgroundColor: "#282A36",
+                color: "#f8f8f2",
+              }}
+            />
+          </div>
+          <div>
+            <InputLabel>Output</InputLabel>
+            <TextField
+              multiline
+              value={outputBoxValue[language]}
+              variant="outlined"
+              inputProps={{
+                style: {
+                  fontSize: 20,
+                  height: "23rem",
+                  width: "30rem",
+                  color: "#FFFFFF",
+                },
+              }}
+              sx={{
+                backgroundColor: "#282A36",
+                color: "#f8f8f2",
+              }}
+            />
+          </div>
         </div>
       </Box>
     </div>
