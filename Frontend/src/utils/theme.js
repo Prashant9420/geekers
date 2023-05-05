@@ -70,7 +70,6 @@ export const DarkTheme = createTheme({
           label: {
             color: "#FFFFFF",
           },
-          // backgroundColor: "#415a77",
         },
       },
     },

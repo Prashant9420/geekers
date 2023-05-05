@@ -6,7 +6,7 @@ const Events = () => {
     <div className={style.events}>
       <Header />
       <div className={style.events}>
-        <h1>Events</h1>
+        <h1>In Progress...</h1>
       </div>
     </div>
   );

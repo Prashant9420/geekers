@@ -168,16 +168,18 @@ int main() {
           gap: "2rem",
           margin: "1rem",
           justifyContent: "space-around",
+          alignItems: "flex-end",
+          height: "88vh",
         }}
       >
         <div
           style={{
             display: "flex",
             flexDirection: "column",
+            flexWrap: "wrap",
             width: "40vw",
             borderRadius: "10px",
-            padding: ".6rem",
-            height: "46rem",
+            height: "43.6rem",
           }}
         >
           <InputLabel
@@ -191,6 +193,7 @@ int main() {
           <div
             style={{
               display: "flex",
+              flexWrap: "wrap",
               width: "50vw",
               alignItems: "center",
               justifyContent: "space-between",
@@ -243,7 +246,7 @@ int main() {
           </div>
           <CodeMirror
             value={languageDefaultCode[language]}
-            height="37.3rem"
+            height="36.5rem"
             width="50vw"
             extensions={[extensionsEditor[language]]}
             onChange={(value) => {
@@ -258,7 +261,12 @@ int main() {
                 caret: "#c6c6c6",
                 fontFamily: "monospace",
               },
-              styles: [{ tag: t.comment, color: "#6272a4" }],
+              styles: [
+                {
+                  tag: t.comment,
+                  color: "#6272a4",
+                },
+              ],
             })}
           />
         </div>
@@ -266,58 +274,66 @@ int main() {
           style={{
             display: "flex",
             flexDirection: "column",
-            justifyContent: "space-around",
-            gap: ".5rem",
-            flexWrap: "wrap",
-            width: "30rem",
-            height: "45.7rem",
-            marginTop: ".3rem",
+            justifyContent: "flex-end",
+            height: "43.6rem",
           }}
         >
-          <div>
-            <InputLabel>Console</InputLabel>
-            <TextField
-              multiline
-              value={consoleInputs[language]}
-              onChange={(e) => {
-                setConsoleInputs({
-                  ...consoleInputs,
-                  [language]: e.target.value,
-                });
-              }}
-              inputProps={{
-                style: {
-                  fontSize: 20,
-                  height: "10rem",
-                  width: "30rem",
-                },
-              }}
-              variant="outlined"
-              sx={{
-                backgroundColor: "#282A36",
-                color: "#f8f8f2",
-              }}
-            />
-          </div>
-          <div>
-            <InputLabel>Output</InputLabel>
-            <TextField
-              multiline
-              value={outputBoxValue[language]}
-              variant="outlined"
-              inputProps={{
-                style: {
-                  fontSize: 20,
-                  height: "23rem",
-                  width: "30rem",
-                  color: "#FFFFFF",
-                },
-              }}
-              sx={{
-                backgroundColor: "#282A36",
-                color: "#f8f8f2",
-              }}
-            />
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-around",
+              gap: ".5rem",
+              flexWrap: "wrap",
+              width: "30rem",
+              height: "39.2rem",
+            }}
+          >
+            <div>
+              <InputLabel>Console</InputLabel>
+              <TextField
+                multiline
+                value={consoleInputs[language]}
+                onChange={(e) => {
+                  setConsoleInputs({
+                    ...consoleInputs,
+                    [language]: e.target.value,
+                  });
+                }}
+                inputProps={{
+                  style: {
+                    fontSize: 20,
+                    height: "8rem",
+                    width: "28rem",
+                  },
+                }}
+                variant="outlined"
+                sx={{
+                  backgroundColor: "#282A36",
+                  color: "#f8f8f2",
+                }}
+              />
+            </div>
+            <div>
+              <InputLabel>Output</InputLabel>
+              <TextField
+                multiline
+                value={outputBoxValue[language]}
+                variant="outlined"
+                inputProps={{
+                  style: {
+                    fontSize: 20,
+                    height: "21.8rem",
+                    width: "28rem",
+                    color: "#FFFFFF",
+                  },
+                }}
+                sx={{
+                  backgroundColor: "#282A36",
+                  color: "#f8f8f2",
+                }}
+              />
+            </div>
           </div>
         </div>
       </Box>
