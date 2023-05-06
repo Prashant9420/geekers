@@ -18,6 +18,7 @@ export const DarkTheme = createTheme({
   },
   typography: {
     fontFamily: "Poppins",
+    color: "#FFFFFF",
   },
 
   components: {

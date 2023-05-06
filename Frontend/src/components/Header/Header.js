@@ -20,6 +20,7 @@ import Tooltip from "@mui/material/Tooltip";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { googleLogout } from "@react-oauth/google";
 import { useMediaQuery, useTheme } from "@mui/material";
+import logo from "./logo.jpeg";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -72,7 +73,16 @@ const Header = () => {
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          {/* <img src={logo} alt="Not Found" /> */}
+          {/* <img
+            src={logo}
+            style={{
+              height: "50px",
+              width: "50px",
+              borderRadius: "50%",
+              marginRight: "10px",
+            }}
+            alt="Not Found"
+          /> */}
           <Typography
             variant="h6"
             noWrap
@@ -83,7 +93,7 @@ const Header = () => {
               display: { xs: "none", md: "flex" },
               fontFamily: "Montserrat",
               fontWeight: 700,
-              color: "FFFFFF",
+              color: "#FFFFFF",
               letterSpacing: ".3rem",
               textDecoration: "none",
             }}
@@ -135,7 +145,15 @@ const Header = () => {
                     key={index}
                     onClick={(handleCloseNavMenu, () => handleClick(index))}
                   >
-                    <Typography textAlign="center">{page}</Typography>
+                    <Typography
+                      textAlign="center"
+                      sx={{
+                        fontWeight: "bold",
+                        fontSize: "1rem",
+                      }}
+                    >
+                      {page}
+                    </Typography>
                   </MenuItem>
                 ))}
               </Menu>
@@ -146,7 +164,14 @@ const Header = () => {
                 <Button
                   key={index}
                   onClick={(handleCloseNavMenu, () => handleClick(index))}
-                  sx={{ mx: 2, my: 2, display: "block", color: "FFFFFF" }}
+                  sx={{
+                    mx: 2,
+                    my: 2,
+                    display: "block",
+                    fontWeight: "bold",
+                    fontSize: "1rem",
+                    letterSpacing: ".1rem",
+                  }}
                 >
                   {page}
                 </Button>
@@ -166,7 +191,7 @@ const Header = () => {
               fontFamily: "Montserrat",
               fontWeight: 700,
               fontSize: ".7rem",
-              color: "FFFFFF",
+              color: "#FFFFFF",
               letterSpacing: ".3rem",
             }}
           >
