@@ -20,6 +20,7 @@ import Tooltip from "@mui/material/Tooltip";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { googleLogout } from "@react-oauth/google";
 import { useMediaQuery, useTheme } from "@mui/material";
+// import { makeStyles } from "@material-ui/core/styles";
 import logo from "./logo.jpeg";
 
 const Header = () => {
@@ -32,6 +33,33 @@ const Header = () => {
   const [anchorElUser, setAnchorElUser] = useState(null);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+
+  // const useStyles = makeStyles((theme) => ({
+  //   button: {
+  //     position: "relative",
+  //     transition: "transform 0.3s, box-shadow 0.3s",
+  //     "&::before": {
+  //       content: '""',
+  //       position: "absolute",
+  //       top: "100%",
+  //       left: 0,
+  //       width: "100%",
+  //       height: "100%",
+  //       background: "rgba(0, 0, 0, 0.2)",
+  //       opacity: 0,
+  //       transition: "opacity 0.3s",
+  //     },
+  //     "&:hover": {
+  //       transform: "translateY(-5px)",
+  //       boxShadow: "0 5px 10px rgba(0, 0, 0, 0.3)",
+  //     },
+  //     "&:hover::before": {
+  //       opacity: 1,
+  //     },
+  //   },
+  // }));
+
+  // const classes = useStyles();
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -171,6 +199,10 @@ const Header = () => {
                     fontWeight: "bold",
                     fontSize: "1rem",
                     letterSpacing: ".1rem",
+                    "&:hover": {
+                      transform: "scale(.8)",
+                      boxShadow: "0 5px 10px rgba(0, 0, 0, 0.3)",
+                    },
                   }}
                 >
                   {page}

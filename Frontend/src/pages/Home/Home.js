@@ -12,11 +12,9 @@ const Home = () => {
           <source src={videoFile} type="video/mp4" />
         </video>
       </div>
-      <Typography
-        sx={{ fontSize: "5rem", textAlign: "center", fontWeight: "bold" }}
-      >
-        Explore Learn Build
-      </Typography>
+      <div className={style.container}>
+        <header>Explore Learn Build</header>
+      </div>
     </>
   );
 };

@@ -151,6 +151,11 @@ const SignIn = () => {
             pattern="^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            required
+            sx={{
+              width: "13.8rem",
+              border: "1px solid  ",
+            }}
           />
           <FormControl sx={{ m: 1, width: "27ch" }} variant="outlined">
             <InputLabel htmlFor="outlined-adornment-password">
@@ -161,6 +166,12 @@ const SignIn = () => {
               type={showPassword ? "text" : "password"}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              required
+              sx={{
+                width: "13.8rem",
+                marginBottom: "2rem",
+                border: "1px solid  ",
+              }}
               endAdornment={
                 <InputAdornment position="end">
                   <IconButton
@@ -181,6 +192,7 @@ const SignIn = () => {
             className={style.button}
             onClick={handleSubmit}
             type="submit"
+            sx={{ width: "13.8rem" }}
           >
             Login
           </Button>

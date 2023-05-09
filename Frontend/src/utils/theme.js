@@ -54,8 +54,8 @@ export const DarkTheme = createTheme({
     MuiChip: {
       styleOverrides: {
         root: {
-          color: "#0d1b2a",
-          backgroundColor: "#FFFFFF",
+          color: "#FFFFFF",
+          backgroundColor: "#023047",
           "&:hover": {
             color: "#FFFFFF",
             backgroundColor: "#0d1b2a",
@@ -81,6 +81,7 @@ export const DarkTheme = createTheme({
           label: {
             color: "#FFFFFF",
           },
+          // backgroundColor: "#023047",
         },
       },
     },
@@ -132,7 +133,7 @@ export const LightTheme = createTheme({
       main: "#1C2834",
     },
     background: {
-      default: "#FFFFFF",
+      default: "#bde0fe",
     },
     secondary: {
       main: "#e0e1dd",
@@ -152,6 +153,7 @@ export const LightTheme = createTheme({
         root: {
           borderRadius: "10px",
           color: "#FFFFFF",
+          backgroundColor: "#023047",
         },
       },
     },
@@ -176,6 +178,62 @@ export const LightTheme = createTheme({
           label: {
             color: "#FFFFFF",
           },
+        },
+      },
+    },
+    MuiOutlinedInput: {
+      styleOverrides: {
+        root: {
+          borderRadius: "10px",
+          color: "#FFFFFF",
+          backgroundColor: "#1E1E1E",
+          label: {
+            color: "#FFFFFF",
+          },
+        },
+      },
+    },
+    MuiInputLabel: {
+      styleOverrides: {
+        root: {
+          color: "#FFFFFF",
+          label: {
+            color: "#FFFFFF",
+          },
+        },
+      },
+    },
+    MuiMenuItem: {
+      styleOverrides: {
+        root: {
+          color: "#FFFFFF",
+          backgroundColor: "#023047",
+          "&:hover": {
+            color: "#FFFFFF",
+            backgroundColor: "#0d1b2a",
+          },
+        },
+      },
+    },
+    MuiSelect: {
+      styleOverrides: {
+        root: {
+          color: "#FFFFFF",
+          backgroundColor: "#023047",
+        },
+      },
+    },
+    MuiIconButton: {
+      styleOverrides: {
+        root: {
+          color: "#FFFFFF",
+        },
+      },
+    },
+    MuiLink: {
+      styleOverrides: {
+        root: {
+          color: "#FFFFFF",
         },
       },
     },

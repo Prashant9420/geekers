@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 import qs from "qs";
 import Box from "@mui/material/Box";
@@ -11,8 +11,6 @@ import { Button, Typography } from "@mui/material";
 import Snackbar from "../../utils/Snackbar";
 import SnackbarForCompiling from "../../utils/SnackbarForShowingWait";
 import CodeMirror from "@uiw/react-codemirror";
-// import "codemirror/lib/codemirror.css";
-// import "codemirror/theme/material.css";
 import { draculaInit } from "@uiw/codemirror-theme-dracula";
 import { tags as t } from "@lezer/highlight";
 import { java } from "@codemirror/lang-java";
