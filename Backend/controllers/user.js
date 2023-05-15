@@ -114,7 +114,7 @@ const mailer = (email, otp) => {
   var transporter = nodeMailer.createTransport({
     service: "gmail",
     port: 465,
-    secure: false,
+    secure: true,
     auth: {
       user: process.env.EMAIL,
       pass: process.env.PASSWORD,
