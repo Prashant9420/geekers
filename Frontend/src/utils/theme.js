@@ -233,7 +233,10 @@ export const LightTheme = createTheme({
     MuiLink: {
       styleOverrides: {
         root: {
-          color: "#FFFFFF",
+          // color: "#FFFFFF",
+          "&:hover": {
+            // color: "#FFFFFF",
+          },
         },
       },
     },
