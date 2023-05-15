@@ -113,7 +113,6 @@ export const resetPassword = async (req, res, next) => {
 const mailer = (email, otp) => {
   const transporter = nodeMailer.createTransport({
     service: "gmail",
-    host: "smtp.gmail.com",
     port: 465,
     secure: true,
     auth: {
