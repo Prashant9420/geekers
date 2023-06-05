@@ -185,6 +185,34 @@ export const saveCode = async (req, res, next) => {
   }
 };
 
+export const deleteSavedCode = async (req, res, next) => {
+  const {email,fileId,googleUser } = req.body;
+  try {
+    if (googleUser) {
+      const user = await GoogleUser.findOne({ email: email });
+      if (!user) return next(createError(404, "User not found!"));
+      const objWithIdIndex = user.savedCodes.findIndex((obj) => obj.id === fileId);
+      if (objWithIdIndex > -1) {
+        user.savedCodes=user.savedCodes.splice(objWithIdIndex, 1);
+      }
+      await user.save();
+      return res.status(200).send("Code deleted successfully!");
+    }
+    const user = await User.findOne({ email: email });
+    console.log(user);
+    if (!user) return next(createError(404, "User not found!"));
+      const objWithIdIndex = user.savedCodes.findIndex((obj) => obj.id === fileId);
+      if (objWithIdIndex > -1) {
+        user.savedCodes.splice(objWithIdIndex,1);
+        // console.log(user.savedCodes);
+      }
+      await user.save();
+      return res.status(200).send("Code deleted successfully!");
+  } catch (err) {
+    next(err);
+  }
+};
+
 export const getSavedCodes = async (req, res, next) => {
   const { email, googleUser } = req.body;
   try {
