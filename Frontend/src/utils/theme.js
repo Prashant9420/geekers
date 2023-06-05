@@ -19,8 +19,25 @@ export const DarkTheme = createTheme({
   typography: {
     fontFamily: "Poppins",
     color: "#FFFFFF",
+    h1: {
+      fontSize: "5rem",
+      "@media (max-width:600px)": {
+        fontSize: "3rem",
+      },
+      "@media (max-width:900px)": {
+        fontSize: "4rem",
+      },
+      "@media (max-width:1200px)": {
+        fontSize: "3rem",
+      },
+      "@media (max-width:1600px)": {
+        fontSize: "4rem",
+      },
+      "@media (max-width:2000px)": {
+        fontSize: "3rem",
+      },
+    },
   },
-
   components: {
     MuiButton: {
       styleOverrides: {

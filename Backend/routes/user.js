@@ -5,6 +5,8 @@ import {
   registerUser,
   resetPassword,
   googleLogin,
+  saveCode,
+  getSavedCodes,
 } from "../controllers/user.js";
 
 const router = express.Router();
@@ -28,5 +30,13 @@ router.post("/resetPassword", resetPassword);
 // GOOGLE LOGIN
 
 router.post("/googleLogin", googleLogin);
+
+// SAVE CODE
+
+router.post("/saveCode", saveCode);
+
+// GET SAVED CODES
+
+router.post("/getSavedCodes", getSavedCodes);
 
 export default router;

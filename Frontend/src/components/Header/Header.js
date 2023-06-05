@@ -20,8 +20,8 @@ import Tooltip from "@mui/material/Tooltip";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { googleLogout } from "@react-oauth/google";
 import { useMediaQuery, useTheme } from "@mui/material";
-// import { makeStyles } from "@material-ui/core/styles";
 import logo from "./logo.jpeg";
+import { toast } from "react-toastify";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -33,33 +33,6 @@ const Header = () => {
   const [anchorElUser, setAnchorElUser] = useState(null);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
-
-  // const useStyles = makeStyles((theme) => ({
-  //   button: {
-  //     position: "relative",
-  //     transition: "transform 0.3s, box-shadow 0.3s",
-  //     "&::before": {
-  //       content: '""',
-  //       position: "absolute",
-  //       top: "100%",
-  //       left: 0,
-  //       width: "100%",
-  //       height: "100%",
-  //       background: "rgba(0, 0, 0, 0.2)",
-  //       opacity: 0,
-  //       transition: "opacity 0.3s",
-  //     },
-  //     "&:hover": {
-  //       transform: "translateY(-5px)",
-  //       boxShadow: "0 5px 10px rgba(0, 0, 0, 0.3)",
-  //     },
-  //     "&:hover::before": {
-  //       opacity: 1,
-  //     },
-  //   },
-  // }));
-
-  // const classes = useStyles();
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -78,6 +51,15 @@ const Header = () => {
 
   const handleClick = (index) => {
     navigate(`/${pages[index].toLowerCase()}`);
+  };
+
+  const handleSettings = (index) => {
+    if (window.localStorage.getItem("username") === null) {
+      toast.error("Please Sign In to continue");
+      navigate(`/${"signin"}`);
+      return;
+    }
+    navigate(`/${settings[index].toLowerCase()}`);
   };
 
   const handleDarkMode = () => {
@@ -112,7 +94,7 @@ const Header = () => {
             alt="Not Found"
           /> */}
           <Typography
-            variant="h6"
+            variant="h1"
             noWrap
             component="a"
             href="/"
@@ -211,7 +193,7 @@ const Header = () => {
             </Box>
           )}
           <Typography
-            variant="h5"
+            variant="h1"
             noWrap
             component="a"
             href=""
@@ -300,8 +282,11 @@ const Header = () => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+              {settings.map((setting, index) => (
+                <MenuItem
+                  key={index}
+                  onClick={(handleCloseUserMenu, () => handleSettings(index))}
+                >
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
               ))}

@@ -1,10 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import qs from "qs";
 import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import SendIcon from "@mui/icons-material/Send";
 import { Button, Typography } from "@mui/material";
@@ -23,12 +22,47 @@ import { toast } from "react-toastify";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import LibraryAddCheckRoundedIcon from "@mui/icons-material/LibraryAddCheckRounded";
 import Tooltip from "@mui/material/Tooltip";
-import DownloadRoundedIcon from "@mui/icons-material/DownloadRounded";
 import { saveAs } from "file-saver";
+import DownloadRoundedIcon from "@mui/icons-material/DownloadRounded";
+import SaveRoundedIcon from "@mui/icons-material/SaveRounded";
+import ServerURL from "../../utils/ServerURL";
+import Modal from "@mui/material/Modal";
+import { AuthContext } from "../../App";
 
 const Compiler = () => {
   const [language, setLanguage] = useState("Java");
   const [copy, setCopy] = useState(false);
+  const [fileName, setFileName] = useState("");
+  const [openModal, setOpenModal] = useState(false);
+  const [openFilesModal, setOpenFilesModal] = useState(false);
+
+  useEffect(() => {
+    if (window.localStorage.getItem("email") === null) {
+      return;
+    }
+    getSavedCodes();
+  }, []);
+
+  const { googleUser, setGoogleUser } = useContext(AuthContext);
+  window.localStorage.getItem("avatar") === null
+    ? setGoogleUser(false)
+    : setGoogleUser(true);
+
+  const handleOpenFilesModal = () => {
+    setOpenFilesModal(true);
+  };
+
+  const handleCloseFilesModal = () => {
+    setOpenFilesModal(false);
+  };
+
+  const handleOpenModal = () => {
+    setOpenModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setOpenModal(false);
+  };
 
   const handleCopyCode = () => {
     setCopy(true);
@@ -38,6 +72,75 @@ const Compiler = () => {
       setCopy(false);
     }, 1500);
   };
+
+  const handleSaveCode = async () => {
+    if (window.localStorage.getItem("username") === null) {
+      toast("Please Login to Save Code!", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+      });
+      return;
+    }
+    try {
+      const res = await fetch(`${ServerURL}/user/saveCode/`, {
+        method: "POST",
+        credentials: "include",
+        withCredentials: true,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          fileName,
+          language,
+          code,
+          email: window.localStorage.getItem("email"),
+          googleUser,
+        }),
+      });
+
+      if (res.status === 200) {
+        setFileName("");
+        handleCloseModal();
+        toast("Code Saved Successfully!", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+        });
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const getSavedCodes = async () => {
+    try {
+      const res = await fetch(`${ServerURL}/user/getSavedCodes/`, {
+        method: "POST",
+        credentials: "include",
+        withCredentials: true,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: window.localStorage.getItem("email"),
+          googleUser,
+        }),
+      });
+
+      if (res.status === 200) {
+        const data = await res.json();
+        console.log(data);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const handleDownloadCode = () => {
     const blob = new Blob([code], { type: "text/plain;charset=utf-8" });
     saveAs(blob, `code.${languageArrayExtension[language]}`);
@@ -219,6 +322,49 @@ int main() {
             </Select>
 
             <div style={{ display: "flex", gap: "1rem", padding: "0 15px" }}>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={handleOpenFilesModal}
+                style={{ width: "8rem", height: "2.5rem" }}
+              >
+                My Files
+              </Button>
+              <Modal
+                open={openFilesModal}
+                onClose={handleCloseFilesModal}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+              >
+                <Box
+                  sx={{
+                    position: "absolute",
+                    top: "50%",
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                    width: 400,
+                    bgcolor: "background.paper",
+                    color: "black",
+                    border: "2px solid #000",
+                    boxShadow: 24,
+                    p: 4,
+                  }}
+                >
+                  <h2 id="modal-modal-title">My Files</h2>
+                  <p id="modal-modal-description">
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: "1rem",
+                      }}
+                    >
+                      My Files
+                    </div>
+                  </p>
+                </Box>
+              </Modal>
+
               <Tooltip title="Run" placement="top">
                 <SendIcon onClick={executeCode} style={{ cursor: "pointer" }} />
               </Tooltip>
@@ -234,6 +380,59 @@ int main() {
                   />
                 </Tooltip>
               )}
+              <Tooltip title="Save" placement="top">
+                <SaveRoundedIcon
+                  onClick={handleOpenModal}
+                  style={{ cursor: "pointer" }}
+                />
+              </Tooltip>
+              <Modal
+                open={openModal}
+                onClose={handleCloseModal}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+              >
+                <Box
+                  sx={{
+                    position: "absolute",
+                    top: "50%",
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                    width: 400,
+                    border: "2px solid ",
+                    boxShadow: 24,
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    p: 4,
+                  }}
+                >
+                  <Typography
+                    id="modal-modal-title"
+                    variant="h6"
+                    component="h2"
+                    sx={{ textAlign: "center" }}
+                  >
+                    Save Code
+                  </Typography>
+                  <TextField
+                    id="outlined-basic"
+                    label="Enter File Name"
+                    variant="outlined"
+                    required
+                    value={fileName}
+                    onChange={(event) => setFileName(event.target.value)}
+                    sx={{ width: "100%", margin: "1rem 0" }}
+                  />
+                  <Button
+                    variant="contained"
+                    onClick={handleSaveCode}
+                    sx={{ width: "60%" }}
+                  >
+                    Save
+                  </Button>
+                </Box>
+              </Modal>
               <Tooltip title="Download" placement="top">
                 <DownloadRoundedIcon
                   onClick={handleDownloadCode}

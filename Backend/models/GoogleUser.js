@@ -17,6 +17,30 @@ const GoogleUserSchema = new mongoose.Schema({
   avatar: {
     type: String,
   },
+  // createdBlogs Schema
+  createdBlogs: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Blog",
+    },
+  ],
+  // savedCode Schema
+  savedCodes: [
+    {
+      fileName: {
+        type: String,
+      },
+      language: {
+        type: String,
+      },
+      code: {
+        type: String,
+      },
+      email: {
+        type: String,
+      },
+    },
+  ],
 });
 
 export default mongoose.model("GoogleUser", GoogleUserSchema);

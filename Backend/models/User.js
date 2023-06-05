@@ -16,6 +16,30 @@ const UserSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    // createdBlogs Schema
+    createdBlogs: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Blog",
+      },
+    ],
+    // savedCode Schema
+    savedCodes: [
+      {
+        fileName: {
+          type: String,
+        },
+        language: {
+          type: String,
+        },
+        code: {
+          type: String,
+        },
+        email: {
+          type: String,
+        },
+      },
+    ],
   },
   {
     timestamps: true,

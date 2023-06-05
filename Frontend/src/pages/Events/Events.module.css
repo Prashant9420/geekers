@@ -1,4 +1,35 @@
-.events {
+.header {
   width: 100%;
   height: 100%;
+  display: flex;
+  justify-content: center;
+}
+.contest {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 70vh;
+  border: 2px solid;
+}
+.contestCard {
+  border: 2px solid;
+  border-radius: 10px;
+  width: 25%;
+  height: 50%;
+}
+.contestCard:hover {
+}
+.contestCard__title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  align-items: center;
+  text-align: center;
+  border: 2px solid;
+}
+.contestCard:hover .contestCard__title {
+  color: #a18787;
 }

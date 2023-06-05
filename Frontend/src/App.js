@@ -18,21 +18,30 @@ import { ThemeProvider, createTheme } from "@mui/material";
 import CssBaseline from "@mui/material/CssBaseline";
 import ForgotPassword from "./pages/SignIn/ForgotPassword/ForgotPassword";
 import ResetPassword from "./pages/SignIn/ResetPassword/ResetPassword";
-import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 import { DarkTheme, LightTheme } from "./utils/theme.js";
+import Profile from "./pages/Profile/Profile";
 
 export const AuthContext = createContext(null);
 
 function App() {
   const [username, setUsername] = useState("");
   const [darkMode, setDarkMode] = useState(true);
+  const [googleUser, setGoogleUser] = useState(false);
 
   return (
     <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}>
       <ThemeProvider theme={darkMode ? DarkTheme : LightTheme}>
         <CssBaseline />
         <AuthContext.Provider
-          value={{ username, setUsername, darkMode, setDarkMode }}
+          value={{
+            username,
+            setUsername,
+            darkMode,
+            setDarkMode,
+            googleUser,
+            setGoogleUser,
+          }}
         >
           <ToastContainer />
           <Router>
@@ -59,6 +68,7 @@ function App() {
                 element={<ResetPassword />}
               />
               <Route exact path="/signUp" element={<SignUp />} />
+              <Route exact path="/profile" element={<Profile />} />
             </Routes>
           </Router>
         </AuthContext.Provider>

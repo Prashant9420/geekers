@@ -164,3 +164,39 @@ const registerUserMail = (email, name) => {
     }
   });
 };
+
+export const saveCode = async (req, res, next) => {
+  const { fileName, code, language, email, googleUser } = req.body;
+  try {
+    if (googleUser) {
+      const user = await GoogleUser.findOne({ email: email });
+      if (!user) return next(createError(404, "User not found!"));
+      user.savedCodes.push({ fileName, code, language, email });
+      await user.save();
+      return res.status(200).send("Code saved successfully!");
+    }
+    const user = await User.findOne({ email: email });
+    if (!user) return next(createError(404, "User not found!"));
+    user.savedCodes.push({ fileName, code, language, email });
+    await user.save();
+    res.status(200).send("Code saved successfully!");
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const getSavedCodes = async (req, res, next) => {
+  const { email, googleUser } = req.body;
+  try {
+    if (googleUser) {
+      const user = await GoogleUser.findOne({ email: email });
+      if (!user) return next(createError(404, "User not found!"));
+      return res.status(200).send(user.savedCodes);
+    }
+    const user = await User.findOne({ email: email });
+    if (!user) return next(createError(404, "User not found!"));
+    res.status(200).send(user.savedCodes);
+  } catch (err) {
+    next(err);
+  }
+};

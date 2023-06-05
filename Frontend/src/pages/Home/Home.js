@@ -1,4 +1,3 @@
-import { Typography } from "@mui/material";
 import Header from "../../components/Header/Header";
 import style from "./Home.module.css";
 import videoFile from "./video.mp4";
