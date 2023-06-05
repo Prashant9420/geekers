@@ -10,7 +10,7 @@ import morgan from "morgan";
 
 const app = express();
 
-dotenv.config();
+dotenv.config({path:'./config.env'});
 
 const connect = async () => {
   try {

@@ -113,7 +113,32 @@ const Compiler = () => {
     }
   };
 
-  const handleDeleteCode = async (fileName) => {};
+  const handleDeleteCode = async (fileId) => {
+    console.log(fileId);
+    try {
+      const res = await fetch(`${ServerURL}/user/deleteSavedCode/`, {
+        method: "POST",
+        credentials: "include",
+        withCredentials: true,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: window.localStorage.getItem("email"),
+          fileId,
+          googleUser,
+        }),
+      });
+
+      if (res.status === 200) {
+        getSavedCodes();
+      }
+    } catch (err) {
+      
+      console.log(err);
+    }
+
+  };
 
   const getSavedCodes = async () => {
     try {
@@ -132,10 +157,12 @@ const Compiler = () => {
 
       if (res.status === 200) {
         const data = await res.json();
+        
         console.log(data);
         setSavedCodes(data);
       }
     } catch (err) {
+      
       console.log(err);
     }
   };
@@ -368,7 +395,7 @@ int main() {
                           }}
                         >
                           {file.fileName}
-                          <DeleteIcon onClick={handleDeleteCode} />
+                          <DeleteIcon onClick={()=>handleDeleteCode(file._id)} />
                         </MenuItem>
                       );
                     })}
