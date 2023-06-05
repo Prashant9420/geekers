@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useContext } from "react";
 import axios from "axios";
 import qs from "qs";
 import Box from "@mui/material/Box";
@@ -17,13 +17,14 @@ import { python } from "@codemirror/lang-python";
 import { cpp } from "@codemirror/lang-cpp";
 import { javascript } from "@codemirror/lang-javascript";
 import Header from "../../components/Header/Header";
-import { TextField, Container } from "@mui/material";
+import { TextField } from "@mui/material";
 import { toast } from "react-toastify";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import LibraryAddCheckRoundedIcon from "@mui/icons-material/LibraryAddCheckRounded";
 import Tooltip from "@mui/material/Tooltip";
 import { saveAs } from "file-saver";
 import DownloadRoundedIcon from "@mui/icons-material/DownloadRounded";
+import DeleteIcon from "@mui/icons-material/Delete";
 import SaveRoundedIcon from "@mui/icons-material/SaveRounded";
 import ServerURL from "../../utils/ServerURL";
 import Modal from "@mui/material/Modal";
@@ -35,13 +36,7 @@ const Compiler = () => {
   const [fileName, setFileName] = useState("");
   const [openModal, setOpenModal] = useState(false);
   const [openFilesModal, setOpenFilesModal] = useState(false);
-
-  useEffect(() => {
-    if (window.localStorage.getItem("email") === null) {
-      return;
-    }
-    getSavedCodes();
-  }, []);
+  const [savedCodes, setSavedCodes] = useState([]);
 
   const { googleUser, setGoogleUser } = useContext(AuthContext);
   window.localStorage.getItem("avatar") === null
@@ -49,6 +44,7 @@ const Compiler = () => {
     : setGoogleUser(true);
 
   const handleOpenFilesModal = () => {
+    getSavedCodes();
     setOpenFilesModal(true);
   };
 
@@ -117,6 +113,8 @@ const Compiler = () => {
     }
   };
 
+  const handleDeleteCode = async (fileName) => {};
+
   const getSavedCodes = async () => {
     try {
       const res = await fetch(`${ServerURL}/user/getSavedCodes/`, {
@@ -135,6 +133,7 @@ const Compiler = () => {
       if (res.status === 200) {
         const data = await res.json();
         console.log(data);
+        setSavedCodes(data);
       }
     } catch (err) {
       console.log(err);
@@ -330,6 +329,7 @@ int main() {
               >
                 My Files
               </Button>
+
               <Modal
                 open={openFilesModal}
                 onClose={handleCloseFilesModal}
@@ -352,15 +352,26 @@ int main() {
                 >
                   <h2 id="modal-modal-title">My Files</h2>
                   <p id="modal-modal-description">
-                    <div
-                      style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        gap: "1rem",
-                      }}
-                    >
-                      My Files
-                    </div>
+                    {savedCodes.map((file, index) => {
+                      return (
+                        <MenuItem
+                          key={index}
+                          value={file}
+                          sx={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                          }}
+                          onClick={() => {
+                            setCode(file.code);
+                            setLanguage(file.language);
+                            handleCloseFilesModal();
+                          }}
+                        >
+                          {file.fileName}
+                          <DeleteIcon onClick={handleDeleteCode} />
+                        </MenuItem>
+                      );
+                    })}
                   </p>
                 </Box>
               </Modal>
