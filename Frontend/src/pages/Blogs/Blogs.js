@@ -10,7 +10,7 @@ import { useState, useEffect } from "react";
 import SERVER_URL from "../../utils/ServerURL";
 import Chip from "@mui/material/Chip";
 import { toast } from "react-toastify";
-import MenuBookIcon from '@mui/icons-material/MenuBook';
+import MenuBookIcon from "@mui/icons-material/MenuBook";
 import { AppBar } from "@mui/material";
 
 const Blogs = () => {
@@ -28,27 +28,6 @@ const Blogs = () => {
     const data = await res.json();
     setBlogs(data.blogs);
   };
-
-  // --under Construction---------------------------------------------
-
-  const getUserBlogs = async () => {
-    const res = await fetch(`${SERVER_URL}/user/getUserBlogs`,{
-      method: "POST",
-      credentials: "include",
-      withCredentials: true,
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email:window.localStorage.getItem('email'),
-        googleUser
-      }),
-    });
-    const data = await res.json();
-    setBlogs(data);
-  };
-
-  // --under Construction---------------------------------------------
 
   const getAllCategories = async () => {
     const res = await fetch(`${SERVER_URL}/blog/getAllCategories`);
@@ -128,25 +107,6 @@ const Blogs = () => {
             >
               Write a Blog
             </Button>
-            <Button
-              color="info"
-              variant="contained"
-              startIcon={<MenuBookIcon />}
-              onClick={() => {
-                if (window.localStorage.getItem("username") === null) {
-                  toast("Please Login First", {
-                    type: "error",
-                    position: "top-center",
-                  });
-                  navigate("/signIn");
-                } else {
-                  getUserBlogs();
-                }
-              }}
-            >
-              My Blogs
-            </Button>
-
           </div>
           <div className={style.allCategories}>
             <div className={style.categories}>

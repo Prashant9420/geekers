@@ -6,6 +6,7 @@ import Blog from "../models/Blog.js";
 import jwt from "jsonwebtoken";
 import { createError } from "../utils/error.js";
 import nodeMailer from "nodemailer";
+import mongoose from "mongoose";
 
 export const googleLogin = async (req, res, next) => {
   try {
@@ -187,14 +188,16 @@ export const saveCode = async (req, res, next) => {
 };
 
 export const deleteSavedCode = async (req, res, next) => {
-  const {email,fileId,googleUser } = req.body;
+  const { email, fileId, googleUser } = req.body;
   try {
     if (googleUser) {
       const user = await GoogleUser.findOne({ email: email });
       if (!user) return next(createError(404, "User not found!"));
-      const objWithIdIndex = user.savedCodes.findIndex((obj) => obj.id === fileId);
+      const objWithIdIndex = user.savedCodes.findIndex(
+        (obj) => obj.id === fileId
+      );
       if (objWithIdIndex > -1) {
-        user.savedCodes=user.savedCodes.splice(objWithIdIndex, 1);
+        user.savedCodes.splice(objWithIdIndex, 1);
       }
       await user.save();
       return res.status(200).send("Code deleted successfully!");
@@ -202,12 +205,14 @@ export const deleteSavedCode = async (req, res, next) => {
     const user = await User.findOne({ email: email });
     console.log(user);
     if (!user) return next(createError(404, "User not found!"));
-      const objWithIdIndex = user.savedCodes.findIndex((obj) => obj.id === fileId);
-      if (objWithIdIndex > -1) {
-        user.savedCodes.splice(objWithIdIndex,1);
-      }
-      await user.save();
-      return res.status(200).send("Code deleted successfully!");
+    const objWithIdIndex = user.savedCodes.findIndex(
+      (obj) => obj.id === fileId
+    );
+    if (objWithIdIndex > -1) {
+      user.savedCodes.splice(objWithIdIndex, 1);
+    }
+    await user.save();
+    return res.status(200).send("Code deleted successfully!");
   } catch (err) {
     next(err);
   }
@@ -218,48 +223,89 @@ export const getSavedCodes = async (req, res, next) => {
   try {
     if (googleUser) {
       const user = await GoogleUser.findOne({ email: email });
-      if (!user) return next(createError(404, "User not found!"));
+      if (!user) return next(createError(404, "User Not Found!"));
       return res.status(200).send(user.savedCodes);
     }
     const user = await User.findOne({ email: email });
-    if (!user) return next(createError(404, "User not found!"));
+    if (!user) return next(createError(404, "User Not Found!"));
     res.status(200).send(user.savedCodes);
   } catch (err) {
     next(err);
   }
 };
 
-export const getUserBlogs = async (req, res, next) => {
-  const { email, googleUser } = req.body;
+export const saveBlog = async (req, res, next) => {
+  console.log("helooo");
+  const { title, content, imgUrl, categories, email, googleUser } = req.body;
   try {
+    const blog = new Blog({
+      title: title,
+      content: content,
+      imgUrl: imgUrl,
+      categories: categories,
+      email: email,
+    });
+    await blog.save();
     if (googleUser) {
-      const user = await GoogleUser.findOne({ email: email });
-      if (!user) return next(createError(404, "User not found!"));
-      return res.status(200).send(user.savedBlogs);
+      const user = await GoogleUser.findOne({ email });
+      if (!user) return next(createError(404, "User Not Found!"));
+      user.savedBlogs.push(blog._id);
+      await user.save();
+      console.log(user.savedBlogs);
+      return res.status(200).send("Blog saved successfully!");
     }
-    const user = await User.findOne({ email: email });
-    if (!user) return next(createError(404, "User not found!"));
-    res.status(200).send(user.savedBlogs);
+    const user = await User.findOne({ email });
+    if (!user) return next(createError(404, "User not found"));
+    user.savedBlogs.push(blog._id);
+    await user.save();
+    return res.status(200).send("Blog saved successfully!");
   } catch (err) {
     next(err);
   }
 };
 
-export const saveMyBlog = async (req, res, next) => {
-  const {title,content,imgUrl,categories,username,email,googleUser}=req.body;
+export const getSavedBlogs = async (req, res, next) => {
+  const { userId, googleUser } = req.body;
   try {
     if (googleUser) {
-      const user = await GoogleUser.findOne({ email: email });
-      if (!user) return next(createError(404, "User not found!"));
-      user.savedBlogs.push({title,content,imgUrl,categories,username});
-      await user.save();
+      const user = await GoogleUser.findOne({ _id: userId }).populate(
+        "savedBlogs"
+      );
+      console.log(user.savedBlogs);
       return res.status(200).send(user.savedBlogs);
     }
-    const user = await User.findOne({ email: email });
-    if (!user) return next(createError(404, "User not found!"));
-    user.savedBlogs.push({title,content,imgUrl,categories,username});
+    const user = User.findOne({ email });
+    if (!user) return next(createError(404, "User not found"));
+    return res.status(200).send(user.savedBlogs);
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const deleteBlog = async (req, res, next) => {
+  const { userId, blogId, googleUser } = req.body;
+  try {
+    if (googleUser) {
+      const user = User.findOne({ _id: userId });
+      if (!user) return next(createError(404, "User not found"));
+      const objWithIdIndex = user.savedBlogs.findIndex(
+        (obj) => obj._id === blogId
+      );
+      if (objWithIdIndex > -1) {
+        user.savedBlogs.splice(objWithIdIndex, 1);
+      }
+      await user.save();
+      return res.status(200).send("Blog deleted successfully!");
+    }
+    const user = User.findOne({ _id: userId });
+    const objWithIdIndex = user.savedBlogs.findIndex(
+      (obj) => obj._id === blogId
+    );
+    if (objWithIdIndex > -1) {
+      user.savedBlogs.splice(objWithIdIndex, 1);
+    }
     await user.save();
-    res.status(200).send(user.savedBlogs);
+    return res.status(200).send("Blog deleted successfully!");
   } catch (err) {
     next(err);
   }

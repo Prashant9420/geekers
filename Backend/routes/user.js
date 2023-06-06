@@ -8,8 +8,9 @@ import {
   saveCode,
   getSavedCodes,
   deleteSavedCode,
-  getUserBlogs,
-  saveMyBlog
+  saveBlog,
+  deleteBlog,
+  getSavedBlogs,
 } from "../controllers/user.js";
 
 const router = express.Router();
@@ -46,12 +47,16 @@ router.post("/getSavedCodes", getSavedCodes);
 
 router.post("/deleteSavedCode", deleteSavedCode);
 
-// GET USER BLOGS
+// SAVE BLOG
 
-router.post("/getUserBlogs", getUserBlogs);
+router.post("/saveBlog", saveBlog);
 
-// SAVE MY BLOG
+// GET SAVED BLOGS
 
-router.post("/saveMyBlog", saveMyBlog);
+router.post("/getSavedBlogs", getSavedBlogs);
+
+// DELETE BLOG
+
+router.post("/deleteBlog", deleteBlog);
 
 export default router;

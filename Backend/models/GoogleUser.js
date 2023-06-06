@@ -18,7 +18,7 @@ const GoogleUserSchema = new mongoose.Schema({
     type: String,
   },
   // createdBlogs Schema
-  createdBlogs: [
+  savedBlogs: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Blog",

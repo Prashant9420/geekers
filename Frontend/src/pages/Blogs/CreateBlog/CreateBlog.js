@@ -1,4 +1,4 @@
-import React, { useState,useContext } from "react";
+import React, { useState, useContext } from "react";
 import style from "./CreateBlog.module.css";
 import Header from "../../../components/Header/Header";
 import ReactQuill from "react-quill";
@@ -18,8 +18,7 @@ const CreateBlog = () => {
   const [categories, setCategories] = useState([]);
   const [content, setContent] = useState("");
   const [imgUrl, setimgUrl] = useState("");
-  const { googleUser, setGoogleUser } = useContext(AuthContext);
-
+  const { googleUser } = useContext(AuthContext);
 
   const handleAddClick = () => {
     category !== "" && setCategories([...categories, category]);
@@ -33,53 +32,48 @@ const CreateBlog = () => {
   const handleChangeContent = (value) => {
     setContent(value);
   };
-  
-  // --under construction---------------------------------------------
 
-  const saveMyBlog= async ()=>{
-    try {
-      const result = await fetch(`${ServerURL}/user/saveMyBlog`, {
-        method: "POST",
-        credentials: "include",
-        withCredentials: true,
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          title,
-          content,
-          imgUrl,
-          categories,
-          username: window.localStorage.getItem("username"),
-          email:window.localStorage.getItem("email"),
-          googleUser
-        }),
-      });
-      if (result.status === 200) {
-        toast("Blog Saved Successfully!", {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          type: "success",
-          theme: "colored",
-        });
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  }
-
-  // --under construction---------------------------------------------
-
+  // const saveBlog = async () => {
+  //   try {
+  //     const result = await fetch(`${ServerURL}/user/saveBlog`, {
+  //       method: "POST",
+  //       credentials: "include",
+  //       withCredentials: true,
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({
+  //         title,
+  //         content,
+  //         imgUrl,
+  //         categories,
+  //         username: window.localStorage.getItem("username"),
+  //         email: window.localStorage.getItem("email"),
+  //         googleUser,
+  //       }),
+  //     });
+  //     if (result.status === 200) {
+  //       toast("Blog Saved Successfully!", {
+  //         position: "top-right",
+  //         autoClose: 3000,
+  //         hideProgressBar: false,
+  //         closeOnClick: true,
+  //         pauseOnHover: true,
+  //         draggable: true,
+  //         progress: undefined,
+  //         type: "success",
+  //         theme: "colored",
+  //       });
+  //     }
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const result = await fetch(`${ServerURL}/blog/`, {
+      const result = await fetch(`${ServerURL}/user/saveBlog/`, {
         method: "POST",
         credentials: "include",
         withCredentials: true,
@@ -92,6 +86,8 @@ const CreateBlog = () => {
           imgUrl,
           categories,
           username: window.localStorage.getItem("username"),
+          email: window.localStorage.getItem("email"),
+          googleUser,
         }),
       });
       if (result.status === 200) {
@@ -110,7 +106,6 @@ const CreateBlog = () => {
           type: "success",
           theme: "colored",
         });
-        saveMyBlog();
         navigate("/blogs");
       }
     } catch (err) {

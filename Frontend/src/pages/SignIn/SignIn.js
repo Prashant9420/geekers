@@ -49,10 +49,10 @@ const SignIn = () => {
     });
     if (result.status === 200) {
       const data = await result.json();
+      window.localStorage.setItem("userId", data._id);
       window.localStorage.setItem("username", data.name);
       window.localStorage.setItem("email", data.email);
       window.localStorage.setItem("avatar", data.avatar);
-      console.log(window.localStorage.getItem("avatar"));
       navigate("/");
       toast("You are successfully logged in!", {
         position: "top-center",
@@ -98,6 +98,7 @@ const SignIn = () => {
       if (result.status === 200) {
         const data = await result.json();
         setUsername(data.details.username);
+        window.localStorage.setItem("userId", data.details._id);
         window.localStorage.setItem("username", data.details.username);
         window.localStorage.setItem("email", data.details.email);
         navigate("/");

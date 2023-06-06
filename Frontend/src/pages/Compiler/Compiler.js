@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import axios from "axios";
 import qs from "qs";
 import Box from "@mui/material/Box";
@@ -28,7 +28,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import SaveRoundedIcon from "@mui/icons-material/SaveRounded";
 import ServerURL from "../../utils/ServerURL";
 import Modal from "@mui/material/Modal";
-import { AuthContext } from '../../App';
+import { AuthContext } from "../../App";
 
 const Compiler = () => {
   const [language, setLanguage] = useState("Java");
@@ -38,10 +38,7 @@ const Compiler = () => {
   const [openFilesModal, setOpenFilesModal] = useState(false);
   const [savedCodes, setSavedCodes] = useState([]);
 
-  const { googleUser, setGoogleUser } = useContext(AuthContext);
-  window.localStorage.getItem("avatar") === null
-    ? setGoogleUser(false)
-    : setGoogleUser(true);
+  const { googleUser } = useContext(AuthContext);
 
   const handleOpenFilesModal = () => {
     getSavedCodes();
@@ -98,6 +95,8 @@ const Compiler = () => {
       });
 
       if (res.status === 200) {
+        setLanguage("Java");
+        setCode("");
         setFileName("");
         handleCloseModal();
         toast("Code Saved Successfully!", {
@@ -114,7 +113,6 @@ const Compiler = () => {
   };
 
   const handleDeleteCode = async (fileId) => {
-    console.log(fileId);
     try {
       const res = await fetch(`${ServerURL}/user/deleteSavedCode/`, {
         method: "POST",
@@ -134,10 +132,8 @@ const Compiler = () => {
         getSavedCodes();
       }
     } catch (err) {
-      
       console.log(err);
     }
-
   };
 
   const getSavedCodes = async () => {
@@ -156,13 +152,11 @@ const Compiler = () => {
       });
 
       if (res.status === 200) {
-        const data = await res.json();
-        
-        console.log(data);
-        setSavedCodes(data);
+        const codes = await res.json();
+        console.log(codes);
+        setSavedCodes(codes);
       }
     } catch (err) {
-      
       console.log(err);
     }
   };
@@ -274,6 +268,10 @@ int main() {
       });
   };
 
+  useEffect(() => {
+    getSavedCodes();
+  }, []);
+
   return (
     <div>
       <Header />
@@ -347,7 +345,14 @@ int main() {
               })}
             </Select>
 
-            <div style={{ display: "flex", gap: "1rem", padding: "0 15px" }}>
+            <div
+              style={{
+                display: "flex",
+                gap: "1rem",
+                padding: "0 15px",
+                alignItems: "center",
+              }}
+            >
               <Button
                 variant="contained"
                 color="primary"
@@ -363,46 +368,73 @@ int main() {
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
               >
-                <Box
-                  sx={{
-                    position: "absolute",
-                    top: "50%",
-                    left: "50%",
-                    transform: "translate(-50%, -50%)",
-                    width: 400,
-                    bgcolor: "background.paper",
-                    color: "black",
-                    border: "2px solid #000",
-                    boxShadow: 24,
-                    p: 4,
-                  }}
-                >
-                  <h2 id="modal-modal-title">My Files</h2>
-                  <p id="modal-modal-description">
-                    {savedCodes.map((file, index) => {
-                      return (
-                        <MenuItem
-                          key={index}
-                          value={file}
-                          sx={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                          }}
-                          onClick={() => {
-                            setCode(file.code);
-                            setLanguage(file.language);
-                            handleCloseFilesModal();
-                          }}
-                        >
-                          {file.fileName}
-                          <DeleteIcon onClick={()=>handleDeleteCode(file._id)} />
-                        </MenuItem>
-                      );
-                    })}
-                  </p>
-                </Box>
+                {savedCodes.length === 0 ? (
+                  <Box
+                    sx={{
+                      position: "absolute",
+                      top: "50%",
+                      left: "50%",
+                      transform: "translate(-50%, -50%)",
+                      width: 400,
+                      border: "2px solid ",
+                      boxShadow: 24,
+                      p: 4,
+                    }}
+                  >
+                    <Typography>No Files</Typography>
+                  </Box>
+                ) : (
+                  <Box
+                    sx={{
+                      position: "absolute",
+                      top: "50%",
+                      left: "50%",
+                      transform: "translate(-50%, -50%)",
+                      width: 400,
+                      border: "2px solid ",
+                      boxShadow: 24,
+                      p: 4,
+                    }}
+                  >
+                    <Typography
+                      id="modal-modal-title"
+                      sx={{
+                        textAlign: "center",
+                        display: "block",
+                      }}
+                      variant="h5"
+                      component="h1"
+                      borderBottom={2}
+                    >
+                      My Files
+                    </Typography>
+                    <dv id="modal-modal-description">
+                      {savedCodes.map((file, index) => {
+                        return (
+                          <MenuItem
+                            key={index}
+                            value={file}
+                            sx={{
+                              display: "flex",
+                              justifyContent: "space-between",
+                            }}
+                            onClick={() => {
+                              setCode(file.code);
+                              setLanguage(file.language);
+                              handleCloseFilesModal();
+                            }}
+                          >
+                            {file.fileName}
+                            <DeleteIcon
+                              onClick={() => handleDeleteCode(file._id)}
+                            />
+                          </MenuItem>
+                        );
+                      })}
+                    </dv>
+                  </Box>
+                )}
               </Modal>
-
               <Tooltip title="Run" placement="top">
                 <SendIcon onClick={executeCode} style={{ cursor: "pointer" }} />
               </Tooltip>
@@ -460,6 +492,11 @@ int main() {
                     required
                     value={fileName}
                     onChange={(event) => setFileName(event.target.value)}
+                    onKeyDown={(event) => {
+                      if (event.key === "Enter") {
+                        handleSaveCode();
+                      }
+                    }}
                     sx={{ width: "100%", margin: "1rem 0" }}
                   />
                   <Button
