@@ -2,6 +2,7 @@ import User from "../models/User.js";
 import GoogleUser from "../models/GoogleUser.js";
 import Otp from "../models/Otp.js";
 import bcrypt from "bcrypt";
+import Blog from "../models/Blog.js";
 import jwt from "jsonwebtoken";
 import { createError } from "../utils/error.js";
 import nodeMailer from "nodemailer";
@@ -204,7 +205,6 @@ export const deleteSavedCode = async (req, res, next) => {
       const objWithIdIndex = user.savedCodes.findIndex((obj) => obj.id === fileId);
       if (objWithIdIndex > -1) {
         user.savedCodes.splice(objWithIdIndex,1);
-        // console.log(user.savedCodes);
       }
       await user.save();
       return res.status(200).send("Code deleted successfully!");
@@ -224,6 +224,42 @@ export const getSavedCodes = async (req, res, next) => {
     const user = await User.findOne({ email: email });
     if (!user) return next(createError(404, "User not found!"));
     res.status(200).send(user.savedCodes);
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const getUserBlogs = async (req, res, next) => {
+  const { email, googleUser } = req.body;
+  try {
+    if (googleUser) {
+      const user = await GoogleUser.findOne({ email: email });
+      if (!user) return next(createError(404, "User not found!"));
+      return res.status(200).send(user.savedBlogs);
+    }
+    const user = await User.findOne({ email: email });
+    if (!user) return next(createError(404, "User not found!"));
+    res.status(200).send(user.savedBlogs);
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const saveMyBlog = async (req, res, next) => {
+  const {title,content,imgUrl,categories,username,email,googleUser}=req.body;
+  try {
+    if (googleUser) {
+      const user = await GoogleUser.findOne({ email: email });
+      if (!user) return next(createError(404, "User not found!"));
+      user.savedBlogs.push({title,content,imgUrl,categories,username});
+      await user.save();
+      return res.status(200).send(user.savedBlogs);
+    }
+    const user = await User.findOne({ email: email });
+    if (!user) return next(createError(404, "User not found!"));
+    user.savedBlogs.push({title,content,imgUrl,categories,username});
+    await user.save();
+    res.status(200).send(user.savedBlogs);
   } catch (err) {
     next(err);
   }
