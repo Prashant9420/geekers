@@ -28,7 +28,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import SaveRoundedIcon from "@mui/icons-material/SaveRounded";
 import ServerURL from "../../utils/ServerURL";
 import Modal from "@mui/material/Modal";
-import { AuthContext } from "../../App";
+import { AuthContext } from '../../App';
 
 const Compiler = () => {
   const [language, setLanguage] = useState("Java");

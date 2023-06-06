@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import Blog from "../models/Blog.js";
 
 const UserSchema = new mongoose.Schema(
   {
@@ -22,6 +23,30 @@ const UserSchema = new mongoose.Schema(
         type: mongoose.Schema.Types.ObjectId,
         ref: "Blog",
       },
+    ],
+    savedBlogs:[
+      {
+        title: {
+          type: String,
+          required: true,
+        },
+        content: {
+          type: String,
+          required: true,
+        },
+        imgUrl: {
+          type: String,
+          required: true,
+        },
+        categories: {
+          type: [String],
+          required: true,
+        },
+        username: {
+          type: String,
+          required: true,
+        }
+      }
     ],
     // savedCode Schema
     savedCodes: [

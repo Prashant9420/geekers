@@ -7,7 +7,9 @@ import {
   googleLogin,
   saveCode,
   getSavedCodes,
-  deleteSavedCode
+  deleteSavedCode,
+  getUserBlogs,
+  saveMyBlog
 } from "../controllers/user.js";
 
 const router = express.Router();
@@ -40,6 +42,16 @@ router.post("/saveCode", saveCode);
 
 router.post("/getSavedCodes", getSavedCodes);
 
+// DELETE SAVED CODES
+
 router.post("/deleteSavedCode", deleteSavedCode);
+
+// GET USER BLOGS
+
+router.post("/getUserBlogs", getUserBlogs);
+
+// SAVE MY BLOG
+
+router.post("/saveMyBlog", saveMyBlog);
 
 export default router;
