@@ -58,7 +58,7 @@ const Profile = () => {
         <div className={style.blogs}>
           <h2>My Blogs</h2>
           <div>
-            {blogs?.map((blog, index) => {
+            {/* {blogs?.map((blog, index) => {
               return (
                 <MenuItem
                   key={index}
@@ -77,7 +77,7 @@ const Profile = () => {
                   <DeleteIcon onClick={() => deleteBlog(blog._id)} />
                 </MenuItem>
               );
-            })}
+            })} */}
           </div>
         </div>
       </div>
