@@ -272,345 +272,351 @@ int main() {
     getSavedCodes();
   }, []);
 
-  return (
-    <div>
-      <Header />
-      <Snackbar
-        isOpen={isOpen}
-        severity={severity}
-        message={messageSnackbar}
-        setIsOpen={setIsOpen}
-      />
-      <SnackbarForCompiling
-        isOpen={compilingSnackbar}
-        severity="info"
-        message="Compiling..."
-        setIsOpen={setCompilingSnackbar}
-      />
-      <Box
-        sx={{
+ return (
+  <div>
+    <Header />
+    <Snackbar
+      isOpen={isOpen}
+      severity={severity}
+      message={messageSnackbar}
+      setIsOpen={setIsOpen}
+    />
+    <SnackbarForCompiling
+      isOpen={compilingSnackbar}
+      severity="info"
+      message="Compiling..."
+      setIsOpen={setCompilingSnackbar}
+    />
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        gap: "1rem",
+        margin: "1rem",
+        justifyContent: "space-around",
+        alignItems: "stretch",
+        height: "88vh",
+      }}
+    >
+      <div
+        style={{
           display: "flex",
-          gap: "2rem",
-          margin: "1rem",
-          justifyContent: "space-around",
-          alignItems: "flex-end",
-          height: "88vh",
+          flexDirection: "column",
+          gap: "1rem",
+          flex: "1 1 auto",
+          borderRadius: "10px",
+        }}
+      >
+        <InputLabel
+          id="demo-simple-select-label"
+          sx={{
+            margin: "10px 0 5px .2rem",
+          }}
+        >
+          Select a language
+        </InputLabel>
+        <div
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            alignItems: "center",
+            justifyContent: "center",
+            marginBottom: "1rem",
+          }}
+        >
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={language}
+            label="Choose language"
+            onChange={(event) => {
+              setLanguage(event.target.value);
+              setCode(languageDefaultCode[event.target.value]);
+            }}
+            style={{ width: "15rem" }}
+          >
+            {languageArray.map((item, index) => {
+              return (
+                <MenuItem key={index} value={item}>
+                  {item}
+                </MenuItem>
+              );
+            })}
+          </Select>
+
+          <div
+            style={{
+              display: "flex",
+              gap: "1rem",
+              padding: "0 15px",
+              alignItems: "center",
+              flexWrap: "wrap",
+              justifyContent: "center",
+            }}
+          >
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleOpenFilesModal}
+              style={{ width: "8rem", height: "2.5rem" }}
+            >
+              My Files
+            </Button>
+
+            <Modal
+              open={openFilesModal}
+              onClose={handleCloseFilesModal}
+              aria-labelledby="modal-modal-title"
+              aria-describedby="modal-modal-description"
+            >
+              {savedCodes.length === 0 ? (
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    height: "100%",
+                  }}
+                >
+                  <Typography>No Files</Typography>
+                </Box>
+              ) : (
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    height: "100%",
+                  }}
+                >
+                  <Typography
+                    id="modal-modal-title"
+                    sx={{
+                      textAlign: "center",
+                      display: "block",
+                    }}
+                    variant="h5"
+                    component="h1"
+                    borderBottom={2}
+                  >
+                    My Files
+                  </Typography>
+                  <Box
+                    id="modal-modal-description"
+                    sx={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "stretch",
+                      flex: "1 1 auto",
+                      overflow: "auto",
+                      maxWidth: 400,
+                      maxHeight: 400,
+                    }}
+                  >
+                    {savedCodes.map((file, index) => {
+                      return (
+                        <MenuItem
+                          key={index}
+                          value={file}
+                          sx={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                            padding: "5px",
+                          }}
+                          onClick={() => {
+                            setCode(file.code);
+                            setLanguage(file.language);
+                            handleCloseFilesModal();
+                          }}
+                        >
+                          {file.fileName}
+                          <DeleteIcon
+                            onClick={() => handleDeleteCode(file._id)}
+                          />
+                        </MenuItem>
+                      );
+                    })}
+                  </Box>
+                </Box>
+              )}
+            </Modal>
+            <Tooltip title="Run" placement="top">
+              <SendIcon onClick={executeCode} style={{ cursor: "pointer" }} />
+            </Tooltip>
+            {copy ? (
+              <Tooltip title="Copied" placement="top">
+                <LibraryAddCheckRoundedIcon />
+              </Tooltip>
+            ) : (
+              <Tooltip title="Copy" placement="top">
+                <ContentCopyIcon
+                  onClick={handleCopyCode}
+                  style={{ cursor: "pointer" }}
+                />
+              </Tooltip>
+            )}
+            <Tooltip title="Save" placement="top">
+              <SaveRoundedIcon
+                onClick={handleOpenModal}
+                style={{ cursor: "pointer" }}
+              />
+            </Tooltip>
+            <Modal
+              open={openModal}
+              onClose={handleCloseModal}
+              aria-labelledby="modal-modal-title"
+              aria-describedby="modal-modal-description"
+            >
+              <Box
+                sx={{
+                  position: "absolute",
+                  top: "50%",
+                  left: "50%",
+                  transform: "translate(-50%, -50%)",
+                  width: 400,
+                  border: "2px solid ",
+                  boxShadow: 24,
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  p: 4,
+                }}
+              >
+                <Typography
+                  id="modal-modal-title"
+                  variant="h6"
+                  component="h2"
+                  sx={{ textAlign: "center" }}
+                >
+                  Save Code
+                </Typography>
+                <TextField
+                  id="outlined-basic"
+                  label="Enter File Name"
+                  variant="outlined"
+                  required
+                  value={fileName}
+                  onChange={(event) => setFileName(event.target.value)}
+                  onKeyDown={(event) => {
+                    if (event.key === "Enter") {
+                      handleSaveCode();
+                    }
+                  }}
+                  sx={{ width: "100%", margin: "1rem 0" }}
+                />
+                <Button
+                  variant="contained"
+                  onClick={handleSaveCode}
+                  sx={{ width: "60%" }}
+                >
+                  Save
+                </Button>
+              </Box>
+            </Modal>
+            <Tooltip title="Download" placement="top">
+              <DownloadRoundedIcon
+                onClick={handleDownloadCode}
+                sx={{ cursor: "pointer" }}
+              />
+            </Tooltip>
+          </div>
+        </div>
+        <CodeMirror
+          value={languageDefaultCode[language]}
+          height="calc(88vh - 30rem)"
+          width="100%"
+          extensions={[extensionsEditor[language]]}
+          onChange={(value) => {
+            setCode(value);
+            setLanguageDefaultCode({
+              ...languageDefaultCode,
+              [language]: value,
+            });
+          }}
+          theme={draculaInit({
+            settings: {
+              caret: "#c6c6c6",
+              fontFamily: "monospace",
+            },
+            styles: [
+              {
+                tag: t.comment,
+                color: "#6272a4",
+              },
+            ],
+          })}
+        />
+      </div>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "flex-end",
+          height: "43.6rem",
         }}
       >
         <div
           style={{
             display: "flex",
             flexDirection: "column",
+            justifyContent: "space-around",
+            gap: ".5rem",
             flexWrap: "wrap",
-            width: "40vw",
-            borderRadius: "10px",
-            height: "43.6rem",
+            width: "30rem",
+            height: "39.2rem",
           }}
         >
-          <InputLabel
-            id="demo-simple-select-label"
-            sx={{
-              margin: "10px 0 5px .2rem",
-            }}
-          >
-            Select a language
-          </InputLabel>
-          <div
-            style={{
-              display: "flex",
-              flexWrap: "wrap",
-              width: "50vw",
-              alignItems: "center",
-              justifyContent: "space-between",
-              marginBottom: "1rem",
-            }}
-          >
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={language}
-              label="Choose language"
-              onChange={(event) => {
-                setLanguage(event.target.value);
-                setCode(languageDefaultCode[event.target.value]);
+          <div>
+            <InputLabel>Console</InputLabel>
+            <TextField
+              multiline
+              value={consoleInputs[language]}
+              onChange={(e) => {
+                setConsoleInputs({
+                  ...consoleInputs,
+                  [language]: e.target.value,
+                });
               }}
-              style={{ width: "15rem" }}
-            >
-              {languageArray.map((item, index) => {
-                return (
-                  <MenuItem key={index} value={item}>
-                    {item}
-                  </MenuItem>
-                );
-              })}
-            </Select>
-
-            <div
-              style={{
-                display: "flex",
-                gap: "1rem",
-                padding: "0 15px",
-                alignItems: "center",
-              }}
-            >
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={handleOpenFilesModal}
-                style={{ width: "8rem", height: "2.5rem" }}
-              >
-                My Files
-              </Button>
-
-              <Modal
-                open={openFilesModal}
-                onClose={handleCloseFilesModal}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-              >
-                {savedCodes.length === 0 ? (
-                  <Box
-                    sx={{
-                      position: "absolute",
-                      top: "50%",
-                      left: "50%",
-                      transform: "translate(-50%, -50%)",
-                      width: 400,
-                      border: "2px solid ",
-                      boxShadow: 24,
-                      p: 4,
-                    }}
-                  >
-                    <Typography>No Files</Typography>
-                  </Box>
-                ) : (
-                  <Box
-                    sx={{
-                      position: "absolute",
-                      top: "50%",
-                      left: "50%",
-                      transform: "translate(-50%, -50%)",
-                      width: 400,
-                      border: "2px solid ",
-                      boxShadow: 24,
-                      p: 4,
-                    }}
-                  >
-                    <Typography
-                      id="modal-modal-title"
-                      sx={{
-                        textAlign: "center",
-                        display: "block",
-                      }}
-                      variant="h5"
-                      component="h1"
-                      borderBottom={2}
-                    >
-                      My Files
-                    </Typography>
-                    <dv id="modal-modal-description">
-                      {savedCodes.map((file, index) => {
-                        return (
-                          <MenuItem
-                            key={index}
-                            value={file}
-                            sx={{
-                              display: "flex",
-                              justifyContent: "space-between",
-                            }}
-                            onClick={() => {
-                              setCode(file.code);
-                              setLanguage(file.language);
-                              handleCloseFilesModal();
-                            }}
-                          >
-                            {file.fileName}
-                            <DeleteIcon
-                              onClick={() => handleDeleteCode(file._id)}
-                            />
-                          </MenuItem>
-                        );
-                      })}
-                    </dv>
-                  </Box>
-                )}
-              </Modal>
-              <Tooltip title="Run" placement="top">
-                <SendIcon onClick={executeCode} style={{ cursor: "pointer" }} />
-              </Tooltip>
-              {copy ? (
-                <Tooltip title="Copied" placement="top">
-                  <LibraryAddCheckRoundedIcon />
-                </Tooltip>
-              ) : (
-                <Tooltip title="Copy" placement="top">
-                  <ContentCopyIcon
-                    onClick={handleCopyCode}
-                    style={{ cursor: "pointer" }}
-                  />
-                </Tooltip>
-              )}
-              <Tooltip title="Save" placement="top">
-                <SaveRoundedIcon
-                  onClick={handleOpenModal}
-                  style={{ cursor: "pointer" }}
-                />
-              </Tooltip>
-              <Modal
-                open={openModal}
-                onClose={handleCloseModal}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-              >
-                <Box
-                  sx={{
-                    position: "absolute",
-                    top: "50%",
-                    left: "50%",
-                    transform: "translate(-50%, -50%)",
-                    width: 400,
-                    border: "2px solid ",
-                    boxShadow: 24,
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    p: 4,
-                  }}
-                >
-                  <Typography
-                    id="modal-modal-title"
-                    variant="h6"
-                    component="h2"
-                    sx={{ textAlign: "center" }}
-                  >
-                    Save Code
-                  </Typography>
-                  <TextField
-                    id="outlined-basic"
-                    label="Enter File Name"
-                    variant="outlined"
-                    required
-                    value={fileName}
-                    onChange={(event) => setFileName(event.target.value)}
-                    onKeyDown={(event) => {
-                      if (event.key === "Enter") {
-                        handleSaveCode();
-                      }
-                    }}
-                    sx={{ width: "100%", margin: "1rem 0" }}
-                  />
-                  <Button
-                    variant="contained"
-                    onClick={handleSaveCode}
-                    sx={{ width: "60%" }}
-                  >
-                    Save
-                  </Button>
-                </Box>
-              </Modal>
-              <Tooltip title="Download" placement="top">
-                <DownloadRoundedIcon
-                  onClick={handleDownloadCode}
-                  sx={{ cursor: "pointer" }}
-                />
-              </Tooltip>
-            </div>
-          </div>
-          <CodeMirror
-            value={languageDefaultCode[language]}
-            height="36.5rem"
-            width="50vw"
-            extensions={[extensionsEditor[language]]}
-            onChange={(value) => {
-              setCode(value);
-              setLanguageDefaultCode({
-                ...languageDefaultCode,
-                [language]: value,
-              });
-            }}
-            theme={draculaInit({
-              settings: {
-                caret: "#c6c6c6",
-                fontFamily: "monospace",
-              },
-              styles: [
-                {
-                  tag: t.comment,
-                  color: "#6272a4",
+              inputProps={{
+                style: {
+                  fontSize: 20,
+                  height: "8rem",
+                  width: "100%",
                 },
-              ],
-            })}
-          />
-        </div>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "flex-end",
-            height: "43.6rem",
-          }}
-        >
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "space-around",
-              gap: ".5rem",
-              flexWrap: "wrap",
-              width: "30rem",
-              height: "39.2rem",
-            }}
-          >
-            <div>
-              <InputLabel>Console</InputLabel>
-              <TextField
-                multiline
-                value={consoleInputs[language]}
-                onChange={(e) => {
-                  setConsoleInputs({
-                    ...consoleInputs,
-                    [language]: e.target.value,
-                  });
-                }}
-                inputProps={{
-                  style: {
-                    fontSize: 20,
-                    height: "8rem",
-                    width: "28rem",
-                  },
-                }}
-                variant="outlined"
-                sx={{
-                  backgroundColor: "#282A36",
-                  color: "#f8f8f2",
-                }}
-              />
-            </div>
-            <div>
-              <InputLabel>Output</InputLabel>
-              <TextField
-                multiline
-                value={outputBoxValue[language]}
-                variant="outlined"
-                inputProps={{
-                  style: {
-                    fontSize: 20,
-                    height: "21.8rem",
-                    width: "28rem",
-                    color: "#FFFFFF",
-                  },
-                }}
-                sx={{
-                  backgroundColor: "#282A36",
-                  color: "#f8f8f2",
-                }}
-              />
-            </div>
+              }}
+              variant="outlined"
+              sx={{
+                backgroundColor: "#282A36",
+                color: "#f8f8f2",
+              }}
+            />
+          </div>
+          <div>
+            <InputLabel>Output</InputLabel>
+            <TextField
+              multiline
+              value={outputBoxValue[language]}
+              variant="outlined"
+              inputProps={{
+                style: {
+                  fontSize: 20,
+                  height: "21.8rem",
+                  width: "100%",
+                  color: "#FFFFFF",
+                },
+              }}
+              sx={{
+                backgroundColor: "#282A36",
+                color: "#f8f8f2",
+              }}
+            />
           </div>
         </div>
-      </Box>
+      </div>
     </div>
   );
 };
+
 
 export default Compiler;
