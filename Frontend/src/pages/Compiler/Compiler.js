@@ -124,7 +124,7 @@ const Compiler = () => {
         body: JSON.stringify({
           email: window.localStorage.getItem("email"),
           fileId,
-          googleUser : `${googleUser}`,
+          googleUser: `${googleUser}`,
         }),
       });
 
@@ -147,7 +147,7 @@ const Compiler = () => {
         },
         body: JSON.stringify({
           email: window.localStorage.getItem("email"),
-          googleUser,
+          googleUser: `${googleUser}`,
         }),
       });
 
