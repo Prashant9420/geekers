@@ -33,43 +33,6 @@ const CreateBlog = () => {
     setContent(value);
   };
 
-  // const saveBlog = async () => {
-  //   try {
-  //     const result = await fetch(`${ServerURL}/user/saveBlog`, {
-  //       method: "POST",
-  //       credentials: "include",
-  //       withCredentials: true,
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({
-  //         title,
-  //         content,
-  //         imgUrl,
-  //         categories,
-  //         username: window.localStorage.getItem("username"),
-  //         email: window.localStorage.getItem("email"),
-  //         googleUser,
-  //       }),
-  //     });
-  //     if (result.status === 200) {
-  //       toast("Blog Saved Successfully!", {
-  //         position: "top-right",
-  //         autoClose: 3000,
-  //         hideProgressBar: false,
-  //         closeOnClick: true,
-  //         pauseOnHover: true,
-  //         draggable: true,
-  //         progress: undefined,
-  //         type: "success",
-  //         theme: "colored",
-  //       });
-  //     }
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -87,7 +50,7 @@ const CreateBlog = () => {
           categories,
           username: window.localStorage.getItem("username"),
           email: window.localStorage.getItem("email"),
-          googleUser,
+          googleUser: `${googleUser}`
         }),
       });
       if (result.status === 200) {

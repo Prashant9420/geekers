@@ -6,7 +6,7 @@ import Blog from "../models/Blog.js";
 import jwt from "jsonwebtoken";
 import { createError } from "../utils/error.js";
 import nodeMailer from "nodemailer";
-import mongoose from "mongoose";
+import BlogCategory from "../models/BlogCategory.js";
 
 export const googleLogin = async (req, res, next) => {
   try {
@@ -235,7 +235,6 @@ export const getSavedCodes = async (req, res, next) => {
 };
 
 export const saveBlog = async (req, res, next) => {
-  console.log("helooo");
   const { title, content, imgUrl, categories, email, googleUser } = req.body;
   try {
     const blog = new Blog({
@@ -246,12 +245,27 @@ export const saveBlog = async (req, res, next) => {
       email: email,
     });
     await blog.save();
+    const allSavedCategories = await BlogCategory.find();
+
+    // Check if the category already exists in the database
+
+    for (var i = 0; i < blog.categories.length; i++) {
+      if (
+        !allSavedCategories.find(
+          (category) => category.categoryName === blog.categories[i]
+        )
+      ) {
+        const newBlogCategory = new BlogCategory({
+          categoryName: blog.categories[i],
+        });
+        await newBlogCategory.save();
+      }
+    }
     if (googleUser) {
       const user = await GoogleUser.findOne({ email });
       if (!user) return next(createError(404, "User Not Found!"));
       user.savedBlogs.push(blog._id);
       await user.save();
-      console.log(user.savedBlogs);
       return res.status(200).send("Blog saved successfully!");
     }
     const user = await User.findOne({ email });
@@ -264,49 +278,54 @@ export const saveBlog = async (req, res, next) => {
   }
 };
 
+// get Saved Blogs
+
 export const getSavedBlogs = async (req, res, next) => {
-  const { userId, googleUser } = req.body;
+  const { email, googleUser } = req.body;
   try {
     if (googleUser) {
-      const user = await GoogleUser.findOne({ _id: userId }).populate(
+      const user = await GoogleUser.findOne({ email: email }).populate(
         "savedBlogs"
       );
-      console.log(user.savedBlogs);
-      return res.status(200).send(user.savedBlogs);
+      if (!user) return next(createError(404, "User Not Found!"));
+      const savedBlogs = user.savedBlogs?.map((blog) => {
+        return {
+          _id: blog._id,
+          title: blog.title,
+          content: blog.content,
+          imgUrl: blog.imgUrl,
+          categories: blog.categories,
+          email: blog.email,
+        };
+      });
+      return res.status(200).send(savedBlogs);
     }
-    const user = User.findOne({ email });
-    if (!user) return next(createError(404, "User not found"));
-    return res.status(200).send(user.savedBlogs);
+    const user = User.findOne({ email: email }).populate("savedBlogs");
+    if (!user) return next(createError(404, "User Not Found!"));
+    const savedBlogs = user.savedBlogs?.map((blog) => {
+      return {
+        _id: blog._id,
+        title: blog.title,
+        content: blog.content,
+        imgUrl: blog.imgUrl,
+        categories: blog.categories,
+        email: blog.email,
+      };
+    });
+    return res.status(200).send(savedBlogs);
   } catch (err) {
     next(err);
   }
 };
 
+// delete saved blog
+
 export const deleteBlog = async (req, res, next) => {
-  const { userId, blogId, googleUser } = req.body;
+  const { blogId } = req.body;
   try {
-    if (googleUser) {
-      const user = User.findOne({ _id: userId });
-      if (!user) return next(createError(404, "User not found"));
-      const objWithIdIndex = user.savedBlogs.findIndex(
-        (obj) => obj._id === blogId
-      );
-      if (objWithIdIndex > -1) {
-        user.savedBlogs.splice(objWithIdIndex, 1);
-      }
-      await user.save();
-      return res.status(200).send("Blog deleted successfully!");
-    }
-    const user = User.findOne({ _id: userId });
-    const objWithIdIndex = user.savedBlogs.findIndex(
-      (obj) => obj._id === blogId
-    );
-    if (objWithIdIndex > -1) {
-      user.savedBlogs.splice(objWithIdIndex, 1);
-    }
-    await user.save();
-    return res.status(200).send("Blog deleted successfully!");
-  } catch (err) {
-    next(err);
+    await Blog.findByIdAndDelete(blogId);
+    res.status(200).json("Blog has been deleted.");
+  } catch (error) {
+    next(error);
   }
 };

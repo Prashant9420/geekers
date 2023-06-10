@@ -153,7 +153,6 @@ const Compiler = () => {
 
       if (res.status === 200) {
         const codes = await res.json();
-        console.log(codes);
         setSavedCodes(codes);
       }
     } catch (err) {
