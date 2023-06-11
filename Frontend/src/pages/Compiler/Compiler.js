@@ -11,7 +11,7 @@ import Snackbar from "../../utils/Snackbar";
 import SnackbarForCompiling from "../../utils/SnackbarForShowingWait";
 import CodeMirror from "@uiw/react-codemirror";
 import { draculaInit } from "@uiw/codemirror-theme-dracula";
-import { tags as t } from "@lezer/highlight";
+import { classHighlighter, tags as t } from "@lezer/highlight";
 import { java } from "@codemirror/lang-java";
 import { python } from "@codemirror/lang-python";
 import { cpp } from "@codemirror/lang-cpp";
@@ -95,8 +95,9 @@ const Compiler = () => {
       });
 
       if (res.status === 200) {
-        setLanguage("Java");
-        setCode("");
+        setLanguage(language);
+        languageDefaultCode[language] = code;
+        setCode(languageDefaultCode[language]);
         setFileName("");
         handleCloseModal();
         toast("Code Saved Successfully!", {
@@ -181,23 +182,27 @@ const Compiler = () => {
     Javascript: javascript(),
   };
   const [languageDefaultCode, setLanguageDefaultCode] = useState({
-    Java: `public class HelloWorld {
-        public static void main(String[] args) {
-            System.out.println("Hello, world!");
-        }
-    }`,
+    Java: `public class HelloWorld 
+{
+  public static void main(String[] args) 
+  {
+      System.out.println("Hello, world!");
+  }
+}`,
     Python: `print("Hello, world!")`,
     "C++": `#include <iostream>
 using namespace std;
-int main() {
+  int main()
+  {
     cout << "Hello, world!";
     return 0;
-    }`,
+  }`,
     C: `#include <stdio.h>
-    int main() {
-        printf("Hello, world!");
-        return 0;
-        }`,
+int main() 
+{
+  printf("Hello, world!");      
+  return 0;
+}`,
     Javascript: `console.log("Hello, world!");`,
   });
   const [code, setCode] = useState(languageDefaultCode[language]);
@@ -418,8 +423,9 @@ int main() {
                               justifyContent: "space-between",
                             }}
                             onClick={() => {
-                              setCode(file.code);
                               setLanguage(file.language);
+                              languageDefaultCode[file.language] = file.code;
+                              setCode(file.code);
                               handleCloseFilesModal();
                             }}
                           >

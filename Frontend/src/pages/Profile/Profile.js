@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 const Profile = () => {
   const [blogs, setBlogs] = useState([]);
   const username = window.localStorage.getItem("username");
+  const [openBlog, setOpenBlog] = useState(true);
 
   const navigate = useNavigate();
   const { googleUser } = useContext(AuthContext);
@@ -83,16 +84,22 @@ const Profile = () => {
                       borderRadius: "5px",
                       fontWeight: "bold",
                     }}
-                    onClick={() => navigate(`/blog/${blog._id}`)}
-                    S
+                    onClick={() => {
+                      if (!openBlog) {
+                        navigate(`/blog/${blog._id}`);
+                      }
+                    }}
                   >
                     {blog.title}
+                    <DeleteIcon
+                      sx={{ cursor: "pointer" }}
+                      onClick={() => {
+                        setOpenBlog(false);
+                        deleteBlog(blog._id);
+                        setOpenBlog(true);
+                      }}
+                    />
                   </MenuItem>
-                  <DeleteIcon
-                    onClick={() => {
-                      deleteBlog(blog._id);
-                    }}
-                  />
                 </div>
               );
             })}
